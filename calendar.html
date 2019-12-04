@@ -1,21 +1,105 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Google Calendar API Quickstart</title>
-    <meta charset="utf-8" />
-    <link href="style.css" type="text/css" rel="stylesheet">
+  <title>Google Calendar API Quickstart</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link href="./resources/css/style.css" type="text/css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/6959a909c1.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </head>
 <body>
-<p>Google Calendar API Quickstart</p>
+  <p>Google Calendar API Quickstart</p>
 
-<!--Add buttons to initiate auth sequence and sign out-->
-<button id="authorize_button" style="display: none;">Authorize</button>
-<button id="signout_button" style="display: none;">Sign Out</button>
+  <!--Add buttons to initiate auth sequence and sign out-->
+  <button id="authorize_button" style="display: none;">Authorize</button>
+  <button id="signout_button" style="display: none;">Sign Out</button>
 
-<pre id="content"></pre>
+  <pre id="content"></pre>
+  <div class="panel panel-danger">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <span class="calender-ico fas fa-calendar"></span>&nbsp;
+        Calendar Events
+      </h3>
+    </div>
+    <div class="panel-body">
+      <ul class="media-list">
+        <li class="media">
+          <div class="media-left">
+            <div class="panel panel-danger text-center date">
+              <div class="panel-heading month">
+                <span class="panel-title strong">
+                  Mar
+                </span>
+              </div>
+              <div class="panel-body day">
+                23
+              </div>
+            </div>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">
+              Pulvinar Mauris Eu
+            </h4>
+            <p>
+              Vivamus pulvinar mauris eu placerat blandit. In euismod tellus vel ex vestibulum congue.
+            </p>
+          </div>
+        </li>
+        <li class="media">
+          <div class="media-left">
+            <div class="panel panel-danger text-center date">
+              <div class="panel-heading month">
+                <span class="panel-title strong">
+                  Jan
+                </span>
+              </div>
+              <div class="panel-body day">
+                16
+              </div>
+            </div>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">
+              Aenean Consectetur Ultricies
+            </h4>
+            <p>
+              Curabitur vel malesuada tortor, sit amet ultricies mauris. Aenean consectetur ultricies luctus.
+            </p>
+          </div>
+        </li>
+        <li class="media">
+          <div class="media-left">
+            <div class="panel panel-danger text-center date">
+              <div class="panel-heading month">
+                <span class="panel-title strong all-caps">
+                  Dec
+                </span>
+              </div>
+              <div class="panel-body day">
+                8
+              </div>
+            </div>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">
+              Praesent Tincidunt
+            </h4>
+            <p>
+              Sed convallis dignissim magna et dignissim. Praesent tincidunt sapien eu gravida dignissim.
+            </p>
+          </div>
+        </li>
+      </ul>
+      <a href="#" class="btn btn-default btn-block">More Events »</a>
+    </div>
+  </div>
 
-
-<script type="text/javascript">
+  <script type="text/javascript">
       // Client ID and API key from the Developer Console
       var CLIENT_ID = '304886205033-j4s1jgo4984jfhvnb8rafao5ojlpf7hd.apps.googleusercontent.com';
       var API_KEY = 'AIzaSyBWc1GKjKmZNO08P1_LE9_sBLo3eQraDMs';
@@ -33,7 +117,7 @@
       /**
        *  On load, called to load the auth2 library and API client library.
        */
-      function handleClientLoad() {
+       function handleClientLoad() {
         gapi.load('client:auth2', initClient);
       }
 
@@ -41,7 +125,7 @@
        *  Initializes the API client library and sets up sign-in state
        *  listeners.
        */
-      function initClient() {
+       function initClient() {
         gapi.client.init({
           apiKey: API_KEY,
           clientId: CLIENT_ID,
@@ -64,7 +148,7 @@
        *  Called when the signed in status changes, to update the UI
        *  appropriately. After a sign-in, the API is called.
        */
-      function updateSigninStatus(isSignedIn) {
+       function updateSigninStatus(isSignedIn) {
         if (isSignedIn) {
           authorizeButton.style.display = 'none';
           signoutButton.style.display = 'block';
@@ -78,14 +162,14 @@
       /**
        *  Sign in the user upon button click.
        */
-      function handleAuthClick(event) {
+       function handleAuthClick(event) {
         gapi.auth2.getAuthInstance().signIn();
       }
 
       /**
        *  Sign out the user upon button click.
        */
-      function handleSignoutClick(event) {
+       function handleSignoutClick(event) {
         gapi.auth2.getAuthInstance().signOut();
       }
 
@@ -95,7 +179,7 @@
        *
        * @param {string} message Text to be placed in pre element.
        */
-      function appendPre(message) {
+       function appendPre(message) {
         var pre = document.getElementById('content');
         var textContent = document.createTextNode(message + '\n');
         pre.appendChild(textContent);
@@ -106,7 +190,7 @@
        * the authorized user's calendar. If no events are found an
        * appropriate message is printed.
        */
-      function listUpcomingEvents() {
+       function listUpcomingEvents() {
         gapi.client.calendar.events.list({
           'calendarId': 'k502j2pfv0a1gqld3ql22t8psk@group.calendar.google.com',
           'timeMin': (new Date()).toISOString(),
@@ -134,10 +218,10 @@
       }
 
     </script>
+    <script async defer src="https://apis.google.com/js/api.js"
+    onload="this.onload=function(){};handleClientLoad()"
+    onreadystatechange="if (this.readyState === 'complete') this.onload()">
+  </script>
 
-<script async defer src="https://apis.google.com/js/api.js"
-        onload="this.onload=function(){};handleClientLoad()"
-        onreadystatechange="if (this.readyState === 'complete') this.onload()">
-</script>
 </body>
 </html>
