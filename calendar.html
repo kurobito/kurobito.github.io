@@ -27,73 +27,8 @@
       </h3>
     </div>
     <div class="panel-body">
-      <ul class="media-list">
-        <li class="media">
-          <div class="media-left">
-            <div class="panel panel-danger text-center date">
-              <div class="panel-heading month">
-                <span class="panel-title strong">
-                  Mar
-                </span>
-              </div>
-              <div class="panel-body day">
-                23
-              </div>
-            </div>
-          </div>
-          <div class="media-body">
-            <h4 class="media-heading">
-              Pulvinar Mauris Eu
-            </h4>
-            <p>
-              Vivamus pulvinar mauris eu placerat blandit. In euismod tellus vel ex vestibulum congue.
-            </p>
-          </div>
-        </li>
-        <li class="media">
-          <div class="media-left">
-            <div class="panel panel-danger text-center date">
-              <div class="panel-heading month">
-                <span class="panel-title strong">
-                  Jan
-                </span>
-              </div>
-              <div class="panel-body day">
-                16
-              </div>
-            </div>
-          </div>
-          <div class="media-body">
-            <h4 class="media-heading">
-              Aenean Consectetur Ultricies
-            </h4>
-            <p>
-              Curabitur vel malesuada tortor, sit amet ultricies mauris. Aenean consectetur ultricies luctus.
-            </p>
-          </div>
-        </li>
-        <li class="media">
-          <div class="media-left">
-            <div class="panel panel-danger text-center date">
-              <div class="panel-heading month">
-                <span class="panel-title strong all-caps">
-                  Dec
-                </span>
-              </div>
-              <div class="panel-body day">
-                8
-              </div>
-            </div>
-          </div>
-          <div class="media-body">
-            <h4 class="media-heading">
-              Praesent Tincidunt
-            </h4>
-            <p>
-              Sed convallis dignissim magna et dignissim. Praesent tincidunt sapien eu gravida dignissim.
-            </p>
-          </div>
-        </li>
+      <ul class="media-list" id="eventList">
+
       </ul>
       <a href="#" class="btn btn-default btn-block">More Events »</a>
     </div>
@@ -186,6 +121,53 @@
       }
 
       /**
+       * Append a eventListItem to the list containing an event from
+       * google calendar. Used to display the results of the API call.
+       *
+       * @param {string} month Text to be placed in span element.
+       * @param {string} day Text to be placed in div element.
+       * @param {string} title Text to be placed in h4 element.
+       * @param {string} description Text to be placed in p element.
+       */      
+      function appendEventListItem(month, day, title){
+        let eventList = document.getElementById('eventList');
+        let event = document.createElement('li');
+        let eventLeft = document.createElement('div');
+        let eventDate = document.createElement('div');
+        let eventMonth = document.createElement('div');
+        let eventDay = document.createElement('div');
+        let eventMonthText = document.createElement('span');
+        let eventBody = document.createElement('div');
+        let eventTitle = document.createElement('h4');
+
+        event.className = 'media';
+        eventLeft.className = 'media-left';
+        eventDate.className = 'panel panel-danger text-center date';
+        eventMonth.className = 'panel-heading month';
+        eventDay.className = 'panel-body day';
+        eventMonthText.className = 'panel-title strong';
+        eventBody.className = 'media-body';
+        eventTitle.className = 'media-heading';
+        eventList.appendChild(event);
+        event.appendChild(eventLeft);
+        event.appendChild(eventBody);
+        eventLeft.appendChild(eventDate);
+        eventDate.appendChild(eventMonth);
+        eventDate.appendChild(eventDay);
+        eventMonth.appendChild(eventMonthText);
+        eventBody.appendChild(eventTitle);
+        
+        let eventMonthContent = document.createTextNode(month);
+        eventMonthText.appendChild(eventMonthContent);
+
+        let eventDayContent = document.createTextNode(day)
+        eventDay.appendChild(eventDayContent);
+
+        let eventTitleContent = document.createTextNode(title);
+        eventTitle.appendChild(eventTitleContent);
+      }
+
+      /**
        * Print the summary and start datetime/date of the next ten events in
        * the authorized user's calendar. If no events are found an
        * appropriate message is printed.
@@ -209,12 +191,44 @@
               if (!when) {
                 when = event.start.date;
               }
-              appendPre(event.summary + ' (' + when + ')')
+              let date = new Date(when);
+             
+              appendEventListItem(getMonthName(date.getMonth()), date.getDate(), event.summary);
             }
           } else {
             appendPre('No upcoming events found.');
           }
         });
+      }
+
+
+      function getMonthName(month){
+          switch(month){
+            case 0:
+              return 'Jan';
+            case 1:
+              return 'Feb';
+            case 2:
+              return 'Mar';
+            case 3:
+              return 'Apr';
+            case 4:
+              return 'May';
+            case 5:
+              return 'Jun';
+            case 6:
+              return 'Jul';
+            case 7:
+              return 'Aug';
+            case 8:
+              return 'Sep';
+            case 9:
+              return 'Oct';
+            case 10:
+              return 'Nov';
+            case 11:
+              return 'Dec';
+          }
       }
 
     </script>
