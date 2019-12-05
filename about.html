@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link href="./resources/css/style.css" type="text/css" rel="stylesheet">
+  <link href="./resources/css/about.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+  <header class="header" id="header">
+    <a href="index.html"><img src="resources/image.png"></a>
+  </header>
+
+  <nav class="nav">
+    <ul class="nav_items">
+      <li><a href="index.html">Home</a></li>
+      <li><a class="active" href="about.html">About NYSL</a></li>
+      <li><a href="">Game Information</a></li>
+      <li><a href="">Rules</a></li>
+      <li><a href="">Registration</a></li>
+      <li><a href="">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section class="mission-container">
+      <div class="mission-caption">
+        <h1>Mission</h1>
+        <p>To support young athletes living in Chicago’s Northside neighborhoods, who have an interest in learning and playing soccer, specifically those skills around team cooperation and good sportsmanship.</p>
+      </div>
+    </section>
+    <section class="vision-container">
+      <div class="vision-caption">
+        <h1>Vision</h1>
+        <p>The Northside Youth Soccer League aspires to develop strong, well-rounded, and mindful athletes through the building of character, self-discipline, and leadership.</p>
+      </div>
+    </section>
+    <section class="general-container">
+
+    </section>
+  </main>
+
+  <script>
+// When the user scrolls down 50px from the top of the document, resize the header's font size
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("header").style.height = "0px";
+  } else {
+    document.getElementById("header").style.height = "200px";
+  }
+}
+</script>
+
+</body>
+</html>

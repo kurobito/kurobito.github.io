@@ -1,18 +1,33 @@
+.header{
+    background: #033949;
+    background-image: url("../image3.jpg");
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+}
+
 .header img{
+    width: 960px;
+    height: 200px;
+}
+
+.nav{
+    position: fixed;
+    z-index: 2;
     width: 100%;
 }
 
-.header{
-    height: 50%;
-}
-
 .nav ul{
+    width: 100%;
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
     background-color: #333;
 }
+
 .nav_items li{
     float: left;
 }
@@ -29,69 +44,5 @@
 }
 
 .active {
-    background-color: #4CAF50;
-}
-
-.calender-ico{
-    padding-top: 8px;
-    color: #54a942;
-}
-
-.panel.date {
-    margin: 8px 0px 0px 0px;
-    width: 60px;
-    text-align: center;
-}
-
-.panel.date .month {
-    padding: 2px 0px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.panel.date .day {
-    padding: 3px 0px;
-    font-weight: 700;
-    font-size: 1.5em;
-    color: #54a942;
-}
-
-.panel{
-    border: 1px solid transparent;
-    border-color: #ccebce;
-    margin: auto;
-    width: 50%;
-    border-radius: 4px;
-}
-
-.panel-heading{
-    background-color: #a2e6a0;
-    padding: 4px 15px;
-}
-
-.panel-title{
-    text-align: left;
-    color: #54a942;
-}
-
-.panel-body{
-    padding: 15px;
-}
-
-.media-list{
-    padding-left: 0;
-    list-style: none;
-}
-
-.media-left{
-    display: table-cell;
-    vertical-align: top;
-    padding-right: 12px;
-}
-
-.media-body{
-    align-self: stretch;
-    flex: auto;
-    display: flex;
-    align-items: center;
+    background-color: #033949;
 }

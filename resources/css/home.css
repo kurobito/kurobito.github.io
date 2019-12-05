@@ -1,0 +1,72 @@
+body button{
+    visibility: hidden;
+}
+
+main{
+    text-align: center;
+}
+
+.calender-ico{
+    padding-top: 8px;
+    color: white;
+}
+
+.panel{
+    border: 1px solid transparent;
+    border-color: #033949;
+    margin: 0 auto;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.panel-heading{
+    background-color: #033949;
+    padding: 4px 15px;
+}
+
+.panel-title{
+    text-align: left;
+    color: white;
+}
+
+.panel-body{
+    padding: 15px;
+}
+
+.panel.date {
+    margin: 8px 0px 0px 0px;
+    width: 60px;
+    text-align: center;
+}
+
+.panel.date .month {
+    padding: 2px 0px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.panel.date .day {
+    padding: 3px 0px;
+    font-weight: 700;
+    font-size: 1.5em;
+    color: #212529;
+}
+
+.media-list{
+    padding-left: 0;
+    list-style: none;
+}
+
+.media-left{
+    display: table-cell;
+    vertical-align: top;
+    padding-right: 10px;
+}
+
+.media-body{
+    align-self: stretch;
+    flex: auto;
+    display: flex;
+    align-items: center;
+}
+
