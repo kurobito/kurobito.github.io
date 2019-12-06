@@ -6,6 +6,10 @@ main{
     text-align: center;
 }
 
+.nav{
+    position: static;
+}
+
 .calender-ico{
     padding-top: 8px;
     color: white;
