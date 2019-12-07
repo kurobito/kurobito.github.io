@@ -9,14 +9,17 @@
 }
 
 .header img{
-    width: 960px;
+    width: 800px;
+    max-width: 90vw;
     height: 200px;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
 }
 
 .nav{
-    position: fixed;
     z-index: 2;
     width: 100%;
+    position: fixed;
 }
 
 .nav ul{
@@ -46,3 +49,4 @@
 .active {
     background-color: #033949;
 }
+

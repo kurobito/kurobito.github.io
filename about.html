@@ -15,15 +15,15 @@
   <nav class="nav">
     <ul class="nav_items">
       <li><a href="index.html">Home</a></li>
-      <li><a class="active" href="about.html">About NYSL</a></li>
-      <li><a href="">Game Information</a></li>
+      <li><a class="active" href="#about">About NYSL</a></li>
+      <li><a href="gameinfo.html">Game Information</a></li>
       <li><a href="">Rules</a></li>
       <li><a href="">Registration</a></li>
       <li><a href="">Contact</a></li>
     </ul>
   </nav>
 
-  <main>
+  <main id="about">
     <section class="mission-container">
       <div class="mission-caption">
         <h1>Mission</h1>
@@ -38,24 +38,23 @@
     </section>
     <section class="general-container">
       <div class="general-container-bg"></div>
-        <h1>General information</h1>
-        <p>The Northside Youth Soccer League was established in 1996 to provide athletes residing in Chicago’s northside neighborhoods an environment in wich to learn and play soccer. To be a member of NYSL, you must be between the ages of 4 - 12 and reside in a Chicago northside neighborhood. NYSL is ran by a small full-time staff, and relies on the generous volunteer time of parents and previous league members.</p>
-        <h6><a href="https://www.vecteezy.com/free-vector/soccer-pattern">Soccer Pattern Vectors by Vecteezy</a></h6>
+      <h1>General information</h1>
+      <p>The Northside Youth Soccer League was established in 1996 to provide athletes residing in Chicago’s northside neighborhoods an environment in wich to learn and play soccer. To be a member of NYSL, you must be between the ages of 4 - 12 and reside in a Chicago northside neighborhood. NYSL is ran by a small full-time staff, and relies on the generous volunteer time of parents and previous league members.</p>
+      <h6><a href="https://www.vecteezy.com/free-vector/soccer-pattern">Soccer Pattern Vectors by Vecteezy</a></h6>
     </section>
   </main>
 
   <script>
-// When the user scrolls down 50px from the top of the document, resize the header's font size
-window.onscroll = function() {scrollFunction()};
+    window.onscroll = () => scrollFunction();
 
-function scrollFunction() {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    document.getElementById("header").style.height = "0px";
-  } else {
-    document.getElementById("header").style.height = "200px";
-  }
-}
-</script>
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("header").style.height = "0px";
+      } else {
+        document.getElementById("header").style.height = "200px";
+      }
+    }
+  </script>
 
 </body>
 </html>

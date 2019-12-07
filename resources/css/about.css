@@ -43,6 +43,10 @@ h1{
 p{
 	width: 50%;
 }
+
+main{
+	margin: 0px;
+}
 .mission-container{
 	position: relative;
 	width: 100%;
@@ -102,7 +106,7 @@ p{
 	width: 100%;
 	position: absolute;
 	background-size: contain;
-	opacity: 0.2;
+	opacity: 0.1;
 	z-index: -1;
 }
 
