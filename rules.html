@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NYSL</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link href="./resources/css/style.css" type="text/css" rel="stylesheet">
+  <link href="./resources/css/rules.css" type="text/css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.3.200/pdf.js"></script>
+</head>
+<body>
+  <header class="header" id="header">
+    <a href="index.html"><img id="header-img" src="resources/image.png"></a>
+  </header>
+  <nav class="nav">
+    <ul class="nav_items">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About NYSL</a></li>
+      <li><a href="gameinfo.html">Game Information</a></li>
+      <li><a class="active" href="#rules" id="rules-nav">Rules</a></li>
+      <li><a href="">Registration</a></li>
+      <li><a href="">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main id="rules">
+
+  </main>
+
+  <script>
+    let PDFJS = window['pdfjs-dist/build/pdf'];
+
+    function loadPDFJS(pageUrl) {
+      PDFJS.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.3.200/pdf.worker.js';
+      var currentPage = 1;
+      var pages = [];
+      var globalPdf = null;
+      var container = document.getElementById('rules');
+      function renderPage(page) {
+        //
+        // Prepare canvas using PDF page dimensions
+        //
+        var canvas = document.createElement('canvas');
+        
+        let scale = 1.5
+        let viewport = page.getViewport({scale: scale});
+        // append the created canvas to the container
+        container.appendChild(canvas);
+        // Get context of the canvas
+        let context = canvas.getContext('2d');
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        //
+        // Render PDF page into canvas context
+        //
+        var renderContext = {
+          canvasContext: context,
+          viewport: viewport
+        };
+        page.render(renderContext).then(function () {
+          if (currentPage < globalPdf.numPages) {
+            pages[currentPage] = canvas;
+            currentPage++;
+            globalPdf.getPage(currentPage).then(renderPage);
+          } else {
+                // Callback function here, which will trigger when all pages are loaded
+              }
+            });
+      }
+      PDFJS.getDocument(pageUrl).then(function (pdf) {
+        if(!globalPdf){
+          globalPdf = pdf;
+        }
+        pdf.getPage(currentPage).then(renderPage);
+      });
+    }
+    loadPDFJS("resources/rules.pdf");
+  </script>
+
+  <script>
+    window.onscroll = () => scrollFunction();
+
+    function scrollFunction() {
+      let header = document.getElementById("header");
+      let headerImage = document.getElementById("header-img");
+
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        header.style.height = "0px";
+        headerImage.style.height = "0px";
+      } else {
+       header.style.height = "200px";
+       headerImage.style.height = "200px";
+     }
+   }
+ </script>
+</body>
+</html>

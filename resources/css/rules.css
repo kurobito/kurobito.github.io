@@ -1,0 +1,19 @@
+html{
+	scroll-behavior: smooth;
+}
+
+body{
+	background-color: grey;
+}
+
+#rules{
+	padding-top: 80px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+#rules canvas{
+	margin: 20px 0px;
+}

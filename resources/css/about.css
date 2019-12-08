@@ -50,7 +50,7 @@ main{
 .mission-container{
 	position: relative;
 	width: 100%;
-	min-height: 1000px;
+	min-height: 130vh;
 	height: 100%;
 	background-image: url(../image4.jpg);
 	background-size: cover;
@@ -73,7 +73,7 @@ main{
 .vision-container{
 	position: relative;
 	width: 100%;
-	min-height: 880px;
+	min-height: 130vh;
 	background-image: url(../image5.png);
 	background-size: cover;
 }
@@ -95,7 +95,7 @@ main{
 .general-container{
 	font-family: 'IBM Plex Sans';
 	height: 100%;
-	min-height: 640px;
+	min-height: 100vh;
 	text-align: center;
 	position: relative;
 }
@@ -111,7 +111,7 @@ main{
 }
 
 .general-container h1{
-	padding: 180px 0px 0px 0px;
+	padding: 40vh 0px 0px 0px;
 }
 
 .general-container p{
