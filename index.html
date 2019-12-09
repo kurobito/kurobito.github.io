@@ -56,6 +56,8 @@
       var authorizeButton = document.getElementById('authorize_button');
       var signoutButton = document.getElementById('signout_button');
 
+
+
       /**
        *  On load, called to load the auth2 library and API client library.
        */
@@ -79,8 +81,8 @@
 
           // Handle the initial sign-in state.
           updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-          authorizeButton.onclick = handleAuthClick;
-          signoutButton.onclick = handleSignoutClick;
+          // authorizeButton.onclick = handleAuthClick;
+          // signoutButton.onclick = handleSignoutClick;
       }, function(error) {
           console.log(JSON.stringify(error, null, 2));
       });
@@ -96,6 +98,7 @@
           signoutButton.style.display = 'block';
           listUpcomingEvents();
       } else {
+          gapi.auth2.getAuthInstance().signIn();
           authorizeButton.style.display = 'block';
           signoutButton.style.display = 'none';
       }
