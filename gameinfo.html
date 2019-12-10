@@ -147,68 +147,89 @@
                 <tr>
                     <td>AJ Katzenmaier Elementary</td>
                     <td>
-                        <a href="https://www.google.nl/maps/place/24+W+Walton+St,+Chicago,+IL+60610,+Verenigde+Staten/@41.9002924,-87.6312391,17z/data=!3m1!4b1!4m5!3m4!1s0x880fd34e07f6bac3:0x68a82e5d59952c86!8m2!3d41.9002924!4d-87.6290504" target="_blank">24 W. Walton St., Chicago, IL 60610</a>
+                        <a id ="katzenmaier-link" href="javascript:updateMaps('katzenmaier-link')">24 W. Walton St., Chicago, IL 60610</a>
                     </td>
                 </tr>
                 <tr>
                     <td>Greenbay Elementary</td>
                     <td>
-                        <a href="https://www.google.nl/maps/place/1734+N+Orleans+St,+Chicago,+IL+60614,+Verenigde+Staten/@41.9138023,-87.640028,17z/data=!3m1!4b1!4m5!3m4!1s0x880fd34073f306a3:0x9e1726bbf8f23f0e!8m2!3d41.9138023!4d-87.6378393" target="_blank">1734 N. Orleans St., Chicago, IL 60614</a>
+                        <a id="greenbay-link" href="javascript:updateMaps('greenbay-link')" >1734 N. Orleans St., Chicago, IL 60614</a>
                     </td>
                 </tr>
                 <tr>
                     <td>Howard A Yeager Elementary</td>
                     <td>
-                        <a href="https://www.google.nl/maps/place/2245+N+Southport+Ave,+Chicago,+IL+60614,+Verenigde+Staten/@41.9232646,-87.6651146,17z/data=!3m1!4b1!4m5!3m4!1s0x880fd2e37f9b8d2d:0x62ad8b907dd755d6!8m2!3d41.9232646!4d-87.6629259" target="_blank">2245 N. Southport Ave., Chicago, IL 60614</a>
+                        <a id="howard-link" href="javascript:updateMaps('howard-link')">2245 N. Southport Ave., Chicago, IL 60614</a>
                     </td>
                 </tr>
                 <tr>
                     <td>Marjorie P Hart Elementary</td>
                     <td>
-                        <a href="https://www.google.nl/maps/place/2625+N+Orchard+St,+Chicago,+IL+60614,+Verenigde+Staten/@41.9232646,-87.6651146,17z/data=!4m5!3m4!1s0x880fd30f2630e551:0x3e719e44a5cef714!8m2!3d41.9295783!4d-87.6458976" target="_blank">2625 N. Orchard St., Chicago, IL 60614</a>
+                        <a id="marjorie-link" href="javascript:updateMaps('marjorie-link')">2625 N. Orchard St., Chicago, IL 60614</a>
                     </td>
                 </tr>
                 <tr>
                     <td>North Elementary</td>
                     <td>
-                        <a href="https://www.google.nl/maps/place/1409+N+Ogden+Ave,+Chicago,+IL+60610,+Verenigde+Staten/@41.9070978,-87.648377,17z/data=!3m1!4b1!4m5!3m4!1s0x880fd33af0e6ccc3:0x26c81c1d557667da!8m2!3d41.9070978!4d-87.6461883" target="_blank">1409 N. Ogden Ave., Chicago, IL 60610</a>
+                        <a id="north-link" href="javascript:updateMaps('north-link')">1409 N. Ogden Ave., Chicago, IL 60610</a>
                     </td>
                 </tr>
                 <tr>
                     <td>South Elementary</td>
                     <td>
-                        <a href="https://www.google.nl/maps/place/2101+N+Fremont+St,+Chicago,+IL+60614,+Verenigde+Staten/@41.9197768,-87.6535554,17z/data=!3m1!4b1!4m5!3m4!1s0x880fd3196fb41dc7:0x970be7f7d6336df5!8m2!3d41.9197768!4d-87.6513667" target="_blank">2101 N. Fremton St., Chicago, IL 60614</a>
+                        <a id="south-link" href="javascript:updateMaps('south-link')">2101 N. Fremton St., Chicago, IL 60614</a>
                     </td>
                 </tr>
             </table>
-        </section>
-        <section class="extra">
-        </section>
-    </main>
+            <div class="map">
+                <iframe id="map"
+                frameborder="1" style="border:0"
+                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCOEjB9sDVdnAtQL-lCXeZ5fRP8owNG9aQ
+                &q=24 W. Walton St., Chicago, IL 60610" allowfullscreen>
+            </iframe>
+        </div>
+    </section>
 
-    <script>
-        window.onscroll = () => scrollFunction();
-        document.getElementsByTagName("body")[0].onresize = () =>scrollFunction();
-        function scrollFunction() {
-            let header = document.getElementById("header");
-            let headerImage = document.getElementById("header-img");
+</main> 
 
-            if (window.innerHeight < 800) {
-                document.getElementById("gameinfo").style.marginTop = "52px";
-                if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
-                    header.style.height = "0px";
-                    headerImage.style.height = "0px";
-                } else {
-                    header.style.height = "200px";
-                    headerImage.style.height = "200px";
-                }
-            }else{
-                document.getElementById("gameinfo").style.marginTop = "0px";
-                if (header.style.height === "0px" && headerImage.style.height === "0px") {
-                    header.style.height = "200px";
-                    headerImage.style.height = "200px";
-                }
+<script>
+    window.onscroll = () => scrollFunction();
+    document.getElementsByTagName("body")[0].onresize = () =>scrollFunction();
+    function scrollFunction() {
+        let header = document.getElementById("header");
+        let headerImage = document.getElementById("header-img");
+
+        if (window.innerHeight < 800) {
+            document.getElementById("gameinfo").style.marginTop = "52px";
+            if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
+                header.style.height = "0px";
+                headerImage.style.height = "0px";
+            } else {
+                header.style.height = "200px";
+                headerImage.style.height = "200px";
             }
+        }else{
+            document.getElementById("gameinfo").style.marginTop = "0px";
+            if (header.style.height === "0px" && headerImage.style.height === "0px") {
+                header.style.height = "200px";
+                headerImage.style.height = "200px";
+            }
+        }
+    }
+
+        // Update the embedded google map
+        function updateMaps(documentId){
+            let mapUrl = "https://www.google.com/maps/embed/v1/place?key=AIzaSyCOEjB9sDVdnAtQL-lCXeZ5fRP8owNG9aQ&q=";
+            let mapLink = "katzenmaier-link"
+            const link = document.getElementById(documentId);
+            const map = document.getElementById("map");
+
+            // Get text from inside the a element
+            const mapQuery = link.firstChild.nodeValue;
+            // Append the query at the end of the url
+            mapUrl += mapQuery;
+            mapLink = documentId;
+            map.src = mapUrl;
         }
     </script>
 </body>
