@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Registration</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="./resources/css/style.css" type="text/css" rel="stylesheet">
     <link href="./resources/css/registration.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-<header class="header">
-    <a href="index.html"><img src="resources/image.png"></a>
+<header class="header" id="header">
+    <a href="index.html"><img id="headerImage" src="resources/image.png"></a>
 </header>
 <nav class="nav">
     <ul class="nav_items">
@@ -57,11 +58,13 @@
                 <label>Gender</label>
                 <div class="radio-div">
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputMale" value="male" required>
+                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputMale"
+                               value="male" required>
                         <label class="custom-control-label" for="inputMale">Male</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputFemale" value="female">
+                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputFemale"
+                               value="female">
                         <label class="custom-control-label" for="inputFemale">Female</label>
                     </div>
                 </div>
@@ -70,27 +73,33 @@
                 <label>Grade</label>
                 <div class="radio-div">
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputGrade" value="grade0" required>
+                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputGrade"
+                               value="grade0" required>
                         <label class="custom-control-label" for="inputGrade">Pre-school</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputGrade1" value="grade1">
+                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputGrade1"
+                               value="grade1">
                         <label class="custom-control-label" for="inputGrade1">1st</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputGrade2" value="grade2">
+                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputGrade2"
+                               value="grade2">
                         <label class="custom-control-label" for="inputGrade2">2nd</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputGrade3" value="grade3">
+                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputGrade3"
+                               value="grade3">
                         <label class="custom-control-label" for="inputGrade3">3rd</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputGrade4" value="grade4">
+                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputGrade4"
+                               value="grade4">
                         <label class="custom-control-label" for="inputGrade4">4th</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputGrade5" value="grade5">
+                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputGrade5"
+                               value="grade5">
                         <label class="custom-control-label" for="inputGrade5">5th</label>
                     </div>
                 </div>
@@ -111,9 +120,77 @@
                 <input type="email" class="form-control" id="inputEmail" required>
             </div>
         </div>
+        <h5 class="">Elementary schools near you</h5>
+        <div class="form-row">
+            <div class="col">
+                <label>First closest school</label>
+                <select class="custom-select custom-select-sm">
+                    <option selected value="AJ Katzenmaier Elementary">AJ Katzenmaier Elementary</option>
+                    <option value="Greenbay Elementary">Greenbay Elementary</option>
+                    <option value="Howard A Yeager Elementary">Howard A Yeager Elementary</option>
+                    <option value="Marjorie P Hart Elementary">Marjorie P Hart Elementary</option>
+                    <option value="North Elementary">North Elementary</option>
+                    <option value="South Elementary">South Elementary</option>
+                </select>
+            </div>
+            <div class="col">
+                <label>Second closest school</label>
+                <select class="custom-select custom-select-sm">
+                    <option selected value="AJ Katzenmaier Elementary">AJ Katzenmaier Elementary</option>
+                    <option value="Greenbay Elementary">Greenbay Elementary</option>
+                    <option value="Howard A Yeager Elementary">Howard A Yeager Elementary</option>
+                    <option value="Marjorie P Hart Elementary">Marjorie P Hart Elementary</option>
+                    <option value="North Elementary">North Elementary</option>
+                    <option value="South Elementary">South Elementary</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col">
+                <p>What position(s) do you normally play? (check all that apply)</p>
+                <div class="radio-div">
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input class="custom-control-input" type="checkbox" name="inlineRadioOptions" id="inputPositionForward"
+                               value="forward" required>
+                        <label class="custom-control-label" for="inputPositionForward">Forward</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input class="custom-control-input" type="checkbox" name="inlineRadioOptions" id="inputPositionDefense"
+                               value="defense">
+                        <label class="custom-control-label" for="inputPositionDefense">Defense</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input class="custom-control-input" type="checkbox" name="inlineRadioOptions" id="inputPositionMidfield"
+                               value="midfield">
+                        <label class="custom-control-label" for="inputPositionMidfield">Midfield</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input class="custom-control-input" type="checkbox" name="inlineRadioOptions" id="inputPositionGoalkeeper"
+                               value="goalkeeper">
+                        <label class="custom-control-label" for="inputPositionGoalkeeper">Goalkeeper</label>
+                    </div>
+            </div>
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
 </main>
+
+<script>
+    window.onscroll = () => scrollFunction();
+
+    function scrollFunction() {
+      let header = document.getElementById("header");
+      let headerImage = document.getElementById("headerImage");
+
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        header.style.height = "0px";
+        headerImage.style.height = "0px";
+      } else {
+       header.style.height = "200px";
+       headerImage.style.height = "200px";
+     }
+   }
+</script>
 </body>
 </html>

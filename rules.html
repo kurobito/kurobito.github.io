@@ -10,7 +10,7 @@
 </head>
 <body>
   <header class="header" id="header">
-    <a href="index.html"><img id="header-img" src="resources/image.png"></a>
+    <a href="index.html"><img id="headerImage" src="resources/image.png"></a>
   </header>
   <nav class="nav">
     <ul class="nav_items">
@@ -18,7 +18,7 @@
       <li><a href="about.html">About NYSL</a></li>
       <li><a href="gameinfo.html">Game Information</a></li>
       <li><a class="active" href="#rules" id="rules-nav">Rules</a></li>
-      <li><a href="">Registration</a></li>
+      <li><a href="registration.html">Registration</a></li>
       <li><a href="">Contact</a></li>
     </ul>
   </nav>
@@ -82,7 +82,7 @@
 
     function scrollFunction() {
       let header = document.getElementById("header");
-      let headerImage = document.getElementById("header-img");
+      let headerImage = document.getElementById("headerImage");
 
       if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
         header.style.height = "0px";
