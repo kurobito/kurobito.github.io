@@ -32,7 +32,7 @@ body{
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #033949;
 }
 
 .nav_items li{
@@ -47,10 +47,10 @@ body{
 }
 
 .nav_items li a:hover{
-    background-color: #111;
+    background-color: #7cc633;
 }
 
 .active {
-    background-color: #033949;
+    background-color: #7cc633;
 }
 

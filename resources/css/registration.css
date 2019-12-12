@@ -8,8 +8,6 @@
 	padding: 6px 0px;
 }
 
-
-
 .radio-div{
 	padding: 6px 0px;
 }
@@ -18,3 +16,33 @@
 	width: 100%;
 }
 
+.hr{
+	border-top: 1px solid rgba(0, 0, 0, 0.31);
+}
+
+.uniform-top{
+	margin-bottom: 0;
+}
+
+.uniform-bottom{
+	margin-top: 0;
+}
+
+.jersey-header{
+	padding-right: 0px;
+}
+
+.jersey.row{
+	margin: 0px;
+	width: 100%;
+}
+
+.shorts.row{
+	margin:0px;
+}
+
+#registerButton{
+	color: #FFF;
+	background-color: #7cc633;
+	border-color: #7cc633;
+}	

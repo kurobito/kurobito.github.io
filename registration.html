@@ -7,6 +7,10 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="./resources/css/style.css" type="text/css" rel="stylesheet">
     <link href="./resources/css/registration.css" type="text/css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/6959a909c1.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
 <header class="header" id="header">
@@ -58,12 +62,12 @@
                 <label>Gender</label>
                 <div class="radio-div">
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputMale"
+                        <input class="custom-control-input" type="radio" name="genderOptions" id="inputMale"
                                value="male" required>
                         <label class="custom-control-label" for="inputMale">Male</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputFemale"
+                        <input class="custom-control-input" type="radio" name="genderOptions" id="inputFemale"
                                value="female">
                         <label class="custom-control-label" for="inputFemale">Female</label>
                     </div>
@@ -73,38 +77,37 @@
                 <label>Grade</label>
                 <div class="radio-div">
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputGrade"
+                        <input class="custom-control-input" type="radio" name="gradeOptions" id="inputGrade"
                                value="grade0" required>
                         <label class="custom-control-label" for="inputGrade">Pre-school</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputGrade1"
+                        <input class="custom-control-input" type="radio" name="gradeOptions" id="inputGrade1"
                                value="grade1">
                         <label class="custom-control-label" for="inputGrade1">1st</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputGrade2"
+                        <input class="custom-control-input" type="radio" name="gradeOptions" id="inputGrade2"
                                value="grade2">
                         <label class="custom-control-label" for="inputGrade2">2nd</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputGrade3"
+                        <input class="custom-control-input" type="radio" name="gradeOptions" id="inputGrade3"
                                value="grade3">
                         <label class="custom-control-label" for="inputGrade3">3rd</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputGrade4"
+                        <input class="custom-control-input" type="radio" name="gradeOptions" id="inputGrade4"
                                value="grade4">
                         <label class="custom-control-label" for="inputGrade4">4th</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="inlineRadioOptions" id="inputGrade5"
+                        <input class="custom-control-input" type="radio" name="gradeOptions" id="inputGrade5"
                                value="grade5">
                         <label class="custom-control-label" for="inputGrade5">5th</label>
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="form-row">
             <div class="col">
@@ -147,31 +150,193 @@
         </div>
         <div class="form-row">
             <div class="col">
-                <p>What position(s) do you normally play? (check all that apply)</p>
-                <div class="radio-div">
+                <label>What position(s) do you normally play? (check all that apply)</label>
+                <div class="checkbox-div">
                     <div class="custom-control custom-checkbox custom-control-inline">
-                        <input class="custom-control-input" type="checkbox" name="inlineRadioOptions" id="inputPositionForward"
-                               value="forward" required>
-                        <label class="custom-control-label" for="inputPositionForward">Forward</label>
+                        <input class="custom-control-input" type="checkbox" id="usualPositionForward"
+                               value="forward">
+                        <label class="custom-control-label" for="usualPositionForward">Forward</label>
                     </div>
                     <div class="custom-control custom-checkbox custom-control-inline">
-                        <input class="custom-control-input" type="checkbox" name="inlineRadioOptions" id="inputPositionDefense"
+                        <input class="custom-control-input" type="checkbox" id="usualPositionDefense"
                                value="defense">
-                        <label class="custom-control-label" for="inputPositionDefense">Defense</label>
+                        <label class="custom-control-label" for="usualPositionDefense">Defense</label>
                     </div>
                     <div class="custom-control custom-checkbox custom-control-inline">
-                        <input class="custom-control-input" type="checkbox" name="inlineRadioOptions" id="inputPositionMidfield"
+                        <input class="custom-control-input" type="checkbox" id="usualPositionMidfield"
                                value="midfield">
-                        <label class="custom-control-label" for="inputPositionMidfield">Midfield</label>
+                        <label class="custom-control-label" for="usualPositionMidfield">Midfield</label>
                     </div>
                     <div class="custom-control custom-checkbox custom-control-inline">
-                        <input class="custom-control-input" type="checkbox" name="inlineRadioOptions" id="inputPositionGoalkeeper"
+                        <input class="custom-control-input" type="checkbox" id="usualPositionGoalkeeper"
                                value="goalkeeper">
-                        <label class="custom-control-label" for="inputPositionGoalkeeper">Goalkeeper</label>
+                        <label class="custom-control-label" for="usualPositionGoalkeeper">Goalkeeper</label>
                     </div>
+                </div>
+            </div>
+            <div class="col">
+                <label>What position(s) do you want to play? (check all that apply)</label>
+                <div class="checkbox-div">
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input class="custom-control-input" type="checkbox" id="wantPositionForward"
+                               value="forward">
+                        <label class="custom-control-label" for="wantPositionForward">Forward</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input class="custom-control-input" type="checkbox" id="wantPositionDefense"
+                               value="defense">
+                        <label class="custom-control-label" for="wantPositionDefense">Defense</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input class="custom-control-input" type="checkbox" id="wantPositionMidfield"
+                               value="midfield">
+                        <label class="custom-control-label" for="wantPositionMidfield">Midfield</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input class="custom-control-input" type="checkbox" id="wantPositionGoalkeeper"
+                               value="goalkeeper">
+                        <label class="custom-control-label" for="wantPositionGoalkeeper">Goalkeeper</label>
+                    </div>
+                </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <hr class="hr uniform-top">
+        <div class="form-row" id="clothesPanelHeader">
+            <div class="col">
+                <div class="custom-control custom-checkbox custom-control-inline" style="width:100%">
+                    <input class="custom-control-input" type="checkbox" id="ownUniform">
+                    <label class="custom-control-label uniform label" for="ownUniform" style="width: 100%"
+                           data-toggle="collapse" data-target=".multi-collapse"
+                           aria-controls="clothesPanel">I already own a uniform</label>
+                </div>
+            </div>
+        </div>
+        <hr class="hr uniform-bottom">
+
+        <!-- Make not required when I already own a uniform checkbox is ticked -->
+        <div class="collapse show multi-collapse" id="clothesPanel">
+            <div class="row">
+                <div class="col jersey-header">
+                    <label>Jersey size</label>
+                </div>
+                <div class="col shorts-header">
+                    <label>Shorts size</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="jersey row">
+                        <div class="radio-div col">
+                            <div class="custom-control custom-radio custom-control">
+                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeYouthSmall"
+                                       value="youth small" required>
+                                <label class="custom-control-label" for="jerSizeYouthSmall">Youth Small</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control">
+                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeYouthMedium"
+                                       value="youth medium" required>
+                                <label class="custom-control-label" for="jerSizeYouthMedium">Youth Medium</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control">
+                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeYouthLarge"
+                                       value="youth large" required>
+                                <label class="custom-control-label" for="jerSizeYouthLarge">Youth Large</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control">
+                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeSmall"
+                                       value="small" required>
+                                <label class="custom-control-label" for="jerSizeSmall">Small</label>
+                            </div>
+                        </div>
+                        <div class="radio-div col">
+                            <div class="custom-control custom-radio custom-control">
+                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeMedium"
+                                       value="medium" required>
+                                <label class="custom-control-label" for="jerSizeMedium">Medium</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control">
+                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeLarge"
+                                       value="large" required>
+                                <label class="custom-control-label" for="jerSizeLarge">Large</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control">
+                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeExtraLarge"
+                                       value="extra large" required>
+                                <label class="custom-control-label" for="jerSizeExtraLarge">Extra Large</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="shorts row">
+                        <div class="radio-div col">
+                            <div class="custom-control custom-radio custom-control">
+                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeYouthSmall"
+                                       value="youth small" required>
+                                <label class="custom-control-label" for="jerSizeYouthSmall">Youth Small</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control">
+                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeYouthMedium"
+                                       value="youth medium" required>
+                                <label class="custom-control-label" for="jerSizeYouthMedium">Youth Medium</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control">
+                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeYouthLarge"
+                                       value="youth large" required>
+                                <label class="custom-control-label" for="jerSizeYouthLarge">Youth Large</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control">
+                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeSmall"
+                                       value="small" required>
+                                <label class="custom-control-label" for="jerSizeSmall">Small</label>
+                            </div>
+                        </div>
+                        <div class="radio-div col">
+                            <div class="custom-control custom-radio custom-control">
+                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeMedium"
+                                       value="medium" required>
+                                <label class="custom-control-label" for="jerSizeMedium">Medium</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control">
+                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeLarge"
+                                       value="large" required>
+                                <label class="custom-control-label" for="jerSizeLarge">Large</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control">
+                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeExtraLarge"
+                                       value="extra large" required>
+                                <label class="custom-control-label" for="jerSizeExtraLarge">Extra Large</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="hr mb-5 mt-5 multi-collapse collapse show">
+        <div>
+            <h6>Permission to play</h6>
+            <p>I, the parent or guardian of the minor registrant, agree that the registrant and I will abide by all the
+                rules of the Nortside Youth Soccer League(NYSL). In recognizing the possibility of physical injury associated
+                with soccer and in consideration for the "League" accepting the registrant for its soccer programs and activities,
+                I hereby release, discharge, and/or otherwise indemnify NYSL, their employees and associated personnel and volunteers,
+                including the facilities used for practice and games, against any claim by or on behalf of the registrant as a
+                result of the registrant's participation in the program and/or being transported to or from NYSL sponsored activities, which transportation.</p>
+            <p>By signing below, I hereby agree and authorize the above, in addition, by signing below, I also acknowledge
+                that I have read the cancellation policy and agree to it's terms</p>
+            <div class="form-row">
+                <div class="col">
+                    <label for="parentFullName">Full name of parent/guardian</label>
+                    <input type="text" class="form-control" id="parentFullName" placeholder="John" required>
+                </div>
+                <div class="col">
+                    <label for="currentDate">Date</label>
+                    <input type="text" class="form-control" id="currentDate" placeholder="12/12/2019" required>
+                </div>
+            </div>
+        </div>
+        <hr class="hidden mt-4 mb-4">
+        <button type="submit" class="btn btn-primary" id="registerButton">Register</button>
     </form>
 
 </main>
