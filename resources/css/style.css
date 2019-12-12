@@ -1,3 +1,7 @@
+body{
+    margin: 0;
+}
+
 .header{
     background: #033949;
     background-image: url("../image3.jpg");
@@ -11,7 +15,7 @@
 .header img{
     width: 800px;
     max-width: 90vw;
-    height: 200px;
+    height: 100%;
     transition: 0.5s ease-in-out;
     -webkit-transition: 0.5s ease-in-out;
 }
