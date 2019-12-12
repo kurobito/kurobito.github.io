@@ -7,10 +7,7 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="./resources/css/style.css" type="text/css" rel="stylesheet">
     <link href="./resources/css/registration.css" type="text/css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/6959a909c1.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 </head>
 <body>
 <header class="header" id="header">
@@ -28,7 +25,7 @@
 </nav>
 <main id="registration">
     <h4 class="mb-3">Player Registration</h4>
-    <form class="needs-validation was-validated" novalidate="">
+    <form class="needs-validation" novalidate="">
         <div class="form-row">
             <div class="col">
                 <label for="playerFirstName">Player's first name</label>
@@ -55,8 +52,9 @@
         </div>
         <div class="form-row">
             <div class="col">
-                <label for="inputBDay">Birth Date (mm/dd/yyyy)</label>
-                <input type="date" class="form-control" id="inputBDay" required>
+                <label for="inputBDay">Birth Date</label>
+                <input type="text" class="form-control" id="inputBDay" placeholder="mm/dd/yyyy" required>
+                <div class="invalid-feedback"></div>
             </div>
             <div class="col">
                 <label>Gender</label>
@@ -228,17 +226,20 @@
                     <div class="jersey row">
                         <div class="radio-div col">
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeYouthSmall"
+                                <input class="custom-control-input" type="radio" name="jerseyOptions"
+                                       id="jerSizeYouthSmall"
                                        value="youth small" required>
                                 <label class="custom-control-label" for="jerSizeYouthSmall">Youth Small</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeYouthMedium"
+                                <input class="custom-control-input" type="radio" name="jerseyOptions"
+                                       id="jerSizeYouthMedium"
                                        value="youth medium" required>
                                 <label class="custom-control-label" for="jerSizeYouthMedium">Youth Medium</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeYouthLarge"
+                                <input class="custom-control-input" type="radio" name="jerseyOptions"
+                                       id="jerSizeYouthLarge"
                                        value="youth large" required>
                                 <label class="custom-control-label" for="jerSizeYouthLarge">Youth Large</label>
                             </div>
@@ -260,7 +261,8 @@
                                 <label class="custom-control-label" for="jerSizeLarge">Large</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeExtraLarge"
+                                <input class="custom-control-input" type="radio" name="jerseyOptions"
+                                       id="jerSizeExtraLarge"
                                        value="extra large" required>
                                 <label class="custom-control-label" for="jerSizeExtraLarge">Extra Large</label>
                             </div>
@@ -271,17 +273,20 @@
                     <div class="shorts row">
                         <div class="radio-div col">
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeYouthSmall"
+                                <input class="custom-control-input" type="radio" name="jerseyOptions"
+                                       id="jerSizeYouthSmall"
                                        value="youth small" required>
                                 <label class="custom-control-label" for="jerSizeYouthSmall">Youth Small</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeYouthMedium"
+                                <input class="custom-control-input" type="radio" name="jerseyOptions"
+                                       id="jerSizeYouthMedium"
                                        value="youth medium" required>
                                 <label class="custom-control-label" for="jerSizeYouthMedium">Youth Medium</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeYouthLarge"
+                                <input class="custom-control-input" type="radio" name="jerseyOptions"
+                                       id="jerSizeYouthLarge"
                                        value="youth large" required>
                                 <label class="custom-control-label" for="jerSizeYouthLarge">Youth Large</label>
                             </div>
@@ -303,7 +308,8 @@
                                 <label class="custom-control-label" for="jerSizeLarge">Large</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeExtraLarge"
+                                <input class="custom-control-input" type="radio" name="jerseyOptions"
+                                       id="jerSizeExtraLarge"
                                        value="extra large" required>
                                 <label class="custom-control-label" for="jerSizeExtraLarge">Extra Large</label>
                             </div>
@@ -317,12 +323,18 @@
         <div>
             <h6>Permission to play</h6>
             <p>I, the parent or guardian of the minor registrant, agree that the registrant and I will abide by all the
-                rules of the Nortside Youth Soccer League(NYSL). In recognizing the possibility of physical injury associated
-                with soccer and in consideration for the "League" accepting the registrant for its soccer programs and activities,
-                I hereby release, discharge, and/or otherwise indemnify NYSL, their employees and associated personnel and volunteers,
-                including the facilities used for practice and games, against any claim by or on behalf of the registrant as a
-                result of the registrant's participation in the program and/or being transported to or from NYSL sponsored activities, which transportation.</p>
-            <p>By signing below, I hereby agree and authorize the above, in addition, by signing below, I also acknowledge
+                rules of the Nortside Youth Soccer League(NYSL). In recognizing the possibility of physical injury
+                associated
+                with soccer and in consideration for the "League" accepting the registrant for its soccer programs and
+                activities,
+                I hereby release, discharge, and/or otherwise indemnify NYSL, their employees and associated personnel
+                and volunteers,
+                including the facilities used for practice and games, against any claim by or on behalf of the
+                registrant as a
+                result of the registrant's participation in the program and/or being transported to or from NYSL
+                sponsored activities, which transportation.</p>
+            <p>By signing below, I hereby agree and authorize the above, in addition, by signing below, I also
+                acknowledge
                 that I have read the cancellation policy and agree to it's terms</p>
             <div class="form-row">
                 <div class="col">
@@ -340,6 +352,7 @@
     </form>
 
 </main>
+<script src="scripts/validate.js"></script>
 
 <script>
     window.onscroll = () => scrollFunction();
@@ -356,6 +369,17 @@
        headerImage.style.height = "200px";
      }
    }
+
 </script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
 </html>
