@@ -2,6 +2,10 @@ body{
     margin: 0;
 }
 
+main{
+    margin-top: 52px;
+}
+
 .header{
     background: #033949;
     background-image: url("../image3.jpg");

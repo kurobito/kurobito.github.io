@@ -10,7 +10,7 @@
 </head>
 <body>
     <header class="header" id="header">
-        <a href="index.html"><img id="header-img" src="resources/image.png"></a>
+        <a href="index.html"><img id="headerImage" src="resources/image.png"></a>
     </header>
     <nav class="nav">
         <ul class="nav_items">
@@ -19,7 +19,7 @@
             <li><a class="active" href="#gameinfo">Game Information</a></li>
             <li><a href="rules.html">Rules</a></li>
             <li><a href="registration.html">Registration</a></li>
-            <li><a href="">Contact</a></li>
+            <li><a href="contact.html">Contact</a></li>
         </ul>
     </nav>
 
@@ -192,31 +192,8 @@
 
 </main> 
 
+    <script src="scripts/smallscroll.js"></script>
 <script>
-    window.onscroll = () => scrollFunction();
-    document.getElementsByTagName("body")[0].onresize = () =>scrollFunction();
-    function scrollFunction() {
-        let header = document.getElementById("header");
-        let headerImage = document.getElementById("header-img");
-
-        if (window.innerHeight < 800) {
-            document.getElementById("gameinfo").style.marginTop = "52px";
-            if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
-                header.style.height = "0px";
-                headerImage.style.height = "0px";
-            } else {
-                header.style.height = "200px";
-                headerImage.style.height = "200px";
-            }
-        }else{
-            document.getElementById("gameinfo").style.marginTop = "0px";
-            if (header.style.height === "0px" && headerImage.style.height === "0px") {
-                header.style.height = "200px";
-                headerImage.style.height = "200px";
-            }
-        }
-    }
-
         // Update the embedded google map
         function updateMaps(documentId){
             let mapUrl = "https://www.google.com/maps/embed/v1/place?key=AIzaSyCOEjB9sDVdnAtQL-lCXeZ5fRP8owNG9aQ&q=";

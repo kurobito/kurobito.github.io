@@ -13,11 +13,12 @@
 		position: static;
 	}
 }
-
+#gameinfo{
+	margin: 0px;
+}
 
 .schedule-header{
 	text-transform: uppercase;
-	top: 20px;
 	background-color: #005911;
 	color: white;
 	font-family: 'Solway', serif;
