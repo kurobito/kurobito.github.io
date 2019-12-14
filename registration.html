@@ -25,11 +25,11 @@
 </nav>
 <main id="registration">
     <h4 class="mb-3">Player Registration</h4>
-    <form class="needs-validation" novalidate="">
+    <form class="needs-validation" novalidate method="post" action="form-to-email.php">
         <div class="form-row">
             <div class="col">
                 <label for="playerFirstName">Player's first name</label>
-                <input type="text" class="form-control" id="playerFirstName" placeholder="John" required>
+                <input type="text" class="form-control" id="playerFirstName" placeholder="John" name="playerFirstName" required>
             </div>
             <div class="col">
                 <label for="playerLastName">Last Name</label>
@@ -48,13 +48,14 @@
             <div class="col">
                 <label>Zip Code</label>
                 <input type="text" class="form-control" id="inputZipCode" required>
+                <div id="invalidZipCode" class="invalid-feedback"></div>
             </div>
         </div>
         <div class="form-row">
             <div class="col">
                 <label for="inputBDay">Birth Date</label>
                 <input type="text" class="form-control" id="inputBDay" placeholder="mm/dd/yyyy" required>
-                <div class="invalid-feedback"></div>
+                <div id="invalidBDay" class="invalid-feedback"></div>
             </div>
             <div class="col">
                 <label>Gender</label>
@@ -115,10 +116,12 @@
             <div class="col">
                 <label>Contact Phone</label>
                 <input type="tel" class="form-control" id="inputPhone" required>
+                <div id="invalidPhone" class="invalid-feedback"></div>
             </div>
             <div class="col">
                 <label>Contact Email</label>
                 <input type="email" class="form-control" id="inputEmail" required>
+                <div id="invalidEmail" class="invalid-feedback"></div>
             </div>
         </div>
         <h5 class="">Elementary schools near you</h5>
@@ -234,36 +237,36 @@
                             <div class="custom-control custom-radio custom-control">
                                 <input class="custom-control-input" type="radio" name="jerseyOptions"
                                        id="jerSizeYouthMedium"
-                                       value="youth medium" required>
+                                       value="youth medium">
                                 <label class="custom-control-label" for="jerSizeYouthMedium">Youth Medium</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
                                 <input class="custom-control-input" type="radio" name="jerseyOptions"
                                        id="jerSizeYouthLarge"
-                                       value="youth large" required>
+                                       value="youth large">
                                 <label class="custom-control-label" for="jerSizeYouthLarge">Youth Large</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
                                 <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeSmall"
-                                       value="small" required>
+                                       value="small">
                                 <label class="custom-control-label" for="jerSizeSmall">Small</label>
                             </div>
                         </div>
                         <div class="radio-div col">
                             <div class="custom-control custom-radio custom-control">
                                 <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeMedium"
-                                       value="medium" required>
+                                       value="medium">
                                 <label class="custom-control-label" for="jerSizeMedium">Medium</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
                                 <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeLarge"
-                                       value="large" required>
+                                       value="large">
                                 <label class="custom-control-label" for="jerSizeLarge">Large</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
                                 <input class="custom-control-input" type="radio" name="jerseyOptions"
                                        id="jerSizeExtraLarge"
-                                       value="extra large" required>
+                                       value="extra large">
                                 <label class="custom-control-label" for="jerSizeExtraLarge">Extra Large</label>
                             </div>
                         </div>
@@ -273,45 +276,45 @@
                     <div class="shorts row">
                         <div class="radio-div col">
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions"
-                                       id="jerSizeYouthSmall"
+                                <input class="custom-control-input" type="radio" name="shortsOptions"
+                                       id="shortsSizeYouthSmall"
                                        value="youth small" required>
-                                <label class="custom-control-label" for="jerSizeYouthSmall">Youth Small</label>
+                                <label class="custom-control-label" for="shortsSizeYouthSmall">Youth Small</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions"
-                                       id="jerSizeYouthMedium"
-                                       value="youth medium" required>
-                                <label class="custom-control-label" for="jerSizeYouthMedium">Youth Medium</label>
+                                <input class="custom-control-input" type="radio" name="shortsOptions"
+                                       id="shortsSizeYouthMedium"
+                                       value="youth medium">
+                                <label class="custom-control-label" for="shortsSizeYouthMedium">Youth Medium</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions"
-                                       id="jerSizeYouthLarge"
-                                       value="youth large" required>
-                                <label class="custom-control-label" for="jerSizeYouthLarge">Youth Large</label>
+                                <input class="custom-control-input" type="radio" name="shortsOptions"
+                                       id="shortsSizeYouthLarge"
+                                       value="youth large">
+                                <label class="custom-control-label" for="shortsSizeYouthLarge">Youth Large</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeSmall"
-                                       value="small" required>
-                                <label class="custom-control-label" for="jerSizeSmall">Small</label>
+                                <input class="custom-control-input" type="radio" name="shortsOptions" id="shortsSizeSmall"
+                                       value="small">
+                                <label class="custom-control-label" for="shortsSizeSmall">Small</label>
                             </div>
                         </div>
                         <div class="radio-div col">
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeMedium"
-                                       value="medium" required>
-                                <label class="custom-control-label" for="jerSizeMedium">Medium</label>
+                                <input class="custom-control-input" type="radio" name="shortsOptions" id="shortsSizeMedium"
+                                       value="medium">
+                                <label class="custom-control-label" for="shortsSizeMedium">Medium</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeLarge"
-                                       value="large" required>
-                                <label class="custom-control-label" for="jerSizeLarge">Large</label>
+                                <input class="custom-control-input" type="radio" name="shortsOptions" id="shortsSizeLarge"
+                                       value="large">
+                                <label class="custom-control-label" for="shortsSizeLarge">Large</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions"
-                                       id="jerSizeExtraLarge"
-                                       value="extra large" required>
-                                <label class="custom-control-label" for="jerSizeExtraLarge">Extra Large</label>
+                                <input class="custom-control-input" type="radio" name="shortsOptions"
+                                       id="shortsSizeExtraLarge"
+                                       value="extra large">
+                                <label class="custom-control-label" for="shortsSizeExtraLarge">Extra Large</label>
                             </div>
                         </div>
                     </div>

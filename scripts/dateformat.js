@@ -1,14 +1,26 @@
 let inputDate = document.getElementById('inputBDay');
 let currentDate = document.getElementById('currentDate')
 let today = new Date();
+let backspacePressed = false;
 
 currentDate.value = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
 
 inputDate.addEventListener('input', function(e){
 	this.type = 'text';
 	let input = this.value; // get text form input
-	// Check whether input is a digit
-	if (/\D\/$/.test(input)) input = input.substring(0, input.length - 3);
+	// Check whether backspace is pressed and remove input appropriately
+	console.log(input)
+	if (backspacePressed) {
+		if(!/\d{2}\/\d{2}\//.test(input)){
+			input = input.substring(0, input.length - 1);
+		}
+		backspacePressed = false;
+		// console.log(input)
+		
+	}
+	// if (/\D\/$/.test(input)){
+	// 	input = input.substring(0, input.length - 3);
+	// }
 	let values = input.split('/').map(function(value){
 		return value.replace(/\D/g, '')
 	})
@@ -35,3 +47,10 @@ function checkValue(str, max) {
 };
 return str;
 };
+
+document.addEventListener("keydown", keyCheck);
+function keyCheck(event){
+	let key = event.key;
+	if(key == 'Backspace') backspacePressed = true;
+	else backspacePressed = false;
+}

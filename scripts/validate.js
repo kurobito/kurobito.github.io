@@ -8,7 +8,9 @@
     var validation = Array.prototype.filter.call(forms, function(form) {
     	form.addEventListener('submit', function(event) {
     		validate(form.elements)
-    		if (form.checkValidity() === false) {
+    		if (form.checkValidity() && document.getElementById('registration')) {
+    			// showAlert();
+    		}else{
     			event.preventDefault();
     			event.stopPropagation();
     		}
@@ -17,6 +19,12 @@
     });
 }, false);
 })();
+
+function showAlert(){
+	if(!confirm("Are you sure you have entered everything correctly?")){
+		return false;
+	}
+}
 
 function validate(formElements){
 	console.log(formElements.length)
@@ -34,12 +42,16 @@ function validate(formElements){
 			case 'inputEmail':
 			validateEmail(formElements[i]);
 			break;
+			case 'ownUniform':
+			checkUniform(formElements[i]);
+			break; 
 		}
 	}
 }
 
 function validateDate(element){
 	let inputDate = element;
+	let invalidFeedback = element.parentElement.children.namedItem("invalidBDay");
 	let dateformat = /^(0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])[\/\-]\d{4}$/;
 	if (inputDate.value.match(dateformat)) {
 		let date = inputDate.value.split('/');
@@ -55,6 +67,7 @@ function validateDate(element){
 			console.log(date)
 			if(dd>daysOfMonths[mm-1]){
 				inputDate.setCustomValidity('Invalid date format!');
+				invalidFeedback.innerHTML = 'Invalid date format!'
 			}
 		}
 
@@ -71,38 +84,71 @@ function validateDate(element){
 		console.log(leapYear)
 		if (leapYear && dd > 29) {
 			inputDate.setCustomValidity('Invalid date format!');
+			invalidFeedback.innerHTML = 'Invalid date format!'
 		}else inputDate.setCustomValidity('');
 		if (!leapYear && dd >= 29){
 			inputDate.setCustomValidity('Invalid date format!');
+			invalidFeedback.innerHTML = 'Invalid date format!'
 		}else inputDate.setCustomValidity('');
 	}else {
-		inputDate.setCustomValidity('Invalid date format!');
+		inputDate.setCustomValidity('empty');
 	}
 }	
 
 function validateZipCode(element){
 	let inputZipCode = element;
+	let invalidFeedback = element.parentElement.children.namedItem("invalidZipCode");
 	const zipCodeFormat = /\d{5}/;
 
 	if (inputZipCode.value.match(zipCodeFormat)){
 		inputZipCode.setCustomValidity('');
-	} else inputZipCode.setCustomValidity('Invalid zip code format!');
+	}else if(inputZipCode){
+		inputZipCode.setCustomValidity('empty')
+	}else {
+		inputZipCode.setCustomValidity('Invalid zip code format!');
+		invalidFeedback.innerHTML = 'Invalid zip code format!'
+	}
 }
 
 function validatePhone(element){
 	let inputPhone = element;
+	let invalidFeedback = element.parentElement.children.namedItem("invalidPhone");
 	const phoneFormat = /^[(]?\d{3}[)]?[(\s)?.-]\d{3}[\s.-]\d{4}$/
-
 
 	if (inputPhone.value.match(phoneFormat)){
 		inputPhone.setCustomValidity('');
-	} else inputPhone.setCustomValidity('Invalid phone format!');
+	} else if(inputPhone){
+		inputPhone.setCustomValidity('empty')
+	}else {
+		inputPhone.setCustomValidity('Invalid phone format!');
+		invalidFeedback.innerHTML = 'Invalid phone format!';
+	}
 }
 function validateEmail(element){
 	let inputEmail = element;
+	let invalidFeedback = element.parentElement.children.namedItem("invalidEmail");
 	const emailFormat = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
 
 	if(inputEmail.value.match(emailFormat)){
 		inputEmail.setCustomValidity('');
-	}else inputEmail.setCustomValidity('Invalid email format!');
+	}else if(inputEmail){
+		inputEmail.setCustomValidity('empty');
+	}else {
+		inputEmail.setCustomValidity('Invalid email format!');
+		invalidFeedback.innerHTML = 'Invalid email format!';
+	}
+}
+
+
+function checkUniform(element){
+	let ownUniform = element.checked;
+	let inputJersey = document.getElementById('jerSizeYouthSmall');
+	let inputShorts = document.getElementById('shortsSizeYouthSmall');
+	if(ownUniform){
+		inputJersey.required = false;
+		inputShorts.required = false;
+	}else{
+		inputJersey.required = true;
+		inputShorts.required = true;
+	}
 }
