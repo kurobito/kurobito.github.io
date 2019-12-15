@@ -25,48 +25,51 @@
 </nav>
 <main id="registration">
     <h4 class="mb-3">Player Registration</h4>
-    <form class="needs-validation" novalidate method="post" action="form-to-email.php">
+    <form class="needs-validation" novalidate method="post" action="register-to-email.php">
         <div class="form-row">
             <div class="col">
                 <label for="playerFirstName">Player's first name</label>
-                <input type="text" class="form-control" id="playerFirstName" placeholder="John" name="playerFirstName" required>
+                <input type="text" id="playerFirstName" class="form-control" placeholder="John" name="playerFirstName"
+                       required>
             </div>
             <div class="col">
                 <label for="playerLastName">Last Name</label>
-                <input type="text" class="form-control" id="playerLastName" placeholder="Doe" required>
+                <input type="text" id="playerLastName" class="form-control" placeholder="Doe" name="playerLastName"
+                       required>
             </div>
         </div>
         <div class="form-row">
             <div class="col">
                 <label for="inputStreet">Street Address</label>
-                <input type="text" class="form-control" id="inputStreet" placeholder="" required>
+                <input type="text" id="inputStreet" class="form-control" placeholder="" name="inputStreet" required>
             </div>
             <div class="col">
                 <label>City</label>
-                <input type="text" class="form-control" id="inputCity" required>
+                <input type="text" id="inputCity" class="form-control" name="inputCity" required>
             </div>
             <div class="col">
                 <label>Zip Code</label>
-                <input type="text" class="form-control" id="inputZipCode" required>
+                <input type="text" id="inputZipCode" class="form-control" name="inputZipCode" required>
                 <div id="invalidZipCode" class="invalid-feedback"></div>
             </div>
         </div>
         <div class="form-row">
             <div class="col">
                 <label for="inputBDay">Birth Date</label>
-                <input type="text" class="form-control" id="inputBDay" placeholder="mm/dd/yyyy" required>
+                <input type="text" id="inputBDay" class="form-control" name="inputBDay" placeholder="mm/dd/yyyy"
+                       required>
                 <div id="invalidBDay" class="invalid-feedback"></div>
             </div>
             <div class="col">
                 <label>Gender</label>
                 <div class="radio-div">
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="genderOptions" id="inputMale"
+                        <input id="inputMale" class="custom-control-input" type="radio" name="genderOptions"
                                value="male" required>
                         <label class="custom-control-label" for="inputMale">Male</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="genderOptions" id="inputFemale"
+                        <input id="inputFemale" class="custom-control-input" type="radio" name="genderOptions"
                                value="female">
                         <label class="custom-control-label" for="inputFemale">Female</label>
                     </div>
@@ -76,33 +79,33 @@
                 <label>Grade</label>
                 <div class="radio-div">
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="gradeOptions" id="inputGrade"
-                               value="grade0" required>
+                        <input id="inputGrade" class="custom-control-input" type="radio" name="gradeOptions"
+                               value="Pre-school" required>
                         <label class="custom-control-label" for="inputGrade">Pre-school</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="gradeOptions" id="inputGrade1"
-                               value="grade1">
+                        <input id="inputGrade1" class="custom-control-input" type="radio" name="gradeOptions"
+                               value="1st">
                         <label class="custom-control-label" for="inputGrade1">1st</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="gradeOptions" id="inputGrade2"
-                               value="grade2">
+                        <input id="inputGrade2" class="custom-control-input" type="radio" name="gradeOptions"
+                               value="2nd">
                         <label class="custom-control-label" for="inputGrade2">2nd</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="gradeOptions" id="inputGrade3"
-                               value="grade3">
+                        <input id="inputGrade3" class="custom-control-input" type="radio" name="gradeOptions"
+                               value="3rd">
                         <label class="custom-control-label" for="inputGrade3">3rd</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="gradeOptions" id="inputGrade4"
-                               value="grade4">
+                        <input id="inputGrade4" class="custom-control-input" type="radio" name="gradeOptions"
+                               value="4th">
                         <label class="custom-control-label" for="inputGrade4">4th</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input class="custom-control-input" type="radio" name="gradeOptions" id="inputGrade5"
-                               value="grade5">
+                        <input id="inputGrade5" class="custom-control-input" type="radio" name="gradeOptions"
+                               value="5th">
                         <label class="custom-control-label" for="inputGrade5">5th</label>
                     </div>
                 </div>
@@ -111,16 +114,16 @@
         <div class="form-row">
             <div class="col">
                 <label>Parent/Guardian</label>
-                <input type="text" class="form-control" id="inputParent" required>
+                <input id="inputParent" type="text" class="form-control" name="inputParent" required>
             </div>
             <div class="col">
                 <label>Contact Phone</label>
-                <input type="tel" class="form-control" id="inputPhone" required>
+                <input id="inputPhone" type="tel" class="form-control" name="inputPhone" required>
                 <div id="invalidPhone" class="invalid-feedback"></div>
             </div>
             <div class="col">
                 <label>Contact Email</label>
-                <input type="email" class="form-control" id="inputEmail" required>
+                <input id="inputEmail" type="email" class="form-control" name="inputEmail" required>
                 <div id="invalidEmail" class="invalid-feedback"></div>
             </div>
         </div>
@@ -128,7 +131,7 @@
         <div class="form-row">
             <div class="col">
                 <label>First closest school</label>
-                <select class="custom-select custom-select-sm">
+                <select class="custom-select custom-select-sm" name="firstClosestSchool">
                     <option selected value="AJ Katzenmaier Elementary">AJ Katzenmaier Elementary</option>
                     <option value="Greenbay Elementary">Greenbay Elementary</option>
                     <option value="Howard A Yeager Elementary">Howard A Yeager Elementary</option>
@@ -139,7 +142,7 @@
             </div>
             <div class="col">
                 <label>Second closest school</label>
-                <select class="custom-select custom-select-sm">
+                <select class="custom-select custom-select-sm" name="secondClosestSchool">
                     <option selected value="AJ Katzenmaier Elementary">AJ Katzenmaier Elementary</option>
                     <option value="Greenbay Elementary">Greenbay Elementary</option>
                     <option value="Howard A Yeager Elementary">Howard A Yeager Elementary</option>
@@ -154,22 +157,26 @@
                 <label>What position(s) do you normally play? (check all that apply)</label>
                 <div class="checkbox-div">
                     <div class="custom-control custom-checkbox custom-control-inline">
-                        <input class="custom-control-input" type="checkbox" id="usualPositionForward"
+                        <input id="usualPositionForward" class="custom-control-input" type="checkbox"
+                               name="usualPositionOptions[]"
                                value="forward">
                         <label class="custom-control-label" for="usualPositionForward">Forward</label>
                     </div>
                     <div class="custom-control custom-checkbox custom-control-inline">
-                        <input class="custom-control-input" type="checkbox" id="usualPositionDefense"
+                        <input id="usualPositionDefense" class="custom-control-input" type="checkbox"
+                               name="usualPositionOptions[]"
                                value="defense">
                         <label class="custom-control-label" for="usualPositionDefense">Defense</label>
                     </div>
                     <div class="custom-control custom-checkbox custom-control-inline">
-                        <input class="custom-control-input" type="checkbox" id="usualPositionMidfield"
+                        <input id="usualPositionMidfield" class="custom-control-input" type="checkbox"
+                               name="usualPositionOptions[]"
                                value="midfield">
                         <label class="custom-control-label" for="usualPositionMidfield">Midfield</label>
                     </div>
                     <div class="custom-control custom-checkbox custom-control-inline">
-                        <input class="custom-control-input" type="checkbox" id="usualPositionGoalkeeper"
+                        <input id="usualPositionGoalkeeper" class="custom-control-input" type="checkbox"
+                               name="usualPositionOptions[]"
                                value="goalkeeper">
                         <label class="custom-control-label" for="usualPositionGoalkeeper">Goalkeeper</label>
                     </div>
@@ -179,42 +186,47 @@
                 <label>What position(s) do you want to play? (check all that apply)</label>
                 <div class="checkbox-div">
                     <div class="custom-control custom-checkbox custom-control-inline">
-                        <input class="custom-control-input" type="checkbox" id="wantPositionForward"
+                        <input id="wantPositionForward" class="custom-control-input" type="checkbox"
+                               name="wantPositionOptions[]"
                                value="forward">
                         <label class="custom-control-label" for="wantPositionForward">Forward</label>
                     </div>
                     <div class="custom-control custom-checkbox custom-control-inline">
-                        <input class="custom-control-input" type="checkbox" id="wantPositionDefense"
+                        <input id="wantPositionDefense" class="custom-control-input" type="checkbox"
+                               name="wantPositionOptions[]"
                                value="defense">
                         <label class="custom-control-label" for="wantPositionDefense">Defense</label>
                     </div>
                     <div class="custom-control custom-checkbox custom-control-inline">
-                        <input class="custom-control-input" type="checkbox" id="wantPositionMidfield"
+                        <input id="wantPositionMidfield" class="custom-control-input" type="checkbox"
+                               name="wantPositionOptions[]"
                                value="midfield">
                         <label class="custom-control-label" for="wantPositionMidfield">Midfield</label>
                     </div>
                     <div class="custom-control custom-checkbox custom-control-inline">
-                        <input class="custom-control-input" type="checkbox" id="wantPositionGoalkeeper"
+                        <input id="wantPositionGoalkeeper" class="custom-control-input" type="checkbox"
+                               name="wantPositionOptions[]"
                                value="goalkeeper">
                         <label class="custom-control-label" for="wantPositionGoalkeeper">Goalkeeper</label>
                     </div>
                 </div>
             </div>
         </div>
-        <hr class="hr uniform-top">
+        <!-- Refreshing causes issues, if ownUniform is checked the site does not update that clothesPanel should collapse -->
+        <hr class="hr hr-uniform-top">
         <div class="form-row" id="clothesPanelHeader">
             <div class="col">
-                <div class="custom-control custom-checkbox custom-control-inline" style="width:100%">
-                    <input class="custom-control-input" type="checkbox" id="ownUniform">
-                    <label class="custom-control-label uniform label" for="ownUniform" style="width: 100%"
+                <div class="custom-control custom-checkbox custom-control-inline clothes-panel">
+                    <input id="ownUniform" class="custom-control-input" type="checkbox" name="ownUniform">
+                    <label class="custom-control-label" for="ownUniform"
                            data-toggle="collapse" data-target=".multi-collapse"
                            aria-controls="clothesPanel">I already own a uniform</label>
                 </div>
             </div>
         </div>
-        <hr class="hr uniform-bottom">
+        <hr class="hr hr-uniform-bottom">
 
-        <!-- Make not required when I already own a uniform checkbox is ticked -->
+        <!-- Make not required when player already owns a uniform -->
         <div class="collapse show multi-collapse" id="clothesPanel">
             <div class="row">
                 <div class="col jersey-header">
@@ -229,44 +241,43 @@
                     <div class="jersey row">
                         <div class="radio-div col">
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions"
-                                       id="jerSizeYouthSmall"
+                                <input id="jerSizeYouthSmall" class="custom-control-input" type="radio"
+                                       name="jerseyOptions"
                                        value="youth small" required>
                                 <label class="custom-control-label" for="jerSizeYouthSmall">Youth Small</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions"
-                                       id="jerSizeYouthMedium"
+                                <input id="jerSizeYouthMedium" class="custom-control-input" type="radio"
+                                       name="jerseyOptions"
                                        value="youth medium">
                                 <label class="custom-control-label" for="jerSizeYouthMedium">Youth Medium</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions"
-                                       id="jerSizeYouthLarge"
+                                <input id="jerSizeYouthLarge" class="custom-control-input" type="radio"
+                                       name="jerseyOptions"
                                        value="youth large">
                                 <label class="custom-control-label" for="jerSizeYouthLarge">Youth Large</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeSmall"
+                                <input id="jerSizeSmall" class="custom-control-input" type="radio" name="jerseyOptions"
                                        value="small">
                                 <label class="custom-control-label" for="jerSizeSmall">Small</label>
                             </div>
                         </div>
                         <div class="radio-div col">
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeMedium"
+                                <input id="jerSizeMedium" class="custom-control-input" type="radio" name="jerseyOptions"
                                        value="medium">
                                 <label class="custom-control-label" for="jerSizeMedium">Medium</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions" id="jerSizeLarge"
+                                <input id="jerSizeLarge" class="custom-control-input" type="radio" name="jerseyOptions"
                                        value="large">
                                 <label class="custom-control-label" for="jerSizeLarge">Large</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="jerseyOptions"
-                                       id="jerSizeExtraLarge"
-                                       value="extra large">
+                                <input id="jerSizeExtraLarge" class="custom-control-input" type="radio"
+                                       name="jerseyOptions" value="extra large">
                                 <label class="custom-control-label" for="jerSizeExtraLarge">Extra Large</label>
                             </div>
                         </div>
@@ -276,44 +287,40 @@
                     <div class="shorts row">
                         <div class="radio-div col">
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="shortsOptions"
-                                       id="shortsSizeYouthSmall"
-                                       value="youth small" required>
+                                <input id="shortsSizeYouthSmall" class="custom-control-input" type="radio"
+                                       name="shortsOptions" value="youth small" required>
                                 <label class="custom-control-label" for="shortsSizeYouthSmall">Youth Small</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="shortsOptions"
-                                       id="shortsSizeYouthMedium"
-                                       value="youth medium">
+                                <input id="shortsSizeYouthMedium" class="custom-control-input" type="radio"
+                                       name="shortsOptions" value="youth medium">
                                 <label class="custom-control-label" for="shortsSizeYouthMedium">Youth Medium</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="shortsOptions"
-                                       id="shortsSizeYouthLarge"
-                                       value="youth large">
+                                <input id="shortsSizeYouthLarge" class="custom-control-input" type="radio"
+                                       name="shortsOptions" value="youth large">
                                 <label class="custom-control-label" for="shortsSizeYouthLarge">Youth Large</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="shortsOptions" id="shortsSizeSmall"
-                                       value="small">
+                                <input id="shortsSizeSmall" class="custom-control-input" type="radio"
+                                       name="shortsOptions" value="small">
                                 <label class="custom-control-label" for="shortsSizeSmall">Small</label>
                             </div>
                         </div>
                         <div class="radio-div col">
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="shortsOptions" id="shortsSizeMedium"
-                                       value="medium">
+                                <input id="shortsSizeMedium" class="custom-control-input" type="radio"
+                                       name="shortsOptions" value="medium">
                                 <label class="custom-control-label" for="shortsSizeMedium">Medium</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="shortsOptions" id="shortsSizeLarge"
-                                       value="large">
+                                <input id="shortsSizeLarge" class="custom-control-input" type="radio"
+                                       name="shortsOptions" value="large">
                                 <label class="custom-control-label" for="shortsSizeLarge">Large</label>
                             </div>
                             <div class="custom-control custom-radio custom-control">
-                                <input class="custom-control-input" type="radio" name="shortsOptions"
-                                       id="shortsSizeExtraLarge"
-                                       value="extra large">
+                                <input id="shortsSizeExtraLarge" class="custom-control-input" type="radio"
+                                       name="shortsOptions" value="extra large">
                                 <label class="custom-control-label" for="shortsSizeExtraLarge">Extra Large</label>
                             </div>
                         </div>
@@ -342,11 +349,13 @@
             <div class="form-row">
                 <div class="col">
                     <label for="parentFullName">Full name of parent/guardian</label>
-                    <input type="text" class="form-control" id="parentFullName" placeholder="John" required>
+                    <input id="parentFullName" type="text" class="form-control" placeholder="John" name="parentFullName"
+                           required>
                 </div>
                 <div class="col">
                     <label for="currentDate">Date</label>
-                    <input type="text" class="form-control" id="currentDate" placeholder="12/12/2019" required disabled>
+                    <input id="currentDate" type="text" class="form-control" placeholder="12/12/2019" name="currentDate"
+                           required readonly>
                 </div>
             </div>
         </div>
@@ -357,22 +366,7 @@
 </main>
 <script src="scripts/validate.js"></script>
 <script src="scripts/dateformat.js"></script>
-<script>
-    window.onscroll = () => scrollFunction();
-
-    function scrollFunction() {
-      let header = document.getElementById("header");
-      let headerImage = document.getElementById("headerImage");
-
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        header.style.height = "0px";
-        headerImage.style.height = "0px";
-      } else {
-       header.style.height = "200px";
-       headerImage.style.height = "200px";
-     }
-   }
-</script>
+<script src="scripts/smallscroll.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
