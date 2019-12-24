@@ -4,7 +4,7 @@ function scrollFunction() {
     let header = document.getElementById("header");
     let headerImage = document.getElementById("headerImage");
     console.log(document.body.clientHeight)
-    if (document.body.clientHeight > 1100) {
+    if (document.body.clientHeight > 1250) {
         if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
             header.style.height = "0px";
             headerImage.style.height = "0px";

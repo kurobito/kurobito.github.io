@@ -7,9 +7,9 @@
     // Loop over them and prevent submission
     var validation = Array.prototype.filter.call(forms, function(form) {
     	form.addEventListener('submit', function(event) {
-    		validate(form.elements)
-    		if (form.checkValidity() && document.getElementById('registration')) {
-    			// showAlert();
+    		validate(form.elements);
+    		if (form.checkValidity()) {
+    			document.getElementById("mail-anim").style.display = "block"; // show anim if form valid
     		}else{
     			event.preventDefault();
     			event.stopPropagation();
@@ -27,7 +27,7 @@ function showAlert(){
 }
 
 function validate(formElements){
-	console.log(formElements.length)
+	// console.log(formElements.length)
 	for (let i = 0; i < formElements.length; i++) {
 		switch(formElements[i].id){
 			case 'inputBDay':

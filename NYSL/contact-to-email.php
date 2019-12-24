@@ -32,7 +32,7 @@ $_POST['inputMessage'];
 			<li><a href="gameinfo.html">Game Information</a></li>
 			<li><a href="rules.html">Rules</a></li>
 			<li><a href="registration.html">Registration</a></li>
-			<li><a class="active" href="#contact">Contact</a></li>
+			<li><a class="active" href="contact.html">Contact</a></li>
 		</ul>
 	</nav>
 
@@ -54,7 +54,7 @@ $_POST['inputMessage'];
 					}else{
 						echo('Something went wrong, please try again.');
 					}
-					?>
+					?> 
 				</h3>
 				<hr class="mt-4 mb-4">
 				<div class="row">
@@ -91,7 +91,7 @@ $_POST['inputMessage'];
 		</section>
 	</section>
 </main>
-<script src="scripts/smallscroll.js">
+<script src="scripts/scroll.js">
 
 </script>
 </body>

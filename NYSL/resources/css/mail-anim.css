@@ -1,0 +1,76 @@
+.animation-container, .animation-container div{display: block;position: absolute}
+
+#mail-anim{
+  height: 100px;
+  display: none;
+}
+
+.envelope{
+  position: absolute;
+  animation: left-to-right 1s infinite,
+  flicker 0.4s infinite;
+  margin-top: 30px;
+}
+.animation-container {
+  width: 100px;
+  height: 50px;
+  top:60%;
+  left:30%;
+  animation: rotate 3s infinite;
+  margin-left: 100px;
+  margin-top: -8px;
+}
+
+.mail-rectangle{
+  width: 100px;
+  height: 50px;
+  top: 50px;
+  border-radius: 10px;
+  background-color: #7cc633;
+}
+
+.mail-divider-left{
+  width: 58px;
+  height: 5px;
+  left: -5px;
+  top:70px;
+  background-color: white;
+  transform: rotate(20deg);
+}
+
+.mail-divider-right{
+  width: 58px;
+  height: 5px;
+  right: -5px;
+  top:70px;
+  background-color: white;
+  transform: rotate(-20deg);
+}
+
+@keyframes rotate {
+  0{transform: rotate(0deg);}
+  25%{transform: rotate(90deg);margin: 14px 0px 0px 150px;}
+  50%{transform: rotate(180deg);margin: 92px 0px 0px 100px;}
+  75%{transform: rotate(270deg);margin: 14px 0px 0px 50px;}
+  100%{transform: rotate(360deg);}
+}
+
+@keyframes left-to-right{
+  0%{left: 5%;}
+  50%{left:80%;}
+  100%{left:5%; }
+}
+
+@keyframes party{
+  0% {color: #45a3e5;}
+  30% {color: #66bf39;}
+  60% {color: #eb670f;}
+  90% {color: #f35;}
+  100% {color: #864cbf;}
+}
+
+@keyframes flicker{
+  0%{opacity: 1;}
+  50%{opacity: 0;}
+  100%{opacity: 1;}
+}

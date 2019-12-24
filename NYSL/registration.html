@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="./resources/css/style.css" type="text/css" rel="stylesheet">
+    <link href="./resources/css/registration.css" type="text/css" rel="stylesheet">
+
+</head>
+<body>
+    <header class="header" id="header">
+        <a href="index.html"><img id="headerImage" src="resources/image.png"></a>
+    </header>
+    <nav class="nav">
+        <ul class="nav_items">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About NYSL</a></li>
+            <li><a href="gameinfo.html">Game Information</a></li>
+            <li><a href="rules.html">Rules</a></li>
+            <li><a class="active" href="#registration">Registration</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <main id="registration">
+        <h4 class="mb-3">Player Registration</h4>
+        <form class="needs-validation" novalidate method="post" action="register-to-email.php">
+            <div class="form-row">
+                <div class="col">
+                    <label for="playerFirstName">Player's first name</label>
+                    <input type="text" id="playerFirstName" class="form-control" placeholder="John" name="playerFirstName"
+                    required>
+                </div>
+                <div class="col">
+                    <label for="playerLastName">Last Name</label>
+                    <input type="text" id="playerLastName" class="form-control" placeholder="Doe" name="playerLastName"
+                    required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <label for="inputStreet">Street Address</label>
+                    <input type="text" id="inputStreet" class="form-control" placeholder="" name="inputStreet" required>
+                </div>
+                <div class="col">
+                    <label>City</label>
+                    <input type="text" id="inputCity" class="form-control" name="inputCity" required>
+                </div>
+                <div class="col">
+                    <label>Zip Code</label>
+                    <input type="text" id="inputZipCode" class="form-control" name="inputZipCode" required>
+                    <div id="invalidZipCode" class="invalid-feedback"></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <label for="inputBDay">Birth Date</label>
+                    <input type="text" id="inputBDay" class="form-control" name="inputBDay" placeholder="mm/dd/yyyy"
+                    required>
+                    <div id="invalidBDay" class="invalid-feedback"></div>
+                </div>
+                <div class="col">
+                    <label>Gender</label>
+                    <div class="radio-div">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input id="inputMale" class="custom-control-input" type="radio" name="genderOptions"
+                            value="male" required>
+                            <label class="custom-control-label" for="inputMale">Male</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input id="inputFemale" class="custom-control-input" type="radio" name="genderOptions"
+                            value="female">
+                            <label class="custom-control-label" for="inputFemale">Female</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <label>Grade</label>
+                    <div class="radio-div">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input id="inputGrade" class="custom-control-input" type="radio" name="gradeOptions"
+                            value="Pre-school" required>
+                            <label class="custom-control-label" for="inputGrade">Pre-school</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input id="inputGrade1" class="custom-control-input" type="radio" name="gradeOptions"
+                            value="1st">
+                            <label class="custom-control-label" for="inputGrade1">1st</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input id="inputGrade2" class="custom-control-input" type="radio" name="gradeOptions"
+                            value="2nd">
+                            <label class="custom-control-label" for="inputGrade2">2nd</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input id="inputGrade3" class="custom-control-input" type="radio" name="gradeOptions"
+                            value="3rd">
+                            <label class="custom-control-label" for="inputGrade3">3rd</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input id="inputGrade4" class="custom-control-input" type="radio" name="gradeOptions"
+                            value="4th">
+                            <label class="custom-control-label" for="inputGrade4">4th</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input id="inputGrade5" class="custom-control-input" type="radio" name="gradeOptions"
+                            value="5th">
+                            <label class="custom-control-label" for="inputGrade5">5th</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <label>Parent/Guardian</label>
+                    <input id="inputParent" type="text" class="form-control" name="inputParent" required>
+                </div>
+                <div class="col">
+                    <label>Contact Phone</label>
+                    <input id="inputPhone" type="tel" class="form-control" name="inputPhone" required>
+                    <div id="invalidPhone" class="invalid-feedback"></div>
+                </div>
+                <div class="col">
+                    <label>Contact Email</label>
+                    <input id="inputEmail" type="email" class="form-control" name="inputEmail" required>
+                    <div id="invalidEmail" class="invalid-feedback"></div>
+                </div>
+            </div>
+            <h5 class="">Elementary schools near you</h5>
+            <div class="form-row">
+                <div class="col">
+                    <label>First closest school</label>
+                    <select class="custom-select custom-select-sm" name="firstClosestSchool">
+                        <option selected value="AJ Katzenmaier Elementary">AJ Katzenmaier Elementary</option>
+                        <option value="Greenbay Elementary">Greenbay Elementary</option>
+                        <option value="Howard A Yeager Elementary">Howard A Yeager Elementary</option>
+                        <option value="Marjorie P Hart Elementary">Marjorie P Hart Elementary</option>
+                        <option value="North Elementary">North Elementary</option>
+                        <option value="South Elementary">South Elementary</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label>Second closest school</label>
+                    <select class="custom-select custom-select-sm" name="secondClosestSchool">
+                        <option selected value="AJ Katzenmaier Elementary">AJ Katzenmaier Elementary</option>
+                        <option value="Greenbay Elementary">Greenbay Elementary</option>
+                        <option value="Howard A Yeager Elementary">Howard A Yeager Elementary</option>
+                        <option value="Marjorie P Hart Elementary">Marjorie P Hart Elementary</option>
+                        <option value="North Elementary">North Elementary</option>
+                        <option value="South Elementary">South Elementary</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <label>What position(s) do you normally play? (check all that apply)</label>
+                    <div class="checkbox-div">
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <input id="usualPositionForward" class="custom-control-input" type="checkbox"
+                            name="usualPositionOptions[]"
+                            value="forward">
+                            <label class="custom-control-label" for="usualPositionForward">Forward</label>
+                        </div>
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <input id="usualPositionDefense" class="custom-control-input" type="checkbox"
+                            name="usualPositionOptions[]"
+                            value="defense">
+                            <label class="custom-control-label" for="usualPositionDefense">Defense</label>
+                        </div>
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <input id="usualPositionMidfield" class="custom-control-input" type="checkbox"
+                            name="usualPositionOptions[]"
+                            value="midfield">
+                            <label class="custom-control-label" for="usualPositionMidfield">Midfield</label>
+                        </div>
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <input id="usualPositionGoalkeeper" class="custom-control-input" type="checkbox"
+                            name="usualPositionOptions[]"
+                            value="goalkeeper">
+                            <label class="custom-control-label" for="usualPositionGoalkeeper">Goalkeeper</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <label>What position(s) do you want to play? (check all that apply)</label>
+                    <div class="checkbox-div">
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <input id="wantPositionForward" class="custom-control-input" type="checkbox"
+                            name="wantPositionOptions[]"
+                            value="forward">
+                            <label class="custom-control-label" for="wantPositionForward">Forward</label>
+                        </div>
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <input id="wantPositionDefense" class="custom-control-input" type="checkbox"
+                            name="wantPositionOptions[]"
+                            value="defense">
+                            <label class="custom-control-label" for="wantPositionDefense">Defense</label>
+                        </div>
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <input id="wantPositionMidfield" class="custom-control-input" type="checkbox"
+                            name="wantPositionOptions[]"
+                            value="midfield">
+                            <label class="custom-control-label" for="wantPositionMidfield">Midfield</label>
+                        </div>
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <input id="wantPositionGoalkeeper" class="custom-control-input" type="checkbox"
+                            name="wantPositionOptions[]"
+                            value="goalkeeper">
+                            <label class="custom-control-label" for="wantPositionGoalkeeper">Goalkeeper</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Refreshing causes issues, if ownUniform is checked the site does not update that clothesPanel should collapse -->
+            <hr class="hr hr-uniform-top">
+            <div class="form-row" id="clothesPanelHeader">
+                <div class="col">
+                    <div class="custom-control custom-checkbox custom-control-inline clothes-panel">
+                        <input id="ownUniform" class="custom-control-input" type="checkbox" name="ownUniform">
+                        <label class="custom-control-label" for="ownUniform"
+                        data-toggle="collapse" data-target=".multi-collapse"
+                        aria-controls="clothesPanel">I already own a uniform</label>
+                    </div>
+                </div>
+            </div>
+            <hr class="hr hr-uniform-bottom">
+
+            <!-- Make not required when player already owns a uniform -->
+            <div class="collapse show multi-collapse" id="clothesPanel">
+                <div class="row">
+                    <div class="col jersey-header">
+                        <label>Jersey size</label>
+                    </div>
+                    <div class="col shorts-header">
+                        <label>Shorts size</label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <div class="jersey row">
+                            <div class="radio-div col">
+                                <div class="custom-control custom-radio custom-control">
+                                    <input id="jerSizeYouthSmall" class="custom-control-input" type="radio"
+                                    name="jerseyOptions"
+                                    value="youth small" required>
+                                    <label class="custom-control-label" for="jerSizeYouthSmall">Youth Small</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control">
+                                    <input id="jerSizeYouthMedium" class="custom-control-input" type="radio"
+                                    name="jerseyOptions"
+                                    value="youth medium">
+                                    <label class="custom-control-label" for="jerSizeYouthMedium">Youth Medium</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control">
+                                    <input id="jerSizeYouthLarge" class="custom-control-input" type="radio"
+                                    name="jerseyOptions"
+                                    value="youth large">
+                                    <label class="custom-control-label" for="jerSizeYouthLarge">Youth Large</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control">
+                                    <input id="jerSizeSmall" class="custom-control-input" type="radio" name="jerseyOptions"
+                                    value="small">
+                                    <label class="custom-control-label" for="jerSizeSmall">Small</label>
+                                </div>
+                            </div>
+                            <div class="radio-div col">
+                                <div class="custom-control custom-radio custom-control">
+                                    <input id="jerSizeMedium" class="custom-control-input" type="radio" name="jerseyOptions"
+                                    value="medium">
+                                    <label class="custom-control-label" for="jerSizeMedium">Medium</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control">
+                                    <input id="jerSizeLarge" class="custom-control-input" type="radio" name="jerseyOptions"
+                                    value="large">
+                                    <label class="custom-control-label" for="jerSizeLarge">Large</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control">
+                                    <input id="jerSizeExtraLarge" class="custom-control-input" type="radio"
+                                    name="jerseyOptions" value="extra large">
+                                    <label class="custom-control-label" for="jerSizeExtraLarge">Extra Large</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="shorts row">
+                            <div class="radio-div col">
+                                <div class="custom-control custom-radio custom-control">
+                                    <input id="shortsSizeYouthSmall" class="custom-control-input" type="radio"
+                                    name="shortsOptions" value="youth small" required>
+                                    <label class="custom-control-label" for="shortsSizeYouthSmall">Youth Small</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control">
+                                    <input id="shortsSizeYouthMedium" class="custom-control-input" type="radio"
+                                    name="shortsOptions" value="youth medium">
+                                    <label class="custom-control-label" for="shortsSizeYouthMedium">Youth Medium</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control">
+                                    <input id="shortsSizeYouthLarge" class="custom-control-input" type="radio"
+                                    name="shortsOptions" value="youth large">
+                                    <label class="custom-control-label" for="shortsSizeYouthLarge">Youth Large</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control">
+                                    <input id="shortsSizeSmall" class="custom-control-input" type="radio"
+                                    name="shortsOptions" value="small">
+                                    <label class="custom-control-label" for="shortsSizeSmall">Small</label>
+                                </div>
+                            </div>
+                            <div class="radio-div col">
+                                <div class="custom-control custom-radio custom-control">
+                                    <input id="shortsSizeMedium" class="custom-control-input" type="radio"
+                                    name="shortsOptions" value="medium">
+                                    <label class="custom-control-label" for="shortsSizeMedium">Medium</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control">
+                                    <input id="shortsSizeLarge" class="custom-control-input" type="radio"
+                                    name="shortsOptions" value="large">
+                                    <label class="custom-control-label" for="shortsSizeLarge">Large</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control">
+                                    <input id="shortsSizeExtraLarge" class="custom-control-input" type="radio"
+                                    name="shortsOptions" value="extra large">
+                                    <label class="custom-control-label" for="shortsSizeExtraLarge">Extra Large</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="hr mb-5 mt-5 multi-collapse collapse show">
+            <div>
+                <h6>Permission to play</h6>
+                <p>I, the parent or guardian of the minor registrant, agree that the registrant and I will abide by all the
+                    rules of the Nortside Youth Soccer League(NYSL). In recognizing the possibility of physical injury
+                    associated
+                    with soccer and in consideration for the "League" accepting the registrant for its soccer programs and
+                    activities,
+                    I hereby release, discharge, and/or otherwise indemnify NYSL, their employees and associated personnel
+                    and volunteers,
+                    including the facilities used for practice and games, against any claim by or on behalf of the
+                    registrant as a
+                    result of the registrant's participation in the program and/or being transported to or from NYSL
+                sponsored activities, which transportation.</p>
+                <p>By signing below, I hereby agree and authorize the above, in addition, by signing below, I also
+                    acknowledge
+                that I have read the cancellation policy and agree to it's terms</p>
+                <div class="form-row">
+                    <div class="col">
+                        <label for="parentFullName">Full name of parent/guardian</label>
+                        <input id="parentFullName" type="text" class="form-control" placeholder="John" name="parentFullName"
+                        required>
+                    </div>
+                    <div class="col">
+                        <label for="currentDate">Date</label>
+                        <input id="currentDate" type="text" class="form-control" placeholder="12/12/2019" name="currentDate"
+                        required readonly>
+                    </div>
+                </div>
+            </div>
+            <hr class="hidden mt-4 mb-4">
+            <button type="submit" class="btn btn-primary" id="registerButton">Register</button>
+        </form>
+        <div id="mail-anim">
+            <div class="animation-container" style="display: none">
+              <div class="mail-rectangle"></div>
+              <div class="mail-divider-left"></div>
+              <div class="mail-divider-right"></div>
+          </div>
+          <div class="ground"></div>
+      </div>
+  </main>
+  <script src="scripts/validate.js"></script>
+  <script src="scripts/dateformat.js"></script>
+  <script src="scripts/scroll.js"></script>
+  <script>
+    let button = document.getElementById("registerButton");
+    button.onclick = () =>{
+        document.getElementById("mail-anim").display = "block"
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+crossorigin="anonymous"></script>
+</body>
+</html>

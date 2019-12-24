@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NYSL</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="./resources/css/index.css" type="text/css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body class="bg-secondary">
+<div w3-include-html="navbar.html"></div>
+<main role="main" class="inner cover bg-light pt-3 mt-5">
+    <h1 class="cover-heading text-center">Congress 116 - Senate </h1>
+    <p class="lead text-center">First convened in 1789, the composition and powers of the Senate are established in
+        Article
+        One of the U.S. Constitution. Each state is represented by two senators, regardless of
+        population, who serve staggered six-year terms. The Senate has several exclusive powers not
+        granted to the House, including consenting to treaties as a precondition to their ratification
+        and consenting to or confirming appointments of Cabinet secretaries, federal judges, other
+        federal executive officials, military officers, regulatory officials, ambassadors, and other
+        federal uniformed officers, as well as trial of federal officials impeached by the House.</p>
+    <hr class="my-4">
+    <div id="app">
+        <div class="row py-5">
+            <div class="col-12 ">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="partyFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Filter by party
+                    </button>
+                    <div class="dropdown-menu px-2" aria-labelledby="partyFilter">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck2">
+                            <label class="custom-control-label" for="customCheck2">Check this custom checkbox</label>
+                        </div>
+                    </div>
+                </div>
+                <form class="form-inline my-2 my-lg-0 float-right">
+                    <input id="searchByName" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" v-model="searchQuery">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <div class="row pb-4">
+            <div class="col-12">
+                <div class="card-columns">
+                    <congress-member-card
+                            v-for="member in congressMembers"
+                            v-bind:key="member.id"
+                            v-bind:member="member">
+                    </congress-member-card>
+                        <!-- Congress member template -->
+<!--                    <div class="card" style="width: 18rem;">-->
+<!--                        <h5 class="card-header">{{ message }}</h5>-->
+<!--                        <ul class="list-group list-group-flush">-->
+<!--                            <li class="list-group-item senator-name"></li>-->
+<!--                            <li class="list-group-item party">Party: D</li>-->
+<!--                            <li class="list-group-item state">State:</li>-->
+<!--                            <li class="list-group-item seniority">Seniority:</li>-->
+<!--                            <li class="list-group-item party-votes">Party Votes:</li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script src="scripts/getCongressMembers.js" defer></script>
+<script src="scripts/include.js"></script>
+
+</body>
+</html>

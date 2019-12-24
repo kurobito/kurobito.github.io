@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NYSL</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="./resources/css/style.css" type="text/css" rel="stylesheet">
+    <link href="./resources/css/home.css" type="text/css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/6959a909c1.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html"><img src="resources/image.png"></a>
+    </header>
+    <nav class="nav">
+        <ul class="nav_items">
+            <li><a class="active" href="index.html">Home</a></li>
+            <li><a href="about.html">About NYSL</a></li>
+            <li><a href="gameinfo.html">Game Information</a></li>
+            <li><a href="rules.html">Rules</a></li>
+            <li><a href="registration.html">Registration</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <button id="authorize_button" style="display: none;">Authorize</button>
+    <button id="signout_button" style="display: none;">Sign Out</button>
+    <main>
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <span class="calender-ico fas fa-calendar"></span>&nbsp;
+                Calendar Events
+            </h3>
+        </div>
+        <div class="panel-body" id="content">
+          <ul class="media-list" id="eventList">
+
+          </ul>
+         <!-- <a href="#" class="btn btn-default btn-block">More Events »</a> -->
+      </div>
+  </div>
+</main>
+<script type="text/javascript" src="scripts/calendar.js">
+
+</script>
+<script async defer src="https://apis.google.com/js/api.js"
+onload="this.onload=function(){};handleClientLoad()"
+onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script>
+</body>
+</html>

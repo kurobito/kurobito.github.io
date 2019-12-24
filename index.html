@@ -4,50 +4,69 @@
     <meta charset="UTF-8">
     <title>NYSL</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href="./resources/css/style.css" type="text/css" rel="stylesheet">
-    <link href="./resources/css/home.css" type="text/css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/6959a909c1.js" crossorigin="anonymous"></script>
+    <link href="./resources/css/index.css" type="text/css" rel="stylesheet">
 </head>
-<body>
-    <header class="header">
-        <a href="index.html"><img src="resources/image.png"></a>
-    </header>
-    <nav class="nav">
-        <ul class="nav_items">
-            <li><a class="active" href="index.html">Home</a></li>
-            <li><a href="about.html">About NYSL</a></li>
-            <li><a href="gameinfo.html">Game Information</a></li>
-            <li><a href="rules.html">Rules</a></li>
-            <li><a href="registration.html">Registration</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="form-page.html">test</a></li>
-        </ul>
-    </nav>
-    <!--Add buttons to initiate auth sequence and sign out-->
-    <button id="authorize_button" style="display: none;">Authorize</button>
-    <button id="signout_button" style="display: none;">Sign Out</button>
-    <main>
-        <div class="panel panel-danger">
-            <div class="panel-heading">
-              <h3 class="panel-title">
-                <span class="calender-ico fas fa-calendar"></span>&nbsp;
-                Calendar Events
-            </h3>
+<body class="text-center bg-secondary">
+<div w3-include-html="navbar.html"></div>
+<div class="cover-container d-flex h-100 px-3 mx-auto mt-5 flex-column">
+    <main role="main" class="inner cover bg-light pt-3">
+        <h1 class="cover-heading">About Us</h1>
+        <p class="lead">Openness, accountability, and honesty define government transparency. In a free society,
+            transparency is government's obligation to share information with citizens. It is at the heart of
+            how citizens hold their public officials accountable. Here at USA Open Gov we believe that
+            government should be transparent.</p>
+        <p class="lead">Governments exist to serve the people. Information on how officials conduct the public
+            business and spend taxpayer money must be readily available and easily understood. This
+            transparency allows good and just governance. Transparency promotes accountability and
+            provides information for citizens about what their Government is doing.
+        </p>
+        <p class="lead">We also believe that government should be participatory. Public engagement enhances the
+            Government's effectiveness and improves the quality of its decisions. Knowledge is widely
+            dispersed in society, and public officials benefit from having access to that dispersed
+            knowledge. We invite you to use our site to become actively engaged in American
+            government.
+        </p>
+        <p class="lead">USA Open Gov works to disclose information in forms that the public can readily find and
+            use. We solicit public feedback to identify information of greatest use to the public.
+        </p>
+        <div class="collapse" id="moreText">
+            <p class="lead">Background History of Government Transparency
+                In the West, the idea that government should be open to public scrutiny and susceptible to
+                public opinion dates back at least to the time of the Enlightenment, when many philosophes
+                made an attack on absolutist doctrine of state secrecy, a core part of their intellectual project.
+                The passage of formal legislative instruments to this end can also be traced to this time with
+                Sweden, for example, (which then included Finland as a Swedish-governed territory)
+                enacting free press legislation as part of its constitution (Freedom of the Press Act, 1766).
+                This approach, and that of the philosophes more broadly, is strongly related to recent
+                historiography on the eighteenth-century public sphere.
+            </p>
+            <p class="lead">Influenced by Enlightenment thought, the revolutions in America (1776) and France (1789),
+                freedom of the press enshrined provisions and requirements for public budgetary accounting
+                and freedom of the press in constitutional articles. In the nineteenth century, attempts by
+                Metternichean statesmen to row back on these measures were vigorously opposed by a
+                number of eminent liberal politicians and writers, Bentham, Mill and Acton prominent among
+                the latter.
+            </p>
+            <p class="lead">Open government is widely seen to be a key hallmark of contemporary democratic practice
+                and is often linked to the passing of freedom of information legislation. Scandinavian
+                countries claim to have adopted the first freedom of information legislation, dating the origins
+                of its modern provisions to the eighteenth century and Finland continuing the presumption of
+                openness after gaining independence in 1917, passing its Act on Publicity of Official
+                Documents in 1951 (superseded by new legislation in 1999).
+                The United States passed its Freedom of Information Act (FOIA) in 1966, FOIAs, Access to
+                Information Acts (AIAs) or equivalent laws were passed in Denmark and Norway in 1970.
+            </p>
         </div>
-        <div class="panel-body" id="content">
-          <ul class="media-list" id="eventList">
-
-          </ul>
-         <!-- <a href="#" class="btn btn-default btn-block">More Events »</a> -->
-      </div>
-  </div>
-</main>
-<script type="text/javascript" src="scripts/calendar.js">
-
-</script>
-<script async defer src="https://apis.google.com/js/api.js"
-onload="this.onload=function(){};handleClientLoad()"
-onreadystatechange="if (this.readyState === 'complete') this.onload()">
-</script>
+        <p class="lead">
+            <a href="#moreText" id="moreTextButton" class="btn btn-lg btn-secondary" data-toggle="collapse" role="button" aria-expanded="false"
+               aria-controls="moreText">Read more</a>
+        </p>
+    </main>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="scripts/readCollapse.js"></script>
+<script src="scripts/include.js"></script>
 </body>
 </html>
