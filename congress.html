@@ -5,11 +5,58 @@
     <title>NYSL</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href="./resources/css/index.css" type="text/css" rel="stylesheet">
+    <link href="./resources/css/styles.css" type="text/css" rel="stylesheet">
+    <link href="./resources/css/congress.css" type="text/css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body class="bg-secondary">
-<div w3-include-html="navbar.html"></div>
+<header class="header">
+    <nav id="navbar" class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+        <a class="navbar-brand" href="./index.html">USA Open Gov</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li id="home" class="nav-item">
+                    <a id="homeLink" class="nav-link" href="./index.html">Home <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li id="congressListItem" class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false" href="#" id="congressDropdownMenuLink">
+                        Congress 116
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="congressDropdownMenuLink">
+                        <a id="congressSenate" class="dropdown-item" href="?senate">Senate</a>
+                        <a id="congressHouse" class="dropdown-item" href="?house">House</a>
+                    </div>
+                </li>
+                <li id="attendanceListItem" class="nav-item dropdown ">
+                    <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false" href="#" id="attendanceDropdownMenuLink">
+                        Attendance
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="attendanceDropdownMenuLink">
+                        <a id="attendanceSenate" class="dropdown-item" href="#">Senate</a>
+                        <a id="attendanceHouse" class="dropdown-item" href="#">House</a>
+                    </div>
+                </li>
+                <li id="partyLoyaltyListItem" class="nav-item dropdown ">
+                    <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false" href="#" id="partyLoyaltyDropdownMenuLink">
+                        Party Loyalty
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="partyLoyaltyDropdownMenuLink">
+                        <a id="partyLoyaltySenate" class="dropdown-item" href="#">Senate</a>
+                        <a id="partyLoyaltyHouse" class="dropdown-item" href="#">House</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
 <main role="main" class="inner cover bg-light pt-3 mt-5">
     <h1 class="cover-heading text-center">Congress 116 - Senate </h1>
     <p class="lead text-center">First convened in 1789, the composition and powers of the Senate are established in
@@ -23,49 +70,69 @@
     <hr class="my-4">
     <div id="app">
         <div class="row py-5">
-            <div class="col-12 ">
+            <div class="col-3 my-auto">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="partyFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="partyFilter"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Filter by party
                     </button>
                     <div class="dropdown-menu px-2" aria-labelledby="partyFilter">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="customCheck2">
-                            <label class="custom-control-label" for="customCheck2">Check this custom checkbox</label>
-                        </div>
+                        <form id="filterByParty">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="filterRepublican"
+                                       name="partyFilters[]" value="R">
+                                <label class="custom-control-label no-select" for="filterRepublican">Republican</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="filterDemocrat"
+                                       name="partyFilters[]" value="D">
+                                <label class="custom-control-label no-select" for="filterDemocrat">Democrat</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="filterIndependent"
+                                       name="partyFilters[]" value="ID">
+                                <label class="custom-control-label no-select"
+                                       for="filterIndependent">Independent</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="filterAll" checked>
+                                <label class="custom-control-label no-select" for="filterAll">Select All</label>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
+            </div>
+            <div class="col-9">
                 <form class="form-inline my-2 my-lg-0 float-right">
-                    <input id="searchByName" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" v-model="searchQuery">
+                    <input id="searchByName" class="form-control mr-sm-2" type="text" placeholder="Search"
+                           aria-label="Search" v-model="searchQuery">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>
         </div>
         <div class="row pb-4">
-            <div class="col-12">
-                <div class="card-columns">
-                    <congress-member-card
-                            v-for="member in congressMembers"
-                            v-bind:key="member.id"
-                            v-bind:member="member">
-                    </congress-member-card>
-                        <!-- Congress member template -->
-<!--                    <div class="card" style="width: 18rem;">-->
-<!--                        <h5 class="card-header">{{ message }}</h5>-->
-<!--                        <ul class="list-group list-group-flush">-->
-<!--                            <li class="list-group-item senator-name"></li>-->
-<!--                            <li class="list-group-item party">Party: D</li>-->
-<!--                            <li class="list-group-item state">State:</li>-->
-<!--                            <li class="list-group-item seniority">Seniority:</li>-->
-<!--                            <li class="list-group-item party-votes">Party Votes:</li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-                </div>
-            </div>
+            <senate-member-card
+                    v-for="senateMember in senateMembers"
+                    v-bind:key="senateMember.id"
+                    v-bind:senate-member="senateMember">
+            </senate-member-card>
+            <house-member-card
+                    v-for="houseMember in houseMembers"
+                    v-bind:key="houseMember.id"
+                    v-bind:house-member="houseMember">
+            </house-member-card>
+            <!-- Congress member template -->
+            <!--                    <div class="card" style="width: 18rem;">-->
+            <!--                        <h5 class="card-header">{{ message }}</h5>-->
+            <!--                        <ul class="list-group list-group-flush">-->
+            <!--                            <li class="list-group-item senator-name"></li>-->
+            <!--                            <li class="list-group-item party">Party: D</li>-->
+            <!--                            <li class="list-group-item state">State:</li>-->
+            <!--                            <li class="list-group-item seniority">Seniority:</li>-->
+            <!--                            <li class="list-group-item party-votes">Party Votes:</li>-->
+            <!--                        </ul>-->
+            <!--                    </div>-->
         </div>
     </div>
 </main>
@@ -78,8 +145,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-<script src="scripts/getCongressMembers.js" defer></script>
 <script src="scripts/include.js"></script>
-
+<script src="scripts/navbar.js" type="module" defer></script>
+<script src="scripts/getCongressMembers.js" type="module" defer></script>
 </body>
 </html>

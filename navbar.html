@@ -1,43 +1,43 @@
 <header class="header">
-    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">USA Open Gov</a>
+    <nav id="navbar" class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+        <a class="navbar-brand" href="./index.html">USA Open Gov</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="./index.html">Home <span class="sr-only">(current)</span></a>
+                <li id="home" class="nav-item">
+                    <a id="homeLink" class="nav-link" href="./index.html">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item dropdown">
+                <li id="congressListItem" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false" href="#" id="congressDropdownMenuLink">
                         Congress 116
                     </a>
                     <div class="dropdown-menu" aria-labelledby="congressDropdownMenuLink">
-                        <a class="dropdown-item" href="./congress.html">Senate</a>
-                        <a class="dropdown-item" href="./congress.html">House</a>
+                        <a id="congressSenate" class="dropdown-item" href="./congress.html">Senate</a>
+                        <a id="congressHouse" class="dropdown-item" href="./congress.html">House</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown ">
+                <li id="attendanceListItem" class="nav-item dropdown ">
                     <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false" href="#" id="attendanceDropdownMenuLink">
                         Attendance
                     </a>
                     <div class="dropdown-menu" aria-labelledby="attendanceDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Senate</a>
-                        <a class="dropdown-item" href="#">House</a>
+                        <a id="attendanceSenate" class="dropdown-item" href="#">Senate</a>
+                        <a id="attendanceHouse" class="dropdown-item" href="#">House</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown ">
+                <li id="partyLoyaltyListItem" class="nav-item dropdown ">
                     <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false" href="#" id="partyLoyaltyDropdownMenuLink">
                         Party Loyalty
                     </a>
                     <div class="dropdown-menu" aria-labelledby="partyLoyaltyDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Senate</a>
-                        <a class="dropdown-item" href="#">House</a>
+                        <a id="partyLoyaltySenate" class="dropdown-item" href="#">Senate</a>
+                        <a id="partyLoyaltyHouse" class="dropdown-item" href="#">House</a>
                     </div>
                 </li>
             </ul>

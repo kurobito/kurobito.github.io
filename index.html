@@ -3,11 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>NYSL</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href="./resources/css/index.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="./resources/css/styles.css" type="text/css" rel="stylesheet">
 </head>
-<body class="text-center bg-secondary">
-<div w3-include-html="navbar.html"></div>
+<body class="text-center bg-secondary index-body">
+<header class="header">
+    <nav id="navbar" class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+        <a class="navbar-brand" href="./index.html">USA Open Gov</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li id="home" class="nav-item active">
+                    <a id="homeLink" class="nav-link" href="./index.html">Home <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li id="congressListItem" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false" href="#" id="congressDropdownMenuLink">
+                        Congress 116
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="congressDropdownMenuLink">
+                        <a id="congressSenate" class="dropdown-item" href="./congress.html?senate">Senate</a>
+                        <a id="congressHouse" class="dropdown-item" href="./congress.html?house">House</a>
+                    </div>
+                </li>
+                <li id="attendanceListItem" class="nav-item dropdown ">
+                    <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false" href="#" id="attendanceDropdownMenuLink">
+                        Attendance
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="attendanceDropdownMenuLink">
+                        <a id="attendanceSenate" class="dropdown-item" href="#">Senate</a>
+                        <a id="attendanceHouse" class="dropdown-item" href="#">House</a>
+                    </div>
+                </li>
+                <li id="partyLoyaltyListItem" class="nav-item dropdown ">
+                    <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false" href="#" id="partyLoyaltyDropdownMenuLink">
+                        Party Loyalty
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="partyLoyaltyDropdownMenuLink">
+                        <a id="partyLoyaltySenate" class="dropdown-item" href="#">Senate</a>
+                        <a id="partyLoyaltyHouse" class="dropdown-item" href="#">House</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
 <div class="cover-container d-flex h-100 px-3 mx-auto mt-5 flex-column">
     <main role="main" class="inner cover bg-light pt-3">
         <h1 class="cover-heading">About Us</h1>
@@ -58,15 +105,23 @@
             </p>
         </div>
         <p class="lead">
-            <a href="#moreText" id="moreTextButton" class="btn btn-lg btn-secondary" data-toggle="collapse" role="button" aria-expanded="false"
+            <a href="#moreText" id="moreTextButton" class="btn btn-lg btn-secondary" data-toggle="collapse"
+               role="button" aria-expanded="false"
                aria-controls="moreText">Read more</a>
         </p>
     </main>
 </div>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 <script src="scripts/readCollapse.js"></script>
-<script src="scripts/include.js"></script>
+<script src="scripts/navbar.js" type="module" defer></script>
+
 </body>
 </html>
