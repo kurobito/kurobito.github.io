@@ -4,10 +4,11 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="3">
+          <list size="4">
             <item index="0" class="java.lang.String" itemvalue="w3-include-html" />
             <item index="1" class="java.lang.String" itemvalue="v-model" />
             <item index="2" class="java.lang.String" itemvalue="onreadystatechange" />
+            <item index="3" class="java.lang.String" itemvalue="v-on:click" />
           </list>
         </value>
       </option>
@@ -16,7 +17,7 @@
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="7">
+          <list size="10">
             <item index="0" class="java.lang.String" itemvalue="nobr" />
             <item index="1" class="java.lang.String" itemvalue="noembed" />
             <item index="2" class="java.lang.String" itemvalue="comment" />
@@ -24,6 +25,9 @@
             <item index="4" class="java.lang.String" itemvalue="embed" />
             <item index="5" class="java.lang.String" itemvalue="script" />
             <item index="6" class="java.lang.String" itemvalue="congress-member-card" />
+            <item index="7" class="java.lang.String" itemvalue="state-checkbox" />
+            <item index="8" class="java.lang.String" itemvalue="senate-member-card" />
+            <item index="9" class="java.lang.String" itemvalue="house-member-card" />
           </list>
         </value>
       </option>

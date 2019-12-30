@@ -5,3 +5,9 @@
 .card{
 	margin-bottom: 1.5rem;
 }
+
+.scrollable-menu{
+	height: auto;
+	max-height: 150px;
+	overflow-x: hidden;
+}

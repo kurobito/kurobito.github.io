@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>NYSL</title>
@@ -8,6 +8,7 @@
     <link href="./resources/css/styles.css" type="text/css" rel="stylesheet">
     <link href="./resources/css/congress.css" type="text/css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://kit.fontawesome.com/6959a909c1.js" crossorigin="anonymous"></script>
 </head>
 <body class="bg-secondary">
 <header class="header">
@@ -70,14 +71,20 @@
     <hr class="my-4">
     <div id="app">
         <div class="row py-5">
-            <div class="col-3 my-auto">
-                <div class="dropdown">
+            <div class="col-4 my-auto">
+                <button id="sortAlphabetically" class="btn btn-secondary d-inline">Sort A to Z &nbsp;<i
+                        class="fas fa-sort-alpha-up"></i></button>
+                <div class="dropdown d-inline">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="partyFilter"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Filter by party
                     </button>
                     <div class="dropdown-menu px-2" aria-labelledby="partyFilter">
                         <form id="filterByParty">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="filterAllParties" checked>
+                                <label class="custom-control-label no-select" for="filterAllParties">Select All</label>
+                            </div>
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="filterRepublican"
                                        name="partyFilters[]" value="R">
@@ -94,16 +101,30 @@
                                 <label class="custom-control-label no-select"
                                        for="filterIndependent">Independent</label>
                             </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="filterAll" checked>
-                                <label class="custom-control-label no-select" for="filterAll">Select All</label>
-                            </div>
                         </form>
-
+                    </div>
+                </div>
+                <div class="dropdown d-inline">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="stateFilter"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Filter by state
+                    </button>
+                    <div class="dropdown-menu scrollable-menu px-2" aria-labelledby="stateFilter">
+                        <form id="filterByState">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="filterAllStates">
+                                <label class="custom-control-label no-select" for="filterAllStates">Select All</label>
+                            </div>
+                            <state-checkbox
+                                    v-for="state in states"
+                                    v-bind:key="state.id"
+                                    v-bind:state="state">
+                            </state-checkbox>
+                        </form>
                     </div>
                 </div>
             </div>
-            <div class="col-9">
+            <div class="col-8">
                 <form class="form-inline my-2 my-lg-0 float-right">
                     <input id="searchByName" class="form-control mr-sm-2" type="text" placeholder="Search"
                            aria-label="Search" v-model="searchQuery">
