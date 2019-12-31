@@ -10,10 +10,6 @@ import {setNavBarLogic} from './navbar.js';
 url = setNavBarLogic(url);
 const chamber = window.location.href.split('?')[1];
 
-const chamberIsSenate = () => {
-	return chamber === 'senate';
-}
-
 // fetch request
 const getCongressData = async (chamber) =>{
 	const request = new Request(url, {method: 'GET', headers: congressHeaders});
@@ -22,13 +18,14 @@ const getCongressData = async (chamber) =>{
 		if(response.ok){
 			const jsonResponse = await response.json();
 			console.log(jsonResponse);
-			if(chamberIsSenate()){
+			if(chamber === 'senate'){
 				senateMembers = jsonResponse.results[0].members;
 				senateMembers.sort(sortMembersByNameAscending);
 				return senateMembers;
 			}else {
 				houseMembers = jsonResponse.results[0].members;
 				houseMembers.sort(sortMembersByNameAscending);
+				console.log(houseMembers)
 				return houseMembers;
 			}
 		}else throw new Error(`${response.status} : ${response.statusText}`)
@@ -49,7 +46,7 @@ function sortMembersByNameDescending(a, b){
 
 // Create component to display a senate member
 let senateMemberCard = Vue.component('senate-member-card', {
-	props: ['senateMember'],
+	props: ['senateMember', 'states', 'getStateName'],
 	template: `<div class="col-sm-6 col-lg-3">
 	<div class="card" style="width: 16rem;">
 	<a v-bind:href="senateMember.url"><h5 class="card-header"> {{ senateMember.first_name }} {{ senateMember.middle_name }} {{ senateMember.last_name }}</h5></a>
@@ -58,7 +55,7 @@ let senateMemberCard = Vue.component('senate-member-card', {
 	<li class="list-group-item party bg-primary text-white" v-else-if="senateMember.party === 'D'">Democrat</li>
 	<li class="list-group-item party bg-info text-white" v-else-if="senateMember.party === 'ID'">Independent</li>
 	<li class="list-group-item party" v-else>Other</li>
-	<li class="list-group-item state">State: {{ senateMember.state }}</li>
+	<li class="list-group-item state">State: {{ getStateName(senateMember.state) }}</li>
 	<li class="list-group-item seniority">Seniority: {{ senateMember.seniority }}</li>
 	<li class="list-group-item party-votes">Party Votes with: {{ senateMember.votes_with_party_pct }}%</li>
 	<li class="list-group-item party-votes">Party Votes against: {{ senateMember.votes_against_party_pct }}%</li>
@@ -67,6 +64,8 @@ let senateMemberCard = Vue.component('senate-member-card', {
 	</div>`
 })
 
+
+
 // Create component to display a house member
 let houseMemberCard = Vue.component('house-member-card', {
 	props: ['houseMember'],
@@ -74,9 +73,9 @@ let houseMemberCard = Vue.component('house-member-card', {
 	<div class="card" style="width: 16rem;">
 	<a v-bind:href="houseMember.url"><h5 class="card-header"> {{ houseMember.first_name }} {{ houseMember.middle_name }} {{ houseMember.last_name }}</h5></a>
 	<ul class="list-group list-group-flush">
-	<li class="list-group-item party" v-if="houseMember.party === 'R'">Republican</li>
-	<li class="list-group-item party" v-else-if="houseMember.party === 'D'">Democrat</li>
-	<li class="list-group-item party" v-else-if="houseMember.party === 'ID' || houseMember.party === 'I'">Independent</li>
+	<li class="list-group-item party bg-danger text-white" v-if="houseMember.party === 'R'">Republican</li>
+	<li class="list-group-item party bg-primary text-white" v-else-if="houseMember.party === 'D'">Democrat</li>
+	<li class="list-group-item party bg-info text-white" v-else-if="houseMember.party === 'ID' || houseMember.party === 'I'">Independent</li>
 	<li class="list-group-item party" v-else>Other</li>
 	<li class="list-group-item state">State: {{ houseMember.state }}</li>
 	<li class="list-group-item state">District: {{ houseMember.district }}</li>
@@ -119,12 +118,22 @@ const app = new Vue({
 		senateMemberCard: senateMemberCard,
 		houseMemberCard: houseMemberCard,
 		stateCheckbox: stateCheckbox
+	},
+	methods: {
+		getStateName(code){
+			// console.log(this.states.map(state => {
+			// 	return state.code
+			// }).indexOf(code))
+			return this.states[this.states.map(state => {
+				return state.code
+			}).indexOf(code)].name;
+		}
 	}
 })
 
 // update vue app
 function updateVue(members){
-	if(chamberIsSenate()){
+	if(chamber === "senate"){
 		app.senateMembers = members;
 	}else{
 		app.houseMembers = members;
@@ -136,18 +145,19 @@ let sortByNameButton = document.getElementById('sortAlphabetically');
 sortByNameButton.onclick = () =>{
 	let sortAtoZString = 'Sort A to Z &nbsp;<i aria-hidden="true" class="fas fa-sort-alpha-up"></i>';
 	let sortZtoAString = 'Sort Z to A &nbsp;<i aria-hidden="true" class="fas fa-sort-alpha-down-alt"></i>'
+	let filteredList = filter(searchByNameInput.value, partyFilterList, stateFilterList);
 	if (sortByNameButton.innerHTML === sortAtoZString) {
 		sortByNameButton.innerHTML = sortZtoAString;
-		senateMembers.sort(sortMembersByNameDescending);
-		updateVue(senateMembers);
+		filteredList.sort(sortMembersByNameDescending);
+		updateVue(filteredList);
 	}else {
 		sortByNameButton.innerHTML = sortAtoZString;
-		senateMembers.sort(sortMembersByNameAscending)
-		updateVue(senateMembers);
+		filteredList.sort(sortMembersByNameAscending)
+		updateVue(filteredList);
 	}
 }
 
-function searchCongressMembers(members, searchQuery){
+function searchCongressMembers(searchQuery, members){
 	let searchedCongressMembers = members.filter(member => {
 		let memberName;
 		if(member.middle_name){
@@ -155,37 +165,54 @@ function searchCongressMembers(members, searchQuery){
 		}else{
 			memberName = `${member.first_name} ${member.last_name}`;
 		}
-		if(memberName.toLowerCase().includes(searchQuery.toLowerCase())) {
-			console.log(memberName);
-			console.log('Found with ' + searchQuery)
-		}else console.log(searchQuery + ' not found');
+		// if(memberName.toLowerCase().includes(searchQuery.toLowerCase())) {
+		// 	console.log(memberName);
+		// 	console.log('Found with ' + searchQuery)
+		// }else console.log(searchQuery + ' not found');
 		return memberName.toLowerCase().includes(searchQuery.toLowerCase());
 	})
 	return searchedCongressMembers;
 }
 
 function filterCongressMembersByParty(partyFilterList, members){
-	let filteredCongressMembers = members.filter(member => {
-		for(let i = 0; i < partyFilterList.length; i++){
+	if (partyFilterList.length > 0) {
+		let filteredCongressMembers = members.filter(member => {
+			for(let i = 0; i < partyFilterList.length; i++){
 			// console.log(`${partyFilterList[i]} === ${member.party} = ${partyFilterList[i] === member.party}`)
 			if (partyFilterList[i] === member.party || partyFilterList[i] === 'I') return member;
 		}
-		if (member.party != 'R' || member.party != 'D' || member.party != 'ID') {
-			console.log(member);
-		}
 	})
-	console.log(filteredCongressMembers);
-	return filteredCongressMembers;
+		// console.log(filteredCongressMembers);
+		return filteredCongressMembers;
+	}else return members;
+}
+
+function filterCongressMembersByState(stateFilterList, members){
+	if (stateFilterList.length > 0) {
+		let filteredCongressMembers = members.filter(member => {
+			for(let i = 0; i < stateFilterList.length; i++){
+				if (stateFilterList[i] === member.state ) return member;
+			}
+		})
+		// console.log(filteredCongressMembers);
+		return filteredCongressMembers;
+	}else return members;
+}
+
+function filter(searchQuery, partyFilterList, stateFilterList){
+	let filteredList;
+	if (chamber === "senate") filteredList = senateMembers;
+	else filteredList = houseMembers;
+	if (searchQuery)filteredList = searchCongressMembers(searchQuery, filteredList);
+	if (partyFilterList.length > 0) filteredList = filterCongressMembersByParty(partyFilterList, filteredList);
+	if (stateFilterList.length > 0) filteredList = filterCongressMembersByState(stateFilterList, filteredList);
+	return filteredList;
 }
 
 // eventListener for search
 let searchByNameInput = document.getElementById('searchByName');
-searchByNameInput.oninput = () =>{
-	if(chamberIsSenate()){
-		updateVue(searchCongressMembers(filterCongressMembersByParty(partyFilterList, senateMembers), searchByName.value));
-	}else{
-		updateVue(searchCongressMembers(filterCongressMembersByParty(partyFilterList, houseMembers), searchByName.value));
-	}
+searchByNameInput.oninput = () => {
+	updateVue(filter(searchByNameInput.value, partyFilterList, stateFilterList));
 }
 
 // eventListener for filter by party
@@ -208,20 +235,10 @@ filterAllParties.onchange = () => {
 	} 
 
 	console.log(partyFilterList);
-	if (chamberIsSenate()) {
-		if (searchByName.value) {
-			updateVue(searchCongressMembers(filterCongressMembersByParty(partyFilterList, senateMembers), searchByName.value));
-		}else{
-			updateVue(filterCongressMembersByParty(partyFilterList, senateMembers));
-		}
-	}else{
-		if (searchByName.value) {
-			updateVue(searchCongressMembers(filterCongressMembersByParty(partyFilterList, houseMembers), searchByName.value));
-		}else{
-			updateVue(filterCongressMembersByParty(partyFilterList, houseMembers));
-		}
-	}
+	updateVue(filter(searchByNameInput.value, partyFilterList, stateFilterList));
 }
+
+// run filter every time a party checkbox's value changes.
 filterByParty.forEach(partyFilter => {
 	partyFilter.onchange = () => {
 		if(partyFilter.checked){
@@ -232,30 +249,49 @@ filterByParty.forEach(partyFilter => {
 		if (partyFilterList.length === filterByParty.length) filterAllParties.checked = true;
 		else filterAllParties.checked = false;
 		console.log(partyFilterList);
-		if (chamberIsSenate()) {
-			if (searchByName.value) {
-				updateVue(searchCongressMembers(filterCongressMembersByParty(partyFilterList, senateMembers), searchByName.value));
-			}else{
-				updateVue(filterCongressMembersByParty(partyFilterList, senateMembers));
-			}
-		}else{
-			if (searchByName.value) {
-				updateVue(searchCongressMembers(filterCongressMembersByParty(partyFilterList, houseMembers), searchByName.value));
-			}else{
-				updateVue(filterCongressMembersByParty(partyFilterList, houseMembers));
-			}
-		}
+		updateVue(filter(searchByNameInput.value, partyFilterList, stateFilterList));
 	}
 })
 
-// let filterByState = document.forms['filterByState'].elements['stateFilters[]'];
+let filterByState = document.forms['filterByState'].elements['stateFilters[]'];
+let filterAllStates = document.getElementById('filterAllStates');
+let stateFilterList = [];
+
+filterAllStates.onchange = () => {
+	if (filterAllStates.checked) {
+		stateFilterList.splice(0); // makes sure the array is always empty before adding all filters
+		filterByState.forEach(stateFilter => {
+			stateFilter.checked = true;
+			stateFilterList.push(stateFilter.value);
+		});
+	}else{
+		filterByState.forEach(stateFilter => {
+			stateFilter.checked = false;
+		});
+		stateFilterList.splice(0); 
+	} 
+	console.log(stateFilterList);
+	updateVue(filter(searchByNameInput.value, partyFilterList, stateFilterList));
+}
+
+filterByState.forEach(stateFilter => {
+	stateFilter.onchange = () => {
+		if (stateFilter.checked) {
+			if (stateFilterList.length < filterByState.length) {
+				stateFilterList.push(stateFilter.value);
+			}
+		}else stateFilterList.splice(stateFilterList.indexOf(stateFilter.value), 1);
+		if (stateFilterList.length === filterByState.length) filterAllStates.checked = true;
+		else filterAllStates.checked = false;
+		// console.log(stateFilterList);
+		updateVue(filter(searchByNameInput.value, partyFilterList, stateFilterList));
+	}
+})
 
 
 const init = async () => {
 	const members = await getCongressData(chamber);
-
 	updateVue(members)
-	filterAllParties.onchange();
 }
 
 setTimeout(init, 500);

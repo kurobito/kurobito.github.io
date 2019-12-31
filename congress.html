@@ -72,6 +72,7 @@
     <div id="app">
         <div class="row py-5">
             <div class="col-4 my-auto">
+                <!--                TODO: make dropdown menu to sort on different properties -->
                 <button id="sortAlphabetically" class="btn btn-secondary d-inline">Sort A to Z &nbsp;<i
                         class="fas fa-sort-alpha-up"></i></button>
                 <div class="dropdown d-inline">
@@ -82,7 +83,7 @@
                     <div class="dropdown-menu px-2" aria-labelledby="partyFilter">
                         <form id="filterByParty">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="filterAllParties" checked>
+                                <input type="checkbox" class="custom-control-input" id="filterAllParties">
                                 <label class="custom-control-label no-select" for="filterAllParties">Select All</label>
                             </div>
                             <div class="custom-control custom-checkbox">
@@ -136,7 +137,9 @@
             <senate-member-card
                     v-for="senateMember in senateMembers"
                     v-bind:key="senateMember.id"
-                    v-bind:senate-member="senateMember">
+                    v-bind:senate-member="senateMember"
+                    v-bind:states="states"
+                    v-bind:get-state-name="getStateName">
             </senate-member-card>
             <house-member-card
                     v-for="houseMember in houseMembers"
