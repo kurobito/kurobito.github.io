@@ -4,11 +4,18 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="4">
+          <list size="11">
             <item index="0" class="java.lang.String" itemvalue="w3-include-html" />
             <item index="1" class="java.lang.String" itemvalue="v-model" />
             <item index="2" class="java.lang.String" itemvalue="onreadystatechange" />
             <item index="3" class="java.lang.String" itemvalue="v-on:click" />
+            <item index="4" class="java.lang.String" itemvalue=":is" />
+            <item index="5" class="java.lang.String" itemvalue="v-for" />
+            <item index="6" class="java.lang.String" itemvalue="v-bind:key" />
+            <item index="7" class="java.lang.String" itemvalue="v-bind:senate-member" />
+            <item index="8" class="java.lang.String" itemvalue="v-bind:states" />
+            <item index="9" class="java.lang.String" itemvalue="v-bind:get-state-name" />
+            <item index="10" class="java.lang.String" itemvalue="v-bind:house-member" />
           </list>
         </value>
       </option>

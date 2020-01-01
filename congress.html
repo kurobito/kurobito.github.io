@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>NYSL</title>
@@ -71,10 +71,21 @@
     <hr class="my-4">
     <div id="app">
         <div class="row py-5">
-            <div class="col-4 my-auto">
+            <div class="col-8 my-auto">
                 <!--                TODO: make dropdown menu to sort on different properties -->
-                <button id="sortAlphabetically" class="btn btn-secondary d-inline">Sort A to Z &nbsp;<i
-                        class="fas fa-sort-alpha-up"></i></button>
+                <div class="dropdown d-inline">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="sortMenuButton"
+                            data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">Sort on first name
+                    </button>
+                    <div class="dropdown-menu " aria-labelledby="sortMenuButton">
+                        <a id="sortFirstName" class="dropdown-item"><i
+                                class="fas fa-sort-alpha-up"></i> Sort on first name</a>
+                        <div class="dropdown-divider"></div>
+                        <a id="sortLastName" class="dropdown-item "><i
+                                class="fas fa-sort-alpha-up"></i> Sort on last name</a>
+                    </div>
+                </div>
                 <div class="dropdown d-inline">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="partyFilter"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -125,7 +136,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-8">
+            <div class="col-4">
                 <form class="form-inline my-2 my-lg-0 float-right">
                     <input id="searchByName" class="form-control mr-sm-2" type="text" placeholder="Search"
                            aria-label="Search" v-model="searchQuery">
@@ -134,18 +145,20 @@
             </div>
         </div>
         <div class="row pb-4">
-            <senate-member-card
-                    v-for="senateMember in senateMembers"
-                    v-bind:key="senateMember.id"
-                    v-bind:senate-member="senateMember"
-                    v-bind:states="states"
-                    v-bind:get-state-name="getStateName">
-            </senate-member-card>
-            <house-member-card
-                    v-for="houseMember in houseMembers"
-                    v-bind:key="houseMember.id"
-                    v-bind:house-member="houseMember">
-            </house-member-card>
+            <div :is="currentSenatorComponent"
+                 v-for="senateMember in senateMembers"
+                 v-bind:key="senateMember.id"
+                 v-bind:senate-member="senateMember"
+                 v-bind:states="states"
+                 v-bind:get-state-name="getStateName">
+            </div>
+            <div :is="currentHouseComponent"
+                 v-for="houseMember in houseMembers"
+                 v-bind:key="houseMember.id"
+                 v-bind:house-member="houseMember"
+                 v-bind:states="states"
+                 v-bind:get-state-name="getStateName">
+            </div>
             <!-- Congress member template -->
             <!--                    <div class="card" style="width: 18rem;">-->
             <!--                        <h5 class="card-header">{{ message }}</h5>-->

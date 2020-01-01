@@ -20,11 +20,11 @@ const getCongressData = async (chamber) =>{
 			console.log(jsonResponse);
 			if(chamber === 'senate'){
 				senateMembers = jsonResponse.results[0].members;
-				senateMembers.sort(sortMembersByNameAscending);
+				senateMembers.sort(sortByFirstNameAscending);
 				return senateMembers;
 			}else {
 				houseMembers = jsonResponse.results[0].members;
-				houseMembers.sort(sortMembersByNameAscending);
+				houseMembers.sort(sortByFirstNameAscending);
 				console.log(houseMembers)
 				return houseMembers;
 			}
@@ -32,24 +32,36 @@ const getCongressData = async (chamber) =>{
 	}catch(e){console.log(e)}
 }
 
-function sortMembersByNameAscending(a, b){
+function sortByFirstNameAscending(a, b){
 	if(a.first_name < b.first_name) return -1;
 	if(a.first_name > b.first_name) return 1;
 	return 0; 
 }
 
-function sortMembersByNameDescending(a, b){
+function sortByFirstNameDescending(a, b){
 	if(a.first_name < b.first_name) return 1;
 	if(a.first_name > b.first_name) return -1;
 	return 0; 
 }
 
+function sortByLastNameAscending(a, b){
+	if(a.last_name < b.last_name) return -1;
+	if(a.last_name > b.last_name) return 1;
+	return 0; 
+}
+
+function sortByLastNameDescending(a, b){
+	if(a.last_name < b.last_name) return 1;
+	if(a.last_name > b.last_name) return -1;
+	return 0; 
+}
+
 // Create component to display a senate member
-let senateMemberCard = Vue.component('senate-member-card', {
+let senateMemberCardFirstName = Vue.component('senate-member-card', {
 	props: ['senateMember', 'states', 'getStateName'],
 	template: `<div class="col-sm-6 col-lg-3">
 	<div class="card" style="width: 16rem;">
-	<a v-bind:href="senateMember.url"><h5 class="card-header"> {{ senateMember.first_name }} {{ senateMember.middle_name }} {{ senateMember.last_name }}</h5></a>
+	<a v-bind:id="senateMember.id" v-bind:href="senateMember.url"><h5 class="card-header"> {{ senateMember.first_name }} {{ senateMember.middle_name }} {{ senateMember.last_name }}</h5></a>
 	<ul class="list-group list-group-flush">
 	<li class="list-group-item party bg-danger text-white" v-if="senateMember.party === 'R'">Republican</li>
 	<li class="list-group-item party bg-primary text-white" v-else-if="senateMember.party === 'D'">Democrat</li>
@@ -64,20 +76,37 @@ let senateMemberCard = Vue.component('senate-member-card', {
 	</div>`
 })
 
-
+let senateMemberCardLastName = Vue.component('senate-member-card', {
+	props: ['senateMember', 'states', 'getStateName'],
+	template: `<div class="col-sm-6 col-lg-3">
+	<div class="card" style="width: 16rem;">
+	<a v-bind:id="senateMember.id" v-bind:href="senateMember.url"><h5 class="card-header"> {{ senateMember.last_name }}, {{ senateMember.first_name }} {{ senateMember.middle_name }}</h5></a>
+	<ul class="list-group list-group-flush">
+	<li class="list-group-item party bg-danger text-white" v-if="senateMember.party === 'R'">Republican</li>
+	<li class="list-group-item party bg-primary text-white" v-else-if="senateMember.party === 'D'">Democrat</li>
+	<li class="list-group-item party bg-info text-white" v-else-if="senateMember.party === 'ID'">Independent</li>
+	<li class="list-group-item party" v-else>Other</li>
+	<li class="list-group-item state">State: {{ getStateName(senateMember.state) }}</li>
+	<li class="list-group-item seniority">Seniority: {{ senateMember.seniority }}</li>
+	<li class="list-group-item party-votes">Party Votes with: {{ senateMember.votes_with_party_pct }}%</li>
+	<li class="list-group-item party-votes">Party Votes against: {{ senateMember.votes_against_party_pct }}%</li>
+	</ul>
+	</div>
+	</div>`
+})
 
 // Create component to display a house member
 let houseMemberCard = Vue.component('house-member-card', {
-	props: ['houseMember'],
+	props: ['houseMember', 'states', 'getStateName'],
 	template: `<div class="col-sm-6 col-lg-3">
 	<div class="card" style="width: 16rem;">
-	<a v-bind:href="houseMember.url"><h5 class="card-header"> {{ houseMember.first_name }} {{ houseMember.middle_name }} {{ houseMember.last_name }}</h5></a>
+	<a v-bind:id="houseMember.id" v-bind:href="houseMember.url"><h5 class="card-header"> {{ houseMember.first_name }} {{ houseMember.middle_name }} {{ houseMember.last_name }}</h5></a>
 	<ul class="list-group list-group-flush">
 	<li class="list-group-item party bg-danger text-white" v-if="houseMember.party === 'R'">Republican</li>
 	<li class="list-group-item party bg-primary text-white" v-else-if="houseMember.party === 'D'">Democrat</li>
 	<li class="list-group-item party bg-info text-white" v-else-if="houseMember.party === 'ID' || houseMember.party === 'I'">Independent</li>
 	<li class="list-group-item party" v-else>Other</li>
-	<li class="list-group-item state">State: {{ houseMember.state }}</li>
+	<li class="list-group-item state">State: {{ getStateName(houseMember.state) }}</li>
 	<li class="list-group-item state">District: {{ houseMember.district }}</li>
 	<li class="list-group-item seniority">Seniority: {{ houseMember.seniority }}</li>
 	<li class="list-group-item party-votes">Party Votes with: {{ houseMember.votes_with_party_pct }}%</li>
@@ -103,6 +132,8 @@ const app = new Vue({
 		houseMembers: [],
 		senateMembers: [],
 		searchQuery: '',
+		currentSenatorComponent: 'senateMemberCardFirstName',
+		currentHouseComponent: 'houseMemberCard',
 		states: [{code: "AK", name: "Alaska"}, {code: "AL", name: "Alabama"}, {code: "AR", name: "Arkansas"}, {code: "AZ", name: "Arizona"}, {code: "CA", name: "California"}
 		,{code: "CO", name: "Colorado"}, {code: "CT", name: "Connecticut"}, {code: "DC", name: "District of Columbia"}, {code: "DE", name: "Delaware"}, {code: "FL", name: "Florida"}
 		,{code: "GA", name: "Georgia"}, {code: "HI", name: "Hawaii"}, {code: "IA", name: "Iowa"}, {code: "ID", name: "Idaho"},{code: "IL", name: "Illinois"}, {code: "IN", name: "Indiana"}
@@ -115,7 +146,8 @@ const app = new Vue({
 		,{code: "VA", name: "Virginia"}, {code: "WA", name: "Washington"}, {code: "WV", name: "West Virginia"}, {code: "WI", name: "Wisconsin"}, {code: "WY", name: "Wyoming"}]
 	},
 	components: {
-		senateMemberCard: senateMemberCard,
+		senateMemberCardFirstName: senateMemberCardFirstName,
+		senateMemberCardLastName: senateMemberCardLastName,
 		houseMemberCard: houseMemberCard,
 		stateCheckbox: stateCheckbox
 	},
@@ -127,6 +159,11 @@ const app = new Vue({
 			return this.states[this.states.map(state => {
 				return state.code
 			}).indexOf(code)].name;
+		},
+		swapComponent(component){
+			if (this.senateMembers.length > 0) {
+				this.currentSenatorComponent = component;
+			}else this.currentHouseComponent = component;
 		}
 	}
 })
@@ -140,19 +177,43 @@ function updateVue(members){
 	}
 }
 
-// Sort button alphabet
-let sortByNameButton = document.getElementById('sortAlphabetically');
-sortByNameButton.onclick = () =>{
-	let sortAtoZString = 'Sort A to Z &nbsp;<i aria-hidden="true" class="fas fa-sort-alpha-up"></i>';
-	let sortZtoAString = 'Sort Z to A &nbsp;<i aria-hidden="true" class="fas fa-sort-alpha-down-alt"></i>'
+// Sorts
+let sortByFirstName = document.getElementById('sortFirstName');
+let sortByLastName = document.getElementById('sortLastName');
+
+sortByFirstName.onclick = () => {
+	let sortFirstNameAscendingly = '<i aria-hidden="true" class="fas fa-sort-alpha-up"></i> Sort on first name';
+	let sortFirstNameDescendingly = '<i aria-hidden="true" class="fas fa-sort-alpha-down-alt"></i> Sort on first name';
 	let filteredList = filter(searchByNameInput.value, partyFilterList, stateFilterList);
-	if (sortByNameButton.innerHTML === sortAtoZString) {
-		sortByNameButton.innerHTML = sortZtoAString;
-		filteredList.sort(sortMembersByNameDescending);
+	if (chamber === "senate") {
+		app.swapComponent('senateMemberCardFirstName');
+	}
+	if (sortByFirstName.innerHTML === sortFirstNameAscendingly) {
+		sortByFirstName.innerHTML = sortFirstNameDescendingly;
+		filteredList.sort(sortByFirstNameDescending);
 		updateVue(filteredList);
 	}else {
-		sortByNameButton.innerHTML = sortAtoZString;
-		filteredList.sort(sortMembersByNameAscending)
+
+		sortByFirstName.innerHTML = sortFirstNameAscendingly;
+		filteredList.sort(sortByFirstNameAscending);
+		updateVue(filteredList);
+	}
+}
+
+sortByLastName.onclick = () => {
+	let sortLastNameAscendingly = '<i aria-hidden="true" class="fas fa-sort-alpha-up"></i> Sort on last name';
+	let sortLastNameDescendingly = '<i aria-hidden="true" class="fas fa-sort-alpha-down-alt"></i> Sort on last name';
+	let filteredList = filter(searchByNameInput.value, partyFilterList, stateFilterList);
+	if (chamber === "senate") {
+		app.swapComponent('senateMemberCardLastName');
+	}
+	if (sortByLastName.innerHTML === sortLastNameAscendingly) {
+		sortByLastName.innerHTML = sortLastNameDescendingly;
+		filteredList.sort(sortByLastNameDescending);
+		updateVue(filteredList);
+	}else {
+		sortByLastName.innerHTML = sortLastNameAscendingly;
+		filteredList.sort(sortByLastNameAscending);
 		updateVue(filteredList);
 	}
 }
