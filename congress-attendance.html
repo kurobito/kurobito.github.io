@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>NYSL</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="./resources/css/styles.css" type="text/css" rel="stylesheet">
+    <link href="./resources/css/congress.css" type="text/css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://kit.fontawesome.com/6959a909c1.js" crossorigin="anonymous"></script>
+
+</head>
+<body class="bg-secondary">
+<header class="header">
+    <nav id="navbar" class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+        <a class="navbar-brand" href="./index.html">USA Open Gov</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li id="home" class="nav-item">
+                    <a id="homeLink" class="nav-link" href="./index.html">Home <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li id="congressListItem" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false" href="#" id="congressDropdownMenuLink">
+                        Congress 116
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="congressDropdownMenuLink">
+                        <a id="congressSenate" class="dropdown-item" href="./congress.html?senate">Senate</a>
+                        <a id="congressHouse" class="dropdown-item" href="./congress.html?house">House</a>
+                    </div>
+                </li>
+                <li id="attendanceListItem" class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false" href="#" id="attendanceDropdownMenuLink">
+                        Attendance
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="attendanceDropdownMenuLink">
+                        <a id="attendanceSenate" class="dropdown-item" href="?senate">Senate</a>
+                        <a id="attendanceHouse" class="dropdown-item" href="?house">House</a>
+                    </div>
+                </li>
+                <li id="partyLoyaltyListItem" class="nav-item dropdown ">
+                    <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false" href="#" id="partyLoyaltyDropdownMenuLink">
+                        Party Loyalty
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="partyLoyaltyDropdownMenuLink">
+                        <a id="partyLoyaltySenate" class="dropdown-item"
+                           href="./congress-party-loyalty?senate">Senate</a>
+                        <a id="partyLoyaltyHouse" class="dropdown-item" href="./congress-party-loyalty?house">House</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main role="main" class="inner cover bg-light pt-3 mt-5">
+    <div id="app">
+        <h1 class="cover-heading text-center"> {{ getCongressHeading }} </h1>
+        <p class="lead text-center"> {{ getCongressText }} </p>
+        <hr class="my-4">
+
+        <div id="congressOverview">
+            <congress-overview-table v-bind:chamber="chamber" v-bind:congress="congress"
+                                     v-bind:sort-by-party="sortByParty"
+                                     v-bind:sort-by-num-of-reps="sortByNumOfReps"
+                                     v-bind:sort-by-pct-voted-with="sortByPctVotedWith">
+            </congress-overview-table>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="pb-4">
+                    <table class="table">
+                        <thead>
+                        <tr class="bg-dark text-white">
+                            <td class="text-center" colspan="3">
+                                <h4 class="my-0 "> Least Engaged (Top 10% Attendance) </h4>
+                            </td>
+                        </tr>
+                        <tr id="leastEngagedHeader">
+                            <th id="leastEngagedNameHeader" v-on:click="sortByName" scope="col">Name</th>
+                            <th id="leastEngagedNumMissedVotesHeader" v-on:click="sortByNumOfMissedVotes" scope="col">#
+                                of missed votes
+                            </th>
+                            <th id="leastEngagedPctMissedVotesHeader" v-on:click="sortByPctOfMissedVotes" scope="col">%
+                                of missed votes
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="member in leastEngagedMembers">
+                            <td>{{ member.first_name }} {{ member.middle_name }} {{ member.last_name }}</td>
+                            <td>{{ member.missed_votes }}</td>
+                            <td>{{ member.missed_votes_pct }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="pb-4">
+                    <table class="table">
+                        <thead>
+                        <tr class="bg-dark text-white">
+                            <td class="text-center" colspan="3">
+                                <h4 class="my-0">Most Engaged (Bottom 10% Attendance)</h4>
+                            </td>
+                        </tr>
+                        <tr id="mostEngagedHeader">
+                            <th id="mostEngagedNameHeader" v-on:click="sortByName" scope="col">Name</th>
+                            <th id="mostEngagedNumMissedVotesHeader" v-on:click="sortByNumOfMissedVotes" scope="col">#
+                                of missed votes
+                            </th>
+                            <th id="mostEngagedPctMissedVotesHeader" v-on:click="sortByPctOfMissedVotes" scope="col">%
+                                of missed votes
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="member in mostEngagedMembers">
+                            <td>{{ member.first_name }} {{ member.middle_name }} {{ member.last_name }}</td>
+                            <td>{{ member.missed_votes }}</td>
+                            <td>{{ member.missed_votes_pct }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script src="scripts/include.js"></script>
+<script src="scripts/navbar.js" type="module" defer></script>
+<script src="scripts/getCongressMembers.js" type="module" defer></script>
+<script src="scripts/renderCongressAttendance.js" type="module"></script>
+<script src="scripts/congressOverview.js" type="module"></script>
+</body>
+</html>

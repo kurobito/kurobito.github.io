@@ -9,6 +9,7 @@
     <link href="./resources/css/congress.css" type="text/css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://kit.fontawesome.com/6959a909c1.js" crossorigin="anonymous"></script>
+
 </head>
 <body class="bg-secondary">
 <header class="header">
@@ -40,8 +41,8 @@
                         Attendance
                     </a>
                     <div class="dropdown-menu" aria-labelledby="attendanceDropdownMenuLink">
-                        <a id="attendanceSenate" class="dropdown-item" href="#">Senate</a>
-                        <a id="attendanceHouse" class="dropdown-item" href="#">House</a>
+                        <a id="attendanceSenate" class="dropdown-item" href="./congress-attendance.html?senate">Senate</a>
+                        <a id="attendanceHouse" class="dropdown-item" href="./congress-attendance.html?house">House</a>
                     </div>
                 </li>
                 <li id="partyLoyaltyListItem" class="nav-item dropdown ">
@@ -59,33 +60,12 @@
     </nav>
 </header>
 <main role="main" class="inner cover bg-light pt-3 mt-5">
-    <h1 class="cover-heading text-center">Congress 116 - Senate </h1>
-    <p class="lead text-center">First convened in 1789, the composition and powers of the Senate are established in
-        Article
-        One of the U.S. Constitution. Each state is represented by two senators, regardless of
-        population, who serve staggered six-year terms. The Senate has several exclusive powers not
-        granted to the House, including consenting to treaties as a precondition to their ratification
-        and consenting to or confirming appointments of Cabinet secretaries, federal judges, other
-        federal executive officials, military officers, regulatory officials, ambassadors, and other
-        federal uniformed officers, as well as trial of federal officials impeached by the House.</p>
-    <hr class="my-4">
     <div id="app">
+        <h1 class="cover-heading text-center"> {{ getCongressHeading }} </h1>
+        <p class="lead text-center"> {{ getCongressText }} </p>
+        <hr class="my-4">
         <div class="row py-5">
             <div class="col-8 my-auto">
-                <!--                TODO: make dropdown menu to sort on different properties -->
-                <div class="dropdown d-inline">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="sortMenuButton"
-                            data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Sort on first name
-                    </button>
-                    <div class="dropdown-menu " aria-labelledby="sortMenuButton">
-                        <a id="sortFirstName" class="dropdown-item"><i
-                                class="fas fa-sort-alpha-up"></i> Sort on first name</a>
-                        <div class="dropdown-divider"></div>
-                        <a id="sortLastName" class="dropdown-item "><i
-                                class="fas fa-sort-alpha-up"></i> Sort on last name</a>
-                    </div>
-                </div>
                 <div class="dropdown d-inline">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="partyFilter"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -135,6 +115,39 @@
                         </form>
                     </div>
                 </div>
+                <div id="sortDropdown" class="dropright">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="sortMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                            class="fas fa-sort-alpha-up"></i> Sort on first name
+                    </button>
+                    <div class="dropdown-menu " aria-labelledby="sortMenuButton">
+                        <a id="sortFirstName" class="dropdown-item"><i class="fas fa-sort-alpha-up"></i> Sort on first
+                            name</a>
+                        <div class="dropdown-divider"></div>
+                        <a id="sortLastName" class="dropdown-item "><i class="fas fa-sort-alpha-up"></i> Sort on last
+                            name</a>
+                        <div class="dropdown-divider"></div>
+                        <a id="sortParty" class="dropdown-item "><i class="fas fa-sort-alpha-up"></i> Sort on party</a>
+                        <div class="dropdown-divider"></div>
+                        <a id="sortState" class="dropdown-item "><i class="fas fa-sort-alpha-up"></i> Sort on state</a>
+                        <div class="dropdown-divider"></div>
+                        <a id="sortDistrict" v-if="houseMembers.length > 0" class="dropdown-item "><i
+                                class="fas fa-sort-alpha-up"></i> Sort on district</a>
+                        <div class="dropdown-divider"></div>
+                        <a id="sortSeniority" class="dropdown-item "><i class="fas fa-sort-numeric-up"></i> Sort on
+                            seniority</a>
+                        <div class="dropdown-divider"></div>
+                        <a id="sortVotesWith" class="dropdown-item "><i class="fas fa-sort-numeric-up"></i> Sort on
+                            votes
+                            with party</a>
+                        <div class="dropdown-divider"></div>
+                        <a id="sortVotesAgainst" class="dropdown-item "><i class="fas fa-sort-numeric-up"></i> Sort on
+                            votes against party </a>
+                    </div>
+                </div>
+                <button id="displayButton" class="btn btn-secondary" v-on:click="swapDisplay">
+                    <i class="fas fa-grip-vertical"></i>
+                </button>
             </div>
             <div class="col-4">
                 <form class="form-inline my-2 my-lg-0 float-right">
@@ -144,32 +157,10 @@
                 </form>
             </div>
         </div>
-        <div class="row pb-4">
-            <div :is="currentSenatorComponent"
-                 v-for="senateMember in senateMembers"
-                 v-bind:key="senateMember.id"
-                 v-bind:senate-member="senateMember"
-                 v-bind:states="states"
-                 v-bind:get-state-name="getStateName">
-            </div>
-            <div :is="currentHouseComponent"
-                 v-for="houseMember in houseMembers"
-                 v-bind:key="houseMember.id"
-                 v-bind:house-member="houseMember"
-                 v-bind:states="states"
-                 v-bind:get-state-name="getStateName">
-            </div>
-            <!-- Congress member template -->
-            <!--                    <div class="card" style="width: 18rem;">-->
-            <!--                        <h5 class="card-header">{{ message }}</h5>-->
-            <!--                        <ul class="list-group list-group-flush">-->
-            <!--                            <li class="list-group-item senator-name"></li>-->
-            <!--                            <li class="list-group-item party">Party: D</li>-->
-            <!--                            <li class="list-group-item state">State:</li>-->
-            <!--                            <li class="list-group-item seniority">Seniority:</li>-->
-            <!--                            <li class="list-group-item party-votes">Party Votes:</li>-->
-            <!--                        </ul>-->
-            <!--                    </div>-->
+        <div :is="currentDisplay" v-bind:current-house-component="currentHouseComponent"
+             v-bind:current-senate-component="currentSenateComponent"
+             v-bind:senate-members="senateMembers" v-bind:house-members="houseMembers" v-bind:states="states"
+             v-bind:get-state-name="getStateName">
         </div>
     </div>
 </main>
@@ -185,5 +176,6 @@
 <script src="scripts/include.js"></script>
 <script src="scripts/navbar.js" type="module" defer></script>
 <script src="scripts/getCongressMembers.js" type="module" defer></script>
+<script src="scripts/renderCongress.js" type="module"></script>
 </body>
 </html>

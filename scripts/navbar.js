@@ -12,7 +12,7 @@ const partyLoyaltyHouse = document.getElementById('partyLoyaltyHouse');
 
 const setNavBarLogic = url => {
 	console.log(window.location.href.split('?'))
-	const chamber = window.location.href.split('?')[1];
+	const chamber = window.location.href.split('?')[1].split('+')[0];
 	switch(chamber){
 		case 'senate':
 			url = url.replace('{chamber}', 'senate');
@@ -22,5 +22,4 @@ const setNavBarLogic = url => {
 			return url;
 	}
 }
-
 export {setNavBarLogic};

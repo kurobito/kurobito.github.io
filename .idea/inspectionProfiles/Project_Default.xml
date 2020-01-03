@@ -4,7 +4,7 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="11">
+          <list size="17">
             <item index="0" class="java.lang.String" itemvalue="w3-include-html" />
             <item index="1" class="java.lang.String" itemvalue="v-model" />
             <item index="2" class="java.lang.String" itemvalue="onreadystatechange" />
@@ -16,6 +16,12 @@
             <item index="8" class="java.lang.String" itemvalue="v-bind:states" />
             <item index="9" class="java.lang.String" itemvalue="v-bind:get-state-name" />
             <item index="10" class="java.lang.String" itemvalue="v-bind:house-member" />
+            <item index="11" class="java.lang.String" itemvalue="v-bind:onclick" />
+            <item index="12" class="java.lang.String" itemvalue="v-if" />
+            <item index="13" class="java.lang.String" itemvalue="v-bind:current-house-component" />
+            <item index="14" class="java.lang.String" itemvalue="v-bind:current-senate-component" />
+            <item index="15" class="java.lang.String" itemvalue="v-bind:senate-members" />
+            <item index="16" class="java.lang.String" itemvalue="v-bind:house-members" />
           </list>
         </value>
       </option>
