@@ -35,7 +35,7 @@
                         <a id="congressHouse" class="dropdown-item" href="./congress.html?house">House</a>
                     </div>
                 </li>
-                <li id="attendanceListItem" class="nav-item dropdown active">
+                <li id="attendanceListItem" class="nav-item dropdown ">
                     <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false" href="#" id="attendanceDropdownMenuLink">
                         Attendance
@@ -46,7 +46,7 @@
                         <a id="attendanceHouse" class="dropdown-item" href="./congress-attendance.html?house">House</a>
                     </div>
                 </li>
-                <li id="partyLoyaltyListItem" class="nav-item dropdown ">
+                <li id="partyLoyaltyListItem" class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false" href="#" id="partyLoyaltyDropdownMenuLink">
                         Party Loyalty
@@ -61,14 +61,83 @@
     </nav>
 </header>
 <main role="main" class="inner cover bg-light pt-3 mt-5">
-    <div id="app">
+    <div id="congressInfoText">
         <h1 class="cover-heading text-center"> {{ getCongressHeading }} </h1>
         <p class="lead text-center"> {{ getCongressText }} </p>
         <hr class="my-4">
+    </div>
+    <div id="congressOverview">
+        <congress-overview-table v-bind:chamber="chamber" v-bind:congress="congress"
+                                 v-bind:sort-by-party="sortByParty"
+                                 v-bind:sort-by-num-of-reps="sortByNumOfReps"
+                                 v-bind:sort-by-pct-voted-with="sortByPctVotedWith">
+        </congress-overview-table>
+    </div>
+    <div id="congressLoyaltyTables">
         <div class="row">
+            <div class="col-6">
+                <div class="pb-4">
+                    <table class="table">
+                        <thead>
+                        <tr class="bg-dark text-white">
+                            <td class="text-center" colspan="3">
+                                <h4 class="my-0 "> Least Loyal (Bottom 10% of party) </h4>
+                            </td>
+                        </tr>
+                        <tr id="leastLoyalHeader">
+                            <th id="leastLoyalNameHeader" v-on:click="sortByName" scope="col">Name</th>
+                            <th id="leastLoyalNumPartyVotesHeader" v-on:click="sortByNumOfPartyVotes" scope="col">#
+                                of party votes
+                            </th>
+                            <th id="leastLoyalPctPartyVotesHeader" v-on:click="sortByPctOfPartyVotes" scope="col">%
+                                of party votes
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="member in leastLoyalMembers">
+                            <td>{{ member.first_name }} {{ member.middle_name }} {{ member.last_name }}</td>
+                            <td>{{ member.num_party_votes }} </td>
+                            <td>{{ member.votes_with_party_pct }}%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="pb-4">
+                    <table class="table">
+                        <thead>
+                        <tr class="bg-dark text-white">
+                            <td class="text-center" colspan="3">
+                                <h4 class="my-0">Most Loyal (Top 10% of party)</h4>
+                            </td>
+                        </tr>
+                        <tr id="mostLoyalHeader">
+                            <th id="mostLoyalNameHeader" v-on:click="sortByName" scope="col">Name</th>
+                            <th id="mostLoyalNumPartyVotesHeader" v-on:click="sortByNumOfPartyVotes" scope="col">#
+                                of party votes
+                            </th>
+                            <th id="mostLoyalPctPartyVotesHeader" v-on:click="sortByPctOfPartyVotes" scope="col">%
+                                of party votes
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="member in mostLoyalMembers">
+                            <td>{{ member.first_name }} {{ member.middle_name }} {{ member.last_name }}</td>
+                            <td>{{ member.num_party_votes }} </td>
+                            <td>{{ member.votes_with_party_pct }}%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
     </div>
+    
+
 </main>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -83,5 +152,6 @@
 <script src="scripts/navbar.js" type="module" defer></script>
 <script src="scripts/getCongressMembers.js" type="module" defer></script>
 <script src="scripts/renderCongressPartyLoyalty.js" type="module"></script>
+<script src="scripts/congressOverview.js" type="module"></script>
 </body>
 </html>

@@ -116,18 +116,6 @@ export function sortByNumOfRepsDescending(a, b){
 	return 0;
 }
 
-export function sortByVotedWithPartyAscending(a, b){
-	if (a.pctVotedWith < b.pctVotedWith) return -1;
-	if (a.pctVotedWith > b.pctVotedWith) return 1;
-	return 0;
-}
-
-export function sortByVotedWithPartyDescending(a, b){
-	if (a.pctVotedWith < b.pctVotedWith) return 1;
-	if (a.pctVotedWith > b.pctVotedWith) return -1;
-	return 0;
-}
-
 export function sortByMissedVotesAscending(a, b){
 	if (a.missed_votes < b.missed_votes) return -1;
 	if (a.missed_votes > b.missed_votes) return 1;
@@ -149,5 +137,33 @@ export function sortByMissedVotesPctAscending(a, b){
 export function sortByMissedVotesPctDescending(a, b){
 	if (a.missed_votes_pct < b.missed_votes_pct) return 1;
 	if (a.missed_votes_pct > b.missed_votes_pct) return -1;
+	return 0;
+}
+
+export function sortByNumPartyVotesAscending(a, b){
+	if (a.num_party_votes < b.num_party_votes) return -1;
+	if (a.num_party_votes > b.num_party_votes) return 1;
+	return 0;
+}
+
+export function sortByNumPartyVotesDescending(a, b){
+	if (a.num_party_votes < b.num_party_votes) return 1;
+	if (a.num_party_votes > b.num_party_votes) return -1;
+	return 0;
+}
+
+
+
+
+// Sorts for congress object array
+export function sortByPctVotedWithAscending(a, b){
+	if (a.pctVotedWith < b.pctVotedWith) return -1;
+	if (a.pctVotedWith > b.pctVotedWith) return 1;
+	return 0;
+}
+
+export function sortByPctVotedWithDescending(a, b){
+	if (a.pctVotedWith < b.pctVotedWith) return 1;
+	if (a.pctVotedWith > b.pctVotedWith) return -1;
 	return 0;
 }

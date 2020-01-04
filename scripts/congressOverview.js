@@ -1,6 +1,6 @@
 import {getCongressData, chamber} from './getCongressMembers.js';
 import {sortByPartyAscending, sortByPartyDescending, sortByNumOfRepsAscending, 
-	sortByNumOfRepsDescending, sortByVotedWithPartyAscending, sortByVotedWithPartyDescending} 
+	sortByNumOfRepsDescending, sortByPctVotedWithAscending, sortByPctVotedWithDescending} 
 	from './sortComparators.js';
 
 
@@ -119,8 +119,8 @@ const congressOverview = new Vue({
 			this.congress[index].pctVotedWith += pctVotedWith;
 		},
 		sortByParty: function(event){
-			const sortStringAscendingly = 'Party <i class="fas fa-sort-up">'
-			const sortStringDescendingly = 'Party <i class="fas fa-sort-down">'
+			const sortStringAscendingly = 'Party <i class="fas fa-sort-up no-pointer-event">'
+			const sortStringDescendingly = 'Party <i class="fas fa-sort-down no-pointer-event">'
 			this.setDefaultStringOnCongressTable();
 			if (this.sortedOn.party) {
 				this.sortedOn.party = false;
@@ -133,8 +133,8 @@ const congressOverview = new Vue({
 			}
 		},
 		sortByNumOfReps: function(event){
-			const sortStringAscendingly = '# of representatives <i class="fas fa-sort-up">'
-			const sortStringDescendingly = '# of representatives <i class="fas fa-sort-down">'
+			const sortStringAscendingly = '# of representatives <i class="fas fa-sort-up no-pointer-event">'
+			const sortStringDescendingly = '# of representatives <i class="fas fa-sort-down no-pointer-event">'
 
 			this.setDefaultStringOnCongressTable();
 			if (this.sortedOn.numOfReps) {
@@ -148,18 +148,18 @@ const congressOverview = new Vue({
 			}
 		},
 		sortByPctVotedWith: function(event){
-			const sortStringAscendingly = '% voted with party <i class="fas fa-sort-up">'
-			const sortStringDescendingly = '% voted with party <i class="fas fa-sort-down">'
+			const sortStringAscendingly = '% voted with party <i class="fas fa-sort-up no-pointer-event">'
+			const sortStringDescendingly = '% voted with party <i class="fas fa-sort-down no-pointer-event">'
 
 			this.setDefaultStringOnCongressTable();
 			if (this.sortedOn.pctVotedWith) {
 				this.sortedOn.pctVotedWith = false;
 				event.target.innerHTML = sortStringDescendingly;
-				this.congress.sort(sortByVotedWithPartyDescending);
+				this.congress.sort(sortByPctVotedWithDescending);
 			}else{
 				this.sortedOn.pctVotedWith = true;
 				event.target.innerHTML = sortStringAscendingly;
-				this.congress.sort(sortByVotedWithPartyAscending);
+				this.congress.sort(sortByPctVotedWithAscending);
 			}
 		},
 		setDefaultStringOnCongressTable: function(){

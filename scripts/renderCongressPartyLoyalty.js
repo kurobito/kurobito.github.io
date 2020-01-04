@@ -1,39 +1,14 @@
 import {getCongressData, chamber} from './getCongressMembers.js';
-import {sortByFirstNameAscending, sortByFirstNameDescending, sortByPartyAscending, 
-	sortByPartyDescending, sortByNumOfRepsAscending, sortByNumOfRepsDescending, 
-	sortByVotedWithPartyAscending, sortByVotedWithPartyDescending, sortByMissedVotesAscending, 
-	sortByMissedVotesDescending, sortByMissedVotesPctAscending, sortByMissedVotesPctDescending} 
+import {congressOverview} from './congressOverview.js';
+import {sortByFirstNameAscending, sortByFirstNameDescending, sortByNumPartyVotesAscending
+	, sortByNumPartyVotesDescending, sortByVotesWithAscending, sortByVotesWithDescending} 
 	from './sortComparators.js';
 
-const app = new Vue({
-	el: '#app',
+// vue instance for congress info
+const congressInfoText = new Vue({
+	el: '#congressInfoText',
 	data: {
-		chamber: chamber,
-		houseMembers: [],
-		senateMembers: [],
-		congress: [{
-			party: 'Republican',
-			representatives: 0,
-			pctVotedWith: 0
-		},
-		{
-			party: 'Democrat',
-			representatives: 0,
-			pctVotedWith: 0
-		},
-		{
-			party: 'Independent',
-			representatives: 0,
-			pctVotedWith: 0
-		}],
-		sortedOn: {
-			party: false,
-			numOfReps: false,
-			pctVotedWith: false,
-			name: false,
-			: false,
-			pctOfMissedVotes: false,
-		}
+		chamber: chamber
 	},
 	computed: {
 		getCongressHeading: function(){
@@ -42,213 +17,131 @@ const app = new Vue({
 			}else return 'House - Party Loyalty';
 		},
 		getCongressText: function(){
-			return `The Constitution specifies that a majority of members constitutes a quorum to do 
-			business in each house. Representatives and senators rarely force the presence of a quorum 
-			by demanding quorum calls; thus, in most cases, debates continue even if a majority is not 
-			present.
-			The Senate uses roll-call votes; a clerk calls out the names of all the senators, each senator 
-			stating "aye" or "no" when his or her name is announced. The House reserves roll-call votes 
-			for the most formal matters, as a roll-call of all 435 representatives takes quite some time; 
-				normally, members vote by electronic device. In the case of a tie, the motion in question fails.
-			In the Senate, the Vice President may (if present) cast the tiebreaking vote.`
-		},
-		getCongressAtGlance: function(){
-			if (chamber === 'senate') {
-				// increment representatives and vote percentage for every senate member
-				this.senateMembers.forEach(member => {
-					this.incrementRepAndVoteWith(member.party, member.votes_with_party_pct)
-				})
-				// calculate the average vote percentage for every party in congress
-				this.congress.forEach(party => {
-					party.pctVotedWith = (party.pctVotedWith / party.representatives).toFixed(2);
-				})
-				return this.congress;
-			}else{
-				this.houseMembers.forEach(member => {
-					this.incrementRepAndVoteWith(member.party, member.votes_with_party_pct)
-				})
-				// calculate the average vote percentage for every party in congress
-				this.congress.forEach(party => {
-					party.pctVotedWith = (party.pctVotedWith / party.representatives).toFixed(2);
-				})
-				return this.congress;
-			}
-		},
-		congressTableHeaders: function(){
-			const partyHeader = document.getElementById('partyHeader');
-			const numOfRepsHeader = document.getElementById('numOfRepsHeader');
-			const pctVotedWithHeader = document.getElementById('pctVotedWithHeader');
-			return [partyHeader, numOfRepsHeader, pctVotedWithHeader];
-		},
-		leastEngagedTableHeaders: function(){
-			const nameHeader = document.getElementById('leastEngagedNameHeader');
-			const numOfMissedVotesHeader = document.getElementById('leastEngagedNumMissedVotesHeader');
-			const pctOfMissedVotesHeader = document.getElementById('leastEngagedPctMissedVotesHeader');
+			return `Those who consider themselves to be strong partisans, strong Democrats and strong 
+			Republicans respectively, tend to be the most faithful in voting for their party's nominee for 
+			office and legislation that backs their party's agenda.`
+		}
+	}
+})
 
-			return [nameHeader, numOfMissedVotesHeader, pctOfMissedVotesHeader];
-		},
-		mostEngagedTableHeaders: function(){
-			const nameHeader = document.getElementById('mostEngagedNameHeader');
-			const numOfMissedVotesHeader = document.getElementById('mostEngagedNumMissedVotesHeader');
-			const pctOfMissedVotesHeader = document.getElementById('mostEngagedPctMissedVotesHeader');
+const congressLoyaltyTables = new Vue({
+	el: '#congressLoyaltyTables',
+	data: {
+		chamber: chamber,
+		houseMembers: [],
+		senateMembers: [],
+		leastLoyalMembers: [],
+		mostLoyalMembers: [],
+		sortedOn: {
+			name: false,
+			numOfPartyVotes: false,
+			pctOfPartyVotes: false,
+		}
+	},
+	computed: {
+		leastLoyalTableHeaders: function(){
+			const nameHeader = document.getElementById('leastLoyalNameHeader');
+			const numOfPartyVotesHeader = document.getElementById('leastLoyalNumPartyVotesHeader');
+			const pctOfPartyVotesHeader = document.getElementById('leastLoyalPctPartyVotesHeader');
 
-			return [nameHeader, numOfMissedVotesHeader, pctOfMissedVotesHeader];
+			return [nameHeader, numOfPartyVotesHeader, pctOfPartyVotesHeader];
+		},
+		mostLoyalTableHeaders: function(){
+			const nameHeader = document.getElementById('mostLoyalNameHeader');
+			const numOfPartyVotesHeader = document.getElementById('mostLoyalNumPartyVotesHeader');
+			const pctOfPartyVotesHeader = document.getElementById('mostLoyalPctPartyVotesHeader');
+
+			return [nameHeader, numOfPartyVotesHeader, pctOfPartyVotesHeader];
 		}
 	},
 	methods:{
-		incrementRepAndVoteWith: function(party, pctVotedWith){
-			let index;
-			switch(party){
-				case 'R':
-				index = this.congress.findIndex(party => party.party === 'Republican');
-				break;
-				case 'D':
-				index = this.congress.findIndex(party => party.party === 'Democrat');
-				break;
-				case 'I':
-				index = this.congress.findIndex(party => party.party === 'Independent');
-				break;
-				case 'ID':
-				index = this.congress.findIndex(party => party.party === 'Independent');
-				break;
-			}
-			this.congress[index].representatives++;
-			this.congress[index].pctVotedWith += pctVotedWith;
-		},
-		setLeastEngagedMembers: function(){
-			let leastEngagedMembers = [];
+		setLeastLoyalMembers: function(){
+			let leastLoyalMembers = [];
 			if (chamber === 'senate'){
-				leastEngagedMembers = this.senateMembers.sort(sortByMissedVotesPctDescending).slice();
-				leastEngagedMembers.splice(10)
-				this.leastEngagedMembers = leastEngagedMembers;
+				leastLoyalMembers = this.senateMembers.sort(sortByVotesWithAscending).slice();
+				leastLoyalMembers.splice((leastLoyalMembers.length * 0.1));
+				this.leastLoyalMembers = leastLoyalMembers;
 			}else {
-				leastEngagedMembers = this.houseMembers.sort(sortByMissedVotesPctDescending).slice();
-				leastEngagedMembers.splice(10)
-				this.leastEngagedMembers = leastEngagedMembers;
+				leastLoyalMembers = this.houseMembers.sort(sortByVotesWithAscending).slice();
+				leastLoyalMembers.splice((leastLoyalMembers.length * 0.1));
+				this.leastLoyalMembers = leastLoyalMembers;
 			}
 		},
-		setMostEngagedMembers: function(){
-			let mostEngagedMembers = [];
+		setMostLoyalMembers: function(){
+			let mostLoyalMembers = [];
 			if (chamber === 'senate'){
-				mostEngagedMembers = this.senateMembers.sort(sortByMissedVotesPctAscending).slice();
-				mostEngagedMembers.splice(10)
-				this.mostEngagedMembers = mostEngagedMembers;
+				mostLoyalMembers = this.senateMembers.sort(sortByVotesWithDescending).slice();
+				mostLoyalMembers.splice((mostLoyalMembers.length * 0.1));
+				this.mostLoyalMembers = mostLoyalMembers;
 			}else {
-				mostEngagedMembers = this.houseMembers.sort(sortByMissedVotesPctAscending).slice();
-				mostEngagedMembers.splice(10)
-				this.mostEngagedMembers = mostEngagedMembers;
-			}
-		},
-		sortByParty: function(event){
-			const sortStringAscendingly = 'Party <i class="fas fa-sort-up">'
-			const sortStringDescendingly = 'Party <i class="fas fa-sort-down">'
-			this.setDefaultStringOnCongressTable();
-			if (this.sortedOn.party) {
-				this.sortedOn.party = false;
-				event.target.innerHTML = sortStringDescendingly;
-				this.congress.sort(sortByPartyDescending);
-			}else{
-				this.sortedOn.party = true;
-				event.target.innerHTML = sortStringAscendingly;
-				this.congress.sort(sortByPartyAscending);
-			}
-		},
-		sortByNumOfReps: function(event){
-			const sortStringAscendingly = '# of representatives <i class="fas fa-sort-up">'
-			const sortStringDescendingly = '# of representatives <i class="fas fa-sort-down">'
-
-			this.setDefaultStringOnCongressTable();
-			if (this.sortedOn.numOfReps) {
-				this.sortedOn.numOfReps = false;
-				event.target.innerHTML = sortStringDescendingly;
-				this.congress.sort(sortByNumOfRepsDescending);
-			}else{
-				this.sortedOn.numOfReps = true;
-				event.target.innerHTML = sortStringAscendingly;
-				this.congress.sort(sortByNumOfRepsAscending);
-			}
-		},
-		sortByPctVotedWith: function(event){
-			const sortStringAscendingly = '% voted with party <i class="fas fa-sort-up">'
-			const sortStringDescendingly = '% voted with party <i class="fas fa-sort-down">'
-
-			this.setDefaultStringOnCongressTable();
-			if (this.sortedOn.pctVotedWith) {
-				this.sortedOn.pctVotedWith = false;
-				event.target.innerHTML = sortStringDescendingly;
-				this.congress.sort(sortByVotedWithPartyDescending);
-			}else{
-				this.sortedOn.pctVotedWith = true;
-				event.target.innerHTML = sortStringAscendingly;
-				this.congress.sort(sortByVotedWithPartyAscending);
+				mostLoyalMembers = this.houseMembers.sort(sortByVotesWithDescending).slice();
+				mostLoyalMembers.splice((mostLoyalMembers.length * 0.1));
+				this.mostLoyalMembers = mostLoyalMembers;
 			}
 		},
 		sortByName: function(event){
-			const sortStringAscendingly = 'Name <i class="fas fa-sort-up">'
-			const sortStringDescendingly = 'Name <i class="fas fa-sort-down">'
-			const leastEngagedHeaderRow = document.getElementById('leastEngagedHeader');
-			const mostEngagedHeaderRow = document.getElementById('mostEngagedHeader');
-			const isLeastEngagedTable = leastEngagedHeaderRow === event.target.parentElement;
+			const sortStringAscendingly = 'Name <i class="fas fa-sort-up no-pointer-event">'
+			const sortStringDescendingly = 'Name <i class="fas fa-sort-down no-pointer-event">'
+			const leastLoyalHeaderRow = document.getElementById('leastLoyalHeader');
+			const mostLoyalHeaderRow = document.getElementById('mostLoyalHeader');
+			const isLeastLoyalTable = leastLoyalHeaderRow === event.target.parentElement;
 
-			if (isLeastEngagedTable) this.setDefaultStringOnLeastEngagedTable();
-			else this.setDefaultStringOnMostEngagedTable();
+			if (isLeastLoyalTable) this.setDefaultStringOnLeastLoyalTable();
+			else this.setDefaultStringOnMostLoyalTable();
 			if (this.sortedOn.name) {
 				this.sortedOn.name = false;
 				event.target.innerHTML = sortStringDescendingly;
-				if (isLeastEngagedTable) this.leastEngagedMembers.sort(sortByFirstNameDescending);
-				else this.mostEngagedMembers.sort(sortByFirstNameDescending);
+				if (isLeastLoyalTable) this.leastLoyalMembers.sort(sortByFirstNameDescending);
+				else this.mostLoyalMembers.sort(sortByFirstNameDescending);
 			}else{
 				this.sortedOn.name = true;
 				event.target.innerHTML = sortStringAscendingly;
-				if (isLeastEngagedTable) this.leastEngagedMembers.sort(sortByFirstNameAscending);
-				else this.mostEngagedMembers.sort(sortByFirstNameAscending);
+				if (isLeastLoyalTable) this.leastLoyalMembers.sort(sortByFirstNameAscending);
+				else this.mostLoyalMembers.sort(sortByFirstNameAscending);
 			}
 		},
-		sortByNumOfMissedVotes: function(event){
-			const sortStringAscendingly = '# of missed votes <i class="fas fa-sort-up">'
-			const sortStringDescendingly = '# of missed votes <i class="fas fa-sort-down">'
-			const leastEngagedHeaderRow = document.getElementById('leastEngagedHeader');
-			const mostEngagedHeaderRow = document.getElementById('mostEngagedHeader');
-			const isLeastEngagedTable = leastEngagedHeaderRow === event.target.parentElement;
-
-			if (isLeastEngagedTable) this.setDefaultStringOnLeastEngagedTable();
-			else this.setDefaultStringOnMostEngagedTable();
-			if (this.sortedOn.numOfMissedVotes) {
-				this.sortedOn.numOfMissedVotes = false;
+		sortByNumOfPartyVotes: function(event){
+			const sortStringAscendingly = '# of party votes <i class="fas fa-sort-up no-pointer-event">'
+			const sortStringDescendingly = '# of party votes <i class="fas fa-sort-down no-pointer-event">'
+			const leastLoyalHeaderRow = document.getElementById('leastLoyalHeader');
+			const isLeastLoyalTable = leastLoyalHeaderRow === event.target.parentElement;
+			if (isLeastLoyalTable) this.setDefaultStringOnLeastLoyalTable();
+			else this.setDefaultStringOnMostLoyalTable();
+			if (this.sortedOn.numOfPartyVotes) {
+				this.sortedOn.numOfPartyVotes = false;
 				event.target.innerHTML = sortStringDescendingly;
-				if (isLeastEngagedTable) this.leastEngagedMembers.sort(sortByMissedVotesDescending);
-				else this.mostEngagedMembers.sort(sortByMissedVotesDescending);
+				if (isLeastLoyalTable) this.leastLoyalMembers.sort(sortByNumPartyVotesDescending);
+				else this.mostLoyalMembers.sort(sortByNumPartyVotesDescending);
 			}else{
-				this.sortedOn.numOfMissedVotes = true;
+				this.sortedOn.numOfPartyVotes = true;
 				event.target.innerHTML = sortStringAscendingly;
-				if (isLeastEngagedTable) this.leastEngagedMembers.sort(sortByMissedVotesAscending);
-				else this.mostEngagedMembers.sort(sortByMissedVotesAscending);
+				if (isLeastLoyalTable) this.leastLoyalMembers.sort(sortByNumPartyVotesAscending);
+				else this.mostLoyalMembers.sort(sortByNumPartyVotesAscending);
 			}
 		},
-		sortByPctOfMissedVotes: function(event){
-			const sortStringAscendingly = '% of missed votes <i class="fas fa-sort-up">'
-			const sortStringDescendingly = '% of missed votes <i class="fas fa-sort-down">'
-			const leastEngagedHeaderRow = document.getElementById('leastEngagedHeader');
-			const mostEngagedHeaderRow = document.getElementById('mostEngagedHeader');
-			const isLeastEngagedTable = leastEngagedHeaderRow === event.target.parentElement;
+		sortByPctOfPartyVotes: function(event){
+			const sortStringAscendingly = '% of party votes <i class="fas fa-sort-up no-pointer-event">'
+			const sortStringDescendingly = '% of party votes <i class="fas fa-sort-down no-pointer-event">'
+			const leastLoyalHeaderRow = document.getElementById('leastLoyalHeader');
+			const isLeastLoyalTable = leastLoyalHeaderRow === event.target.parentElement;
 
-			if (isLeastEngagedTable) this.setDefaultStringOnLeastEngagedTable();
-			else this.setDefaultStringOnMostEngagedTable();
-			if (this.sortedOn.pctOfMissedVotes) {
-				this.sortedOn.pctOfMissedVotes = false;
+			if (isLeastLoyalTable) this.setDefaultStringOnLeastLoyalTable();
+			else this.setDefaultStringOnMostLoyalTable();
+			if (this.sortedOn.pctOfPartyVotes) {
+				this.sortedOn.pctOfPartyVotes = false;
 				event.target.innerHTML = sortStringDescendingly;
-				if (isLeastEngagedTable) this.leastEngagedMembers.sort(sortByMissedVotesPctDescending);
-				else this.mostEngagedMembers.sort(sortByMissedVotesPctDescending);
+				if (isLeastLoyalTable) this.leastLoyalMembers.sort(sortByVotesWithDescending);
+				else this.mostLoyalMembers.sort(sortByVotesWithDescending);
 			}else{
-				this.sortedOn.pctOfMissedVotes = true;
+				this.sortedOn.pctOfPartyVotes = true;
 				event.target.innerHTML = sortStringAscendingly;
-				if (isLeastEngagedTable) this.leastEngagedMembers.sort(sortByMissedVotesPctAscending);
-				else this.mostEngagedMembers.sort(sortByMissedVotesPctAscending);
+				if (isLeastLoyalTable) this.leastLoyalMembers.sort(sortByVotesWithAscending);
+				else this.mostLoyalMembers.sort(sortByVotesWithAscending);
 			}
 		},
-		setDefaultStringOnCongressTable: function(){
-			const defaultStrings = ['Party', '# of representatives', '% voted with party'];
-			this.congressTableHeaders.forEach(header => {
+		setDefaultStringOnLeastLoyalTable: function(isLeastLoyalTable){
+			const defaultStrings = ['Name', '# of party votes', '% of party votes'];
+			this.leastLoyalTableHeaders.forEach(header => {
 				defaultStrings.forEach(defaultString => {
 					if (header.innerHTML.includes(defaultString) && header.innerHTML !== defaultString) {
 						header.innerHTML = defaultString;
@@ -256,21 +149,45 @@ const app = new Vue({
 				})
 			})
 		},
+		setDefaultStringOnMostLoyalTable: function(){
+			const defaultStrings 	= ['Name', '# of party votes', '% of party votes'];
+			this.mostLoyalTableHeaders.forEach(header => {
+				defaultStrings.forEach(defaultString => {
+					if (header.innerHTML.includes(defaultString) && header.innerHTML !== defaultString) {
+						header.innerHTML = defaultString;
+					}
+				})
+			})
+		}
 	}
 })
 
 function updateVue(members){
 	if(chamber === "senate"){
-		app.senateMembers = members;
+		congressLoyaltyTables.senateMembers = members;
+		congressOverview.senateMembers = members;
 	}else{
-		app.houseMembers = members;
+		congressLoyaltyTables.houseMembers = members;
+		congressOverview.houseMembersMembers = members;
 	}
+}
+
+function setNumOfPartyVotesOnMembers(members){
+	members.forEach(member => {
+		let numOfPartyVotes = Math.round((member.total_votes * (member.votes_with_party_pct / 100)));
+		member.num_party_votes = numOfPartyVotes;
+	});
 }
 
 const init = async () => {
 	const members = await getCongressData(chamber);
+	setNumOfPartyVotesOnMembers(members);
 	updateVue(members);
-	console.log(app.getCongressAtGlance);
+	console.log(congressOverview.getCongressAtGlance);
+	congressLoyaltyTables.setLeastLoyalMembers();
+	congressLoyaltyTables.setMostLoyalMembers();
+	console.log(congressLoyaltyTables.mostLoyalMembers);
+	console.log(congressLoyaltyTables.leastLoyalMembers);
 }
 
 setTimeout(init, 500);
