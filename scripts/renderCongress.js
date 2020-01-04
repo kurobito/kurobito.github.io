@@ -1,10 +1,15 @@
+import {getCongressData, chamber} from './getCongressMembers.js'
 import {sortByFirstNameAscending, sortByFirstNameDescending, sortByLastNameAscending
 	, sortByLastNameDescending, sortByPartyAscending, sortByPartyDescending, sortByStateAscending
 	, sortByStateDescending, sortByDistrictAscending, sortByDistrictDescending
 	, sortBySeniorityAscending, sortBySeniorityDescending, sortByVotesWithAscending
 	, sortByVotesWithDescending, sortByVotesAgainstAscending, sortByVotesAgainstDescending}
 	from './sortComparators.js';
-import {getCongressData, chamber} from './getCongressMembers.js'
+
+// make copy of congressData array
+let senateMembers = [];
+let houseMembers = [];
+
 let displayCard = Vue.component('displayCard', {
 	props: ['senateMembers', 'houseMembers', 'currentSenateComponent', 'currentHouseComponent'
 	, 'states', 'getStateName'],
@@ -773,11 +778,12 @@ function filterCongressMembersByState(stateFilterList, members){
 
 function filter(searchQuery, partyFilterList, stateFilterList){
 	let filteredList;
-	if (chamber === "senate") filteredList = senateMembers;
-	else filteredList = houseMembers;
+	if (chamber === "senate") filteredList = senateMembers.slice();
+	else filteredList = houseMembers.slice();
 	if (searchQuery)filteredList = searchCongressMembers(searchQuery, filteredList);
 	if (partyFilterList.length > 0) filteredList = filterCongressMembersByParty(partyFilterList, filteredList);
 	if (stateFilterList.length > 0) filteredList = filterCongressMembersByState(stateFilterList, filteredList);
+	console.log(filteredList)
 	return filteredList;
 }
 
@@ -862,6 +868,8 @@ filterByState.forEach(stateFilter => {
 
 const init = async () => {
 	const members = await getCongressData(chamber);
+	if (chamber === 'senate') senateMembers = members;
+	else houseMembers = members;
 	members.sort(sortByFirstNameAscending);
 	updateVue(members)
 }
