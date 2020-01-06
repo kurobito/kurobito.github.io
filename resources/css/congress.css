@@ -2,20 +2,20 @@
 	user-select: none;
 }
 
-#sortDropdown{
+#sortDropdown {
 	display: inline;
 }
 
-.card{
+.card {
 	margin-bottom: 1.5rem;
 }
 
-.scrollable-menu{
+.scrollable-menu {
 	height: auto;
 	max-height: 150px;
 	overflow-x: hidden;
 }
 
-.no-pointer-event{
+.no-pointer-event {
 	pointer-events: none;
 }
