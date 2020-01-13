@@ -1,21 +1,13 @@
-import { getCongressData, chamber } from "./getCongressMembers.js";
+import { getCongressData, chamber, congress } from "./getCongressMembers.js";
 import {
 	sortByFirstNameAscending,
-	sortByFirstNameDescending,
 	sortByLastNameAscending,
-	sortByLastNameDescending,
 	sortByPartyAscending,
-	sortByPartyDescending,
 	sortByStateAscending,
-	sortByStateDescending,
 	sortByDistrictAscending,
-	sortByDistrictDescending,
 	sortBySeniorityAscending,
-	sortBySeniorityDescending,
 	sortByVotesWithAscending,
-	sortByVotesWithDescending,
-	sortByVotesAgainstAscending,
-	sortByVotesAgainstDescending
+	sortByVotesAgainstAscending
 } from "./sortComparators.js";
 
 // make copy of congressData array
@@ -64,7 +56,7 @@ let senateMemberCardFirstName = Vue.component("senateMemberCardFirstName", {
 	<ul class="list-group list-group-flush">
 	<li class="list-group-item party bg-danger text-white" v-if="senateMember.party === 'R'">Republican</li>
 	<li class="list-group-item party bg-primary text-white" v-else-if="senateMember.party === 'D'">Democrat</li>
-	<li class="list-group-item party bg-info text-white" v-else-if="senateMember.party === 'ID'">Independent</li>
+	<li class="list-group-item party bg-info text-white" v-else-if="senateMember.party === 'ID' || senateMember.party === 'I'">Independent</li>
 	<li class="list-group-item party" v-else>Other</li>
 	<li class="list-group-item state">State: {{ getStateName(senateMember.state) }}</li>
 	<li class="list-group-item seniority">Seniority: {{ senateMember.seniority }}</li>
@@ -84,7 +76,7 @@ let senateMemberCardLastName = Vue.component("senateMemberCardLastName", {
 	<ul class="list-group list-group-flush">
 	<li class="list-group-item party bg-danger text-white" v-if="senateMember.party === 'R'">Republican</li>
 	<li class="list-group-item party bg-primary text-white" v-else-if="senateMember.party === 'D'">Democrat</li>
-	<li class="list-group-item party bg-info text-white" v-else-if="senateMember.party === 'ID'">Independent</li>
+	<li class="list-group-item party bg-info text-white" v-else-if="senateMember.party === 'ID' || senateMember.party === 'I'">Independent</li>
 	<li class="list-group-item party" v-else>Other</li>
 	<li class="list-group-item state">State: {{ getStateName(senateMember.state) }}</li>
 	<li class="list-group-item seniority">Seniority: {{ senateMember.seniority }}</li>
@@ -95,7 +87,8 @@ let senateMemberCardLastName = Vue.component("senateMemberCardLastName", {
 	</div>`
 });
 
-let districtListenerSet = false;
+let districtListenerSet = false; // Check if a listener has been set on district element
+
 // Create card component to display a house member, with his first name displayed first
 let houseMemberCardFirstName = Vue.component("houseMemberCardFirstName", {
 	props: ["houseMember", "states", "getStateName"],
@@ -193,11 +186,9 @@ let displayTable = Vue.component("displayTable", {
 });
 
 // Create a table row component to display a senate member, with his first name displayed first
-let senateMemberTableRowFirstName = Vue.component(
-	"senateMemberTableRowFirstName",
-	{
-		props: ["senateMember", "states", "getStateName"],
-		template: `<tr>
+let senateMemberTableRowFirstName = Vue.component("senateMemberTableRowFirstName", {
+	props: ["senateMember", "states", "getStateName"],
+	template: `<tr>
 	<td scope="row">{{ senateMember.first_name }} {{ senateMember.middle_name }} 
 	{{ senateMember.last_name }}</td>
 	<td> {{ senateMember.party }}</td>
@@ -206,15 +197,12 @@ let senateMemberTableRowFirstName = Vue.component(
 	<td> {{ senateMember.votes_with_party_pct }}</td>
 	<td> {{ senateMember.votes_against_party_pct }}</td>
 	</tr>`
-	}
-);
+});
 
 // Create a table row component to display a senate member, with his last name displayed first
-let senateMemberTableRowLastName = Vue.component(
-	"senateMemberTableRowLastName",
-	{
-		props: ["senateMember", "states", "getStateName"],
-		template: `<tr>
+let senateMemberTableRowLastName = Vue.component("senateMemberTableRowLastName", {
+	props: ["senateMember", "states", "getStateName"],
+	template: `<tr>
 	<td scope="row">{{ senateMember.last_name }}, {{ senateMember.first_name }} 
 	{{ senateMember.middle_name }} </td>
 	<td> {{ senateMember.party }}</td>
@@ -223,15 +211,12 @@ let senateMemberTableRowLastName = Vue.component(
 	<td> {{ senateMember.votes_with_party_pct }}</td>
 	<td> {{ senateMember.votes_against_party_pct }}</td>
 	</tr>`
-	}
-);
+});
 
 // Create a table row component to display a house member, with his first name displayed first
-let houseMemberTableRowFirstName = Vue.component(
-	"houseMemberTableRowFirstName",
-	{
-		props: ["houseMember", "states", "getStateName"],
-		template: `<tr>
+let houseMemberTableRowFirstName = Vue.component("houseMemberTableRowFirstName", {
+	props: ["houseMember", "states", "getStateName"],
+	template: `<tr>
 	<td scope="row">{{ houseMember.first_name }} {{ houseMember.middle_name }} 
 	{{ houseMember.last_name }}</td>
 	<td> {{ houseMember.party }}</td>
@@ -241,8 +226,7 @@ let houseMemberTableRowFirstName = Vue.component(
 	<td> {{ houseMember.votes_with_party_pct }}</td>
 	<td> {{ houseMember.votes_against_party_pct }}</td>
 	</tr>`
-	}
-);
+});
 
 // Create a table row component to display a house member, with his last name displayed first
 let houseMemberTableRowLastName = Vue.component("houseMemberTableRowLastName", {
@@ -339,8 +323,8 @@ const app = new Vue({
 	computed: {
 		getCongressHeading: function() {
 			if (chamber === "senate") {
-				return "Congress 116 - Senate";
-			} else return "Congress 116 - House";
+				return `Congress ${congress.number} - Senate`;
+			} else return `Congress ${congress.number} - House`;
 		},
 		getCongressText: function() {
 			if (chamber === "senate") {
@@ -419,6 +403,7 @@ function updateVue(members) {
 }
 
 // Sorts for card display
+// todo rebuild sort to encount for when congress changes numbers
 const sortedOn = {
 	firstName: true,
 	lastName: false,
@@ -428,23 +413,13 @@ const sortedOn = {
 	seniority: false,
 	partyVotesWith: false,
 	partyVotesAgainst: false,
-	setSortedOn: function(
-		sortedType,
-		sortMenuButton,
-		sortButton,
-		sortHeader,
-		sortString
-	) {
+	setSortedOn: function(sortedType, sortMenuButton, sortButton, sortHeader, sortString) {
 		switch (sortedType) {
 			case "firstName":
-				this.firstName
-					? (this.firstName = false)
-					: (this.firstName = true);
+				this.firstName ? (this.firstName = false) : (this.firstName = true);
 				break;
 			case "lastName":
-				this.lastName
-					? (this.lastName = false)
-					: (this.lastName = true);
+				this.lastName ? (this.lastName = false) : (this.lastName = true);
 				break;
 			case "party":
 				this.party ? (this.party = false) : (this.party = true);
@@ -453,19 +428,13 @@ const sortedOn = {
 				this.state ? (this.state = false) : (this.state = true);
 				break;
 			case "district":
-				this.district
-					? (this.district = false)
-					: (this.district = true);
+				this.district ? (this.district = false) : (this.district = true);
 				break;
 			case "seniority":
-				this.seniority
-					? (this.seniority = false)
-					: (this.seniority = true);
+				this.seniority ? (this.seniority = false) : (this.seniority = true);
 				break;
 			case "partyVotesWith":
-				this.partyVotesWith
-					? (this.partyVotesWith = false)
-					: (this.partyVotesWith = true);
+				this.partyVotesWith ? (this.partyVotesWith = false) : (this.partyVotesWith = true);
 				break;
 			case "partyVotesAgainst":
 				this.partyVotesAgainst
@@ -481,6 +450,51 @@ const sortedOn = {
 	}
 };
 
+function sortClickHandler(
+	sortedOnType,
+	sortedType,
+	sortFunction,
+	sortStringAscendingly,
+	sortStringDescendingly,
+	sortMenuButton,
+	sortButton,
+	sortHeader
+) {
+	let filteredList = filter(searchByNameInput.value, partyFilterList, stateFilterList);
+	if (sortedType === "firstName" && !sortHeader) {
+		chamber === "senate"
+			? app.swapCongressComponent("senateMemberCardFirstName")
+			: app.swapCongressComponent("houseMemberCardFirstName");
+	}
+	if (sortedType === "lastName" && !sortHeader) {
+		chamber === "senate"
+			? app.swapCongressComponent("senateMemberCardLastName")
+			: app.swapCongressComponent("houseMemberCardLastName");
+	}
+
+	if (sortedOnType) {
+		sortedOn.setSortedOn(
+			sortedType,
+			sortMenuButton,
+			sortButton,
+			sortHeader,
+			sortStringDescendingly
+		);
+		filteredList.sort(sortFunction).reverse();
+		updateVue(filteredList);
+	} else {
+		sortedOn.setSortedOn(
+			sortedType,
+			sortMenuButton,
+			sortButton,
+			sortHeader,
+			sortStringAscendingly
+		);
+		filteredList.sort(sortFunction);
+		updateVue(filteredList);
+	}
+}
+
 function setSortCardsListeners() {
 	const sortMenuButton = document.getElementById("sortMenuButton");
 	const sortByFirstName = document.getElementById("sortFirstName");
@@ -490,180 +504,88 @@ function setSortCardsListeners() {
 	const sortBySeniority = document.getElementById("sortSeniority");
 	const sortByVotesWith = document.getElementById("sortVotesWith");
 	const sortByVotesAgainst = document.getElementById("sortVotesAgainst");
+	const sortByDistrict = document.getElementById("sortDistrict");
 
 	sortByFirstName.onclick = () => {
-		let sortStringAscendingly =
-			'<i class="fas fa-sort-alpha-up"></i> Sort on first name';
+		let sortStringAscendingly = '<i class="fas fa-sort-alpha-up"></i> Sort on first name';
 		let sortStringDescendingly =
 			'<i class="fas fa-sort-alpha-down-alt"></i> Sort on first name';
-		let filteredList = filter(
-			searchByNameInput.value,
-			partyFilterList,
-			stateFilterList
+
+		sortClickHandler(
+			sortedOn.firstName,
+			"firstName",
+			sortByFirstNameAscending,
+			sortStringAscendingly,
+			sortStringDescendingly,
+			sortMenuButton,
+			sortByFirstName,
+			undefined
 		);
-		if (chamber === "senate") {
-			app.swapCongressComponent("senateMemberCardFirstName");
-		} else app.swapCongressComponent("houseMemberCardFirstName");
-		if (sortedOn.firstName) {
-			sortedOn.setSortedOn(
-				"firstName",
-				sortMenuButton,
-				sortByFirstName,
-				undefined,
-				sortStringDescendingly
-			);
-			filteredList.sort(sortByFirstNameDescending);
-			updateVue(filteredList);
-		} else {
-			sortedOn.setSortedOn(
-				"firstName",
-				sortMenuButton,
-				sortByFirstName,
-				undefined,
-				sortStringAscendingly
-			);
-			filteredList.sort(sortByFirstNameAscending);
-			updateVue(filteredList);
-		}
 	};
 
 	sortByLastName.onclick = () => {
-		let sortStringAscendingly =
-			'<i class="fas fa-sort-alpha-up"></i> Sort on last name';
-		let sortStringDescendingly =
-			'<i class="fas fa-sort-alpha-down-alt"></i> Sort on last name';
-		let filteredList = filter(
-			searchByNameInput.value,
-			partyFilterList,
-			stateFilterList
+		let sortStringAscendingly = '<i class="fas fa-sort-alpha-up"></i> Sort on last name';
+		let sortStringDescendingly = '<i class="fas fa-sort-alpha-down-alt"></i> Sort on last name';
+
+		sortClickHandler(
+			sortedOn.lastName,
+			"lastName",
+			sortByLastNameAscending,
+			sortStringAscendingly,
+			sortStringDescendingly,
+			sortMenuButton,
+			sortByLastName,
+			undefined
 		);
-		if (chamber === "senate") {
-			app.swapCongressComponent("senateMemberCardLastName");
-		} else app.swapCongressComponent("houseMemberCardLastName");
-		if (sortedOn.lastName) {
-			sortedOn.setSortedOn(
-				"lastName",
-				sortMenuButton,
-				sortByLastName,
-				undefined,
-				sortStringDescendingly
-			);
-			filteredList.sort(sortByLastNameDescending);
-			updateVue(filteredList);
-		} else {
-			sortedOn.setSortedOn(
-				"lastName",
-				sortMenuButton,
-				sortByLastName,
-				undefined,
-				sortStringAscendingly
-			);
-			filteredList.sort(sortByLastNameAscending);
-			updateVue(filteredList);
-		}
 	};
 
 	sortByParty.onclick = () => {
-		let sortStringAscendingly =
-			'<i class="fas fa-sort-alpha-up"></i> Sort on party';
-		let sortStringDescendingly =
-			'<i class="fas fa-sort-alpha-down-alt"></i> Sort on party';
-		let filteredList = filter(
-			searchByNameInput.value,
-			partyFilterList,
-			stateFilterList
-		);
+		let sortStringAscendingly = '<i class="fas fa-sort-alpha-up"></i> Sort on party';
+		let sortStringDescendingly = '<i class="fas fa-sort-alpha-down-alt"></i> Sort on party';
 
-		if (sortedOn.partyAscendingly) {
-			sortedOn.setSortedOn(
-				"party",
-				sortMenuButton,
-				sortByParty,
-				undefined,
-				sortStringDescendingly
-			);
-			filteredList.sort(sortByPartyDescending);
-			updateVue(filteredList);
-		} else {
-			sortedOn.setSortedOn(
-				"party",
-				sortMenuButton,
-				sortByParty,
-				undefined,
-				sortStringAscendingly
-			);
-			console.log("sort party ascendingly");
-			filteredList.sort(sortByPartyAscending);
-			console.log(filteredList);
-			updateVue(filteredList);
-		}
+		sortClickHandler(
+			sortedOn.party,
+			"party",
+			sortByPartyAscending,
+			sortStringAscendingly,
+			sortStringDescendingly,
+			sortMenuButton,
+			sortByParty,
+			undefined
+		);
 	};
 
 	sortByState.onclick = () => {
-		let sortStringAscendingly =
-			'<i class="fas fa-sort-alpha-up"></i> Sort on state';
-		let sortStringDescendingly =
-			'<i class="fas fa-sort-alpha-down-alt"></i> Sort on state';
-		let filteredList = filter(
-			searchByNameInput.value,
-			partyFilterList,
-			stateFilterList
-		);
+		let sortStringAscendingly = '<i class="fas fa-sort-alpha-up"></i> Sort on state';
+		let sortStringDescendingly = '<i class="fas fa-sort-alpha-down-alt"></i> Sort on state';
 
-		if (sortedOn.stateAscendingly) {
-			sortedOn.setSortedOn(
-				"state",
-				sortMenuButton,
-				sortByState,
-				undefined,
-				sortStringDescendingly
-			);
-			filteredList.sort(sortByStateDescending);
-			updateVue(filteredList);
-		} else {
-			sortedOn.setSortedOn(
-				"state",
-				sortMenuButton,
-				sortByState,
-				undefined,
-				sortStringAscendingly
-			);
-			filteredList.sort(sortByStateAscending);
-			updateVue(filteredList);
-		}
+		sortClickHandler(
+			sortedOn.state,
+			"state",
+			sortByStateAscending,
+			sortStringAscendingly,
+			sortStringDescendingly,
+			sortMenuButton,
+			sortByState,
+			undefined
+		);
 	};
+
 	sortBySeniority.onclick = () => {
-		let sortStringAscendingly =
-			'<i class="fas fa-sort-numeric-up"></i> Sort on seniority';
+		let sortStringAscendingly = '<i class="fas fa-sort-numeric-up"></i> Sort on seniority';
 		let sortStringDescendingly =
 			'<i class="fas fa-sort-numeric-down-alt"></i> Sort on seniority';
-		let filteredList = filter(
-			searchByNameInput.value,
-			partyFilterList,
-			stateFilterList
-		);
 
-		if (sortedOn.seniorityAscendingly) {
-			sortedOn.setSortedOn(
-				"seniority",
-				sortMenuButton,
-				sortBySeniority,
-				undefined,
-				sortStringDescendingly
-			);
-			filteredList.sort(sortBySeniorityDescending);
-			updateVue(filteredList);
-		} else {
-			sortedOn.setSortedOn(
-				"seniority",
-				sortMenuButton,
-				sortBySeniority,
-				undefined,
-				sortStringAscendingly
-			);
-			filteredList.sort(sortBySeniorityAscending);
-			updateVue(filteredList);
-		}
+		sortClickHandler(
+			sortedOn.seniority,
+			"seniority",
+			sortBySeniorityAscending,
+			sortStringAscendingly,
+			sortStringDescendingly,
+			sortMenuButton,
+			sortBySeniority,
+			undefined
+		);
 	};
 
 	sortByVotesWith.onclick = () => {
@@ -671,33 +593,17 @@ function setSortCardsListeners() {
 			'<i class="fas fa-sort-numeric-up"></i> Sort on votes with party';
 		let sortStringDescendingly =
 			'<i class="fas fa-sort-numeric-down-alt"></i> Sort on votes with party';
-		let filteredList = filter(
-			searchByNameInput.value,
-			partyFilterList,
-			stateFilterList
-		);
 
-		if (sortedOn.partyVotesWithAscendingly) {
-			sortedOn.setSortedOn(
-				"partyVotesWith",
-				sortMenuButton,
-				sortByVotesWith,
-				undefined,
-				sortStringDescendingly
-			);
-			filteredList.sort(sortByVotesWithDescending);
-			updateVue(filteredList);
-		} else {
-			sortedOn.setSortedOn(
-				"partyVotesWith",
-				sortMenuButton,
-				sortByVotesWith,
-				undefined,
-				sortStringAscendingly
-			);
-			filteredList.sort(sortByVotesWithAscending);
-			updateVue(filteredList);
-		}
+		sortClickHandler(
+			sortedOn.partyVotesWith,
+			"partyVotesWith",
+			sortByVotesWithAscending,
+			sortStringAscendingly,
+			sortStringDescendingly,
+			sortMenuButton,
+			sortByVotesWith,
+			undefined
+		);
 	};
 
 	sortByVotesAgainst.onclick = () => {
@@ -705,33 +611,17 @@ function setSortCardsListeners() {
 			'<i class="fas fa-sort-numeric-up"></i> Sort on votes against party';
 		let sortStringDescendingly =
 			'<i class="fas fa-sort-numeric-down-alt"></i> Sort on votes against party';
-		let filteredList = filter(
-			searchByNameInput.value,
-			partyFilterList,
-			stateFilterList
-		);
 
-		if (sortedOn.partyVotesAgainstAscendingly) {
-			sortedOn.setSortedOn(
-				"partyVotesAgainst",
-				sortMenuButton,
-				sortByVotesAgainst,
-				undefined,
-				sortStringDescendingly
-			);
-			filteredList.sort(sortByVotesAgainstDescending);
-			updateVue(filteredList);
-		} else {
-			sortedOn.setSortedOn(
-				"partyVotesAgainst",
-				sortMenuButton,
-				sortByVotesAgainst,
-				undefined,
-				sortStringAscendingly
-			);
-			filteredList.sort(sortByVotesAgainstAscending);
-			updateVue(filteredList);
-		}
+		sortClickHandler(
+			sortedOn.partyVotesAgainst,
+			"partyVotesAgainst",
+			sortByVotesAgainstAscending,
+			sortStringAscendingly,
+			sortStringDescendingly,
+			sortMenuButton,
+			sortByVotesAgainst,
+			undefined
+		);
 	};
 }
 
@@ -742,37 +632,20 @@ function setSortDistrictListener() {
 
 	if (sortByDistrict) {
 		sortByDistrict.onclick = () => {
-			let sortStringAscendingly =
-				'<i class="fas fa-sort-alpha-up"></i> Sort on district';
+			let sortStringAscendingly = '<i class="fas fa-sort-alpha-up"></i> Sort on district';
 			let sortStringDescendingly =
 				'<i class="fas fa-sort-alpha-down-alt"></i> Sort on district';
-			let filteredList = filter(
-				searchByNameInput.value,
-				partyFilterList,
-				stateFilterList
-			);
 
-			if (sortedOn.districtAscendingly) {
-				sortedOn.setSortedOn(
-					"district",
-					sortMenuButton,
-					sortByDistrict,
-					undefined,
-					sortStringDescendingly
-				);
-				filteredList.sort(sortByDistrictDescending);
-				updateVue(filteredList);
-			} else {
-				sortedOn.setSortedOn(
-					"district",
-					sortMenuButton,
-					sortByDistrict,
-					undefined,
-					sortStringAscendingly
-				);
-				filteredList.sort(sortByDistrictAscending);
-				updateVue(filteredList);
-			}
+			sortClickHandler(
+				sortedOn.district,
+				"district",
+				sortByDistrictAscending,
+				sortStringAscendingly,
+				sortStringDescendingly,
+				sortMenuButton,
+				sortByDistrict,
+				undefined
+			);
 		};
 		return true;
 	}
@@ -801,234 +674,123 @@ function setSortTableListeners() {
 	nameHeader.onclick = () => {
 		let sortStringAscendingly = 'Name <i class="fas fa-sort-up">';
 		let sortStringDescendingly = 'Name <i class="fas fa-sort-down">';
-		let filteredList = filter(
-			searchByNameInput.value,
-			partyFilterList,
-			stateFilterList
-		);
+		let filteredList = filter(searchByNameInput.value, partyFilterList, stateFilterList);
 		setHeadersDefaultString(sortHeaderArray);
-		if (sortedOn.firstName) {
-			sortedOn.setSortedOn(
-				"firstName",
-				undefined,
-				undefined,
-				nameHeader,
-				sortStringDescendingly
-			);
-			filteredList.sort(sortByFirstNameDescending);
-			updateVue(filteredList);
-		} else {
-			sortedOn.setSortedOn(
-				"firstName",
-				undefined,
-				undefined,
-				nameHeader,
-				sortStringAscendingly
-			);
-			filteredList.sort(sortByFirstNameAscending);
-			updateVue(filteredList);
-		}
+		sortClickHandler(
+			sortedOn.firstName,
+			"firstName",
+			sortByFirstNameAscending,
+			sortStringAscendingly,
+			sortStringDescendingly,
+			undefined,
+			undefined,
+			nameHeader
+		);
 	};
 
 	partyHeader.onclick = () => {
 		let sortStringAscendingly = 'Party <i class="fas fa-sort-up">';
 		let sortStringDescendingly = 'Party <i class="fas fa-sort-down">';
-		let filteredList = filter(
-			searchByNameInput.value,
-			partyFilterList,
-			stateFilterList
-		);
+		let filteredList = filter(searchByNameInput.value, partyFilterList, stateFilterList);
 		setHeadersDefaultString(sortHeaderArray);
-		if (sortedOn.partyAscendingly) {
-			sortedOn.setSortedOn(
-				"party",
-				undefined,
-				undefined,
-				partyHeader,
-				sortStringDescendingly
-			);
-			filteredList.sort(sortByPartyDescending);
-			updateVue(filteredList);
-		} else {
-			sortedOn.setSortedOn(
-				"party",
-				undefined,
-				undefined,
-				partyHeader,
-				sortStringAscendingly
-			);
-			filteredList.sort(sortByPartyAscending);
-			updateVue(filteredList);
-		}
+		sortClickHandler(
+			sortedOn.party,
+			"party",
+			sortByFirstNameAscending,
+			sortStringAscendingly,
+			sortStringDescendingly,
+			undefined,
+			undefined,
+			partyHeader
+		);
 	};
 
 	stateHeader.onclick = () => {
 		let sortStringAscendingly = 'State <i class="fas fa-sort-up">';
 		let sortStringDescendingly = 'State <i class="fas fa-sort-down">';
-		let filteredList = filter(
-			searchByNameInput.value,
-			partyFilterList,
-			stateFilterList
-		);
+		let filteredList = filter(searchByNameInput.value, partyFilterList, stateFilterList);
 		setHeadersDefaultString(sortHeaderArray);
-		if (sortedOn.stateAscendingly) {
-			sortedOn.setSortedOn(
-				"state",
-				undefined,
-				undefined,
-				stateHeader,
-				sortStringDescendingly
-			);
-			filteredList.sort(sortByStateDescending);
-			updateVue(filteredList);
-		} else {
-			sortedOn.setSortedOn(
-				"state",
-				undefined,
-				undefined,
-				stateHeader,
-				sortStringAscendingly
-			);
-			filteredList.sort(sortByStateAscending);
-			updateVue(filteredList);
-		}
+		sortClickHandler(
+			sortedOn.state,
+			"state",
+			sortByFirstNameAscending,
+			sortStringAscendingly,
+			sortStringDescendingly,
+			undefined,
+			undefined,
+			stateHeader
+		);
 	};
 
 	if (districtHeader) {
-		if (sortHeaderArray.indexOf(districtHeader) === -1)
-			sortHeaderArray.push(districtHeader);
+		if (sortHeaderArray.indexOf(districtHeader) === -1) sortHeaderArray.push(districtHeader);
 		districtHeader.onclick = () => {
 			let sortStringAscendingly = 'District <i class="fas fa-sort-up">';
-			let sortStringDescendingly =
-				'District <i class="fas fa-sort-down">';
-			let filteredList = filter(
-				searchByNameInput.value,
-				partyFilterList,
-				stateFilterList
-			);
+			let sortStringDescendingly = 'District <i class="fas fa-sort-down">';
+			let filteredList = filter(searchByNameInput.value, partyFilterList, stateFilterList);
 			setHeadersDefaultString(sortHeaderArray);
-			if (sortedOn.districtAscendingly) {
-				sortedOn.setSortedOn(
-					"district",
-					undefined,
-					undefined,
-					districtHeader,
-					sortStringDescendingly
-				);
-				filteredList.sort(sortByDistrictDescending);
-				updateVue(filteredList);
-			} else {
-				sortedOn.setSortedOn(
-					"district",
-					undefined,
-					undefined,
-					districtHeader,
-					sortStringAscendingly
-				);
-				filteredList.sort(sortByDistrictAscending);
-				updateVue(filteredList);
-			}
+			sortClickHandler(
+				sortedOn.district,
+				"district",
+				sortByFirstNameAscending,
+				sortStringAscendingly,
+				sortStringDescendingly,
+				undefined,
+				undefined,
+				districtHeader
+			);
 		};
 	}
 
 	seniorityHeader.onclick = () => {
 		let sortStringAscendingly = 'Seniority <i class="fas fa-sort-up">';
 		let sortStringDescendingly = 'Seniority <i class="fas fa-sort-down">';
-		let filteredList = filter(
-			searchByNameInput.value,
-			partyFilterList,
-			stateFilterList
-		);
+		let filteredList = filter(searchByNameInput.value, partyFilterList, stateFilterList);
 		setHeadersDefaultString(sortHeaderArray);
-		if (sortedOn.seniorityAscendingly) {
-			sortedOn.setSortedOn(
+		sortClickHandler(
+				sortedOn.seniority,
 				"seniority",
+				sortByFirstNameAscending,
+				sortStringAscendingly,
+				sortStringDescendingly,
 				undefined,
 				undefined,
-				seniorityHeader,
-				sortStringDescendingly
+				seniorityHeader
 			);
-			filteredList.sort(sortBySeniorityDescending);
-			updateVue(filteredList);
-		} else {
-			sortedOn.setSortedOn(
-				"seniority",
-				undefined,
-				undefined,
-				seniorityHeader,
-				sortStringAscendingly
-			);
-			filteredList.sort(sortBySeniorityAscending);
-			updateVue(filteredList);
-		}
 	};
 
 	votesWithHeader.onclick = () => {
-		let sortStringAscendingly =
-			'Votes with party <i class="fas fa-sort-up">';
-		let sortStringDescendingly =
-			'Votes with party <i class="fas fa-sort-down">';
-		let filteredList = filter(
-			searchByNameInput.value,
-			partyFilterList,
-			stateFilterList
-		);
+		let sortStringAscendingly = 'Votes with party <i class="fas fa-sort-up">';
+		let sortStringDescendingly = 'Votes with party <i class="fas fa-sort-down">';
+		let filteredList = filter(searchByNameInput.value, partyFilterList, stateFilterList);
 		setHeadersDefaultString(sortHeaderArray);
-		if (sortedOn.partyVotesWithAscendingly) {
-			sortedOn.setSortedOn(
+		sortClickHandler(
+				sortedOn.partyVotesWith,
 				"partyVotesWith",
+				sortByFirstNameAscending,
+				sortStringAscendingly,
+				sortStringDescendingly,
 				undefined,
 				undefined,
-				votesWithHeader,
-				sortStringDescendingly
+				votesWithHeader
 			);
-			filteredList.sort(sortByVotesWithDescending);
-			updateVue(filteredList);
-		} else {
-			sortedOn.setSortedOn(
-				"partyVotesWith",
-				undefined,
-				undefined,
-				votesWithHeader,
-				sortStringAscendingly
-			);
-			filteredList.sort(sortByVotesWithAscending);
-			updateVue(filteredList);
-		}
 	};
 
 	votesAgainstHeader.onclick = () => {
-		let sortStringAscendingly =
-			'Votes against party <i class="fas fa-sort-up">';
-		let sortStringDescendingly =
-			'Votes against party <i class="fas fa-sort-down">';
-		let filteredList = filter(
-			searchByNameInput.value,
-			partyFilterList,
-			stateFilterList
-		);
+		let sortStringAscendingly = 'Votes against party <i class="fas fa-sort-up">';
+		let sortStringDescendingly = 'Votes against party <i class="fas fa-sort-down">';
+		let filteredList = filter(searchByNameInput.value, partyFilterList, stateFilterList);
 		setHeadersDefaultString(sortHeaderArray);
-		if (sortedOn.partyVotesAgainstAscendingly) {
-			sortedOn.setSortedOn(
+		sortClickHandler(
+				sortedOn.partyVotesAgainst,
 				"partyVotesAgainst",
+				sortByFirstNameAscending,
+				sortStringAscendingly,
+				sortStringDescendingly,
 				undefined,
 				undefined,
-				votesAgainstHeader,
-				sortStringDescendingly
+				votesAgainstHeader
 			);
-			filteredList.sort(sortByVotesAgainstDescending);
-			updateVue(filteredList);
-		} else {
-			sortedOn.setSortedOn(
-				"partyVotesAgainst",
-				undefined,
-				undefined,
-				votesAgainstHeader,
-				sortStringAscendingly
-			);
-			filteredList.sort(sortByVotesAgainstAscending);
-			updateVue(filteredList);
-		}
 	};
 }
 
@@ -1044,10 +806,7 @@ function setHeadersDefaultString(sortHeaderArray) {
 
 	sortHeaderArray.forEach(header => {
 		sortDefaultStrings.forEach(defaultString => {
-			if (
-				header.innerHTML.includes(defaultString) &&
-				header.innerHTML !== defaultString
-			) {
+			if (header.innerHTML.includes(defaultString) && header.innerHTML !== defaultString) {
 				header.innerHTML = defaultString;
 			}
 		});
@@ -1062,10 +821,6 @@ function searchCongressMembers(searchQuery, members) {
 		} else {
 			memberName = `${member.first_name} ${member.last_name}`;
 		}
-		// if(memberName.toLowerCase().includes(searchQuery.toLowerCase())) {
-		// 	console.log(memberName);
-		// 	console.log('Found with ' + searchQuery)
-		// }else console.log(searchQuery + ' not found');
 		return memberName.toLowerCase().includes(searchQuery.toLowerCase());
 	});
 	return searchedCongressMembers;
@@ -1075,15 +830,10 @@ function filterCongressMembersByParty(partyFilterList, members) {
 	if (partyFilterList.length > 0) {
 		let filteredCongressMembers = members.filter(member => {
 			for (let i = 0; i < partyFilterList.length; i++) {
-				// console.log(`${partyFilterList[i]} === ${member.party} = ${partyFilterList[i] === member.party}`)
-				if (
-					partyFilterList[i] === member.party ||
-					partyFilterList[i] === "I"
-				)
+				if (partyFilterList[i] === member.party || partyFilterList[i] === "I")
 					return member;
 			}
 		});
-		// console.log(filteredCongressMembers);
 		return filteredCongressMembers;
 	} else return members;
 }
@@ -1095,7 +845,6 @@ function filterCongressMembersByState(stateFilterList, members) {
 				if (stateFilterList[i] === member.state) return member;
 			}
 		});
-		// console.log(filteredCongressMembers);
 		return filteredCongressMembers;
 	} else return members;
 }
@@ -1104,18 +853,11 @@ function filter(searchQuery, partyFilterList, stateFilterList) {
 	let filteredList;
 	if (chamber === "senate") filteredList = senateMembers.slice();
 	else filteredList = houseMembers.slice();
-	if (searchQuery)
-		filteredList = searchCongressMembers(searchQuery, filteredList);
+	if (searchQuery) filteredList = searchCongressMembers(searchQuery, filteredList);
 	if (partyFilterList.length > 0)
-		filteredList = filterCongressMembersByParty(
-			partyFilterList,
-			filteredList
-		);
+		filteredList = filterCongressMembersByParty(partyFilterList, filteredList);
 	if (stateFilterList.length > 0)
-		filteredList = filterCongressMembersByState(
-			stateFilterList,
-			filteredList
-		);
+		filteredList = filterCongressMembersByState(stateFilterList, filteredList);
 	console.log(filteredList);
 	return filteredList;
 }
@@ -1123,9 +865,7 @@ function filter(searchQuery, partyFilterList, stateFilterList) {
 // eventListener for search
 let searchByNameInput = document.getElementById("searchByName");
 searchByNameInput.oninput = () => {
-	updateVue(
-		filter(searchByNameInput.value, partyFilterList, stateFilterList)
-	);
+	updateVue(filter(searchByNameInput.value, partyFilterList, stateFilterList));
 };
 
 // eventListener for filter by party
@@ -1148,9 +888,7 @@ filterAllParties.onchange = () => {
 	}
 
 	console.log(partyFilterList);
-	updateVue(
-		filter(searchByNameInput.value, partyFilterList, stateFilterList)
-	);
+	updateVue(filter(searchByNameInput.value, partyFilterList, stateFilterList));
 };
 
 // run filter every time a party checkbox's value changes.
@@ -1160,18 +898,11 @@ filterByParty.forEach(partyFilter => {
 			if (partyFilterList.length < filterByParty.length) {
 				partyFilterList.push(partyFilter.value);
 			}
-		} else
-			partyFilterList.splice(
-				partyFilterList.indexOf(partyFilter.value),
-				1
-			);
-		if (partyFilterList.length === filterByParty.length)
-			filterAllParties.checked = true;
+		} else partyFilterList.splice(partyFilterList.indexOf(partyFilter.value), 1);
+		if (partyFilterList.length === filterByParty.length) filterAllParties.checked = true;
 		else filterAllParties.checked = false;
 		console.log(partyFilterList);
-		updateVue(
-			filter(searchByNameInput.value, partyFilterList, stateFilterList)
-		);
+		updateVue(filter(searchByNameInput.value, partyFilterList, stateFilterList));
 	};
 });
 
@@ -1193,9 +924,7 @@ filterAllStates.onchange = () => {
 		stateFilterList.splice(0);
 	}
 	console.log(stateFilterList);
-	updateVue(
-		filter(searchByNameInput.value, partyFilterList, stateFilterList)
-	);
+	updateVue(filter(searchByNameInput.value, partyFilterList, stateFilterList));
 };
 
 filterByState.forEach(stateFilter => {
@@ -1204,27 +933,40 @@ filterByState.forEach(stateFilter => {
 			if (stateFilterList.length < filterByState.length) {
 				stateFilterList.push(stateFilter.value);
 			}
-		} else
-			stateFilterList.splice(
-				stateFilterList.indexOf(stateFilter.value),
-				1
-			);
-		if (stateFilterList.length === filterByState.length)
-			filterAllStates.checked = true;
+		} else stateFilterList.splice(stateFilterList.indexOf(stateFilter.value), 1);
+		if (stateFilterList.length === filterByState.length) filterAllStates.checked = true;
 		else filterAllStates.checked = false;
 		// console.log(stateFilterList);
-		updateVue(
-			filter(searchByNameInput.value, partyFilterList, stateFilterList)
-		);
+		updateVue(filter(searchByNameInput.value, partyFilterList, stateFilterList));
 	};
 });
 
-const init = async () => {
+function setOnCongressChangedListener() {
+	const incrementCongressBtn = document.getElementById("incrementCongressBtn");
+	const decrementCongressBtn = document.getElementById("decrementCongressBtn");
+
+	incrementCongressBtn.onclick = async () => {
+		updateVue(await fetchMembers());
+		updateVue(filter(searchByNameInput.value, partyFilterList, stateFilterList));
+	};
+	decrementCongressBtn.onclick = async () => {
+		updateVue(await fetchMembers());
+		updateVue(filter(searchByNameInput.value, partyFilterList, stateFilterList));
+	};
+}
+
+async function fetchMembers() {
 	const members = await getCongressData(chamber);
 	if (chamber === "senate") senateMembers = members;
 	else houseMembers = members;
 	members.sort(sortByFirstNameAscending);
-	updateVue(members);
+
+	return members;
+}
+
+const init = async () => {
+	updateVue(await fetchMembers());
+	setOnCongressChangedListener();
 };
 
 setTimeout(init, 500);

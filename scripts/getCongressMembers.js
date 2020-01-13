@@ -1,18 +1,51 @@
-import { setNavBarLogic } from "./navbar.js";
-
 // ProPublica Congress API Info
 const apiKey = "cHWA0cyVrIeIZHFmZyrlp3UBNFO1aqLn7LsYLij2";
-let url = "https://api.propublica.org/congress/v1/116/{chamber}/members.json";
-// const url = 'https://api.propublica.org/congress/v1/116/senate/members.json';
-const congressHeaders = new Headers();
-congressHeaders.append("X-API-KEY", apiKey);
 let houseMembers;
 let senateMembers;
-url = setNavBarLogic(url);
 const chamber = window.location.href.split("?")[1];
 
+const congress = new Vue({
+	el: "#congress",
+	data:{
+		chamber: chamber,
+		number: 116,
+		senateMin: 80,
+		senateMax: 116,
+		houseMin: 102,
+		houseMax: 116,
+	},
+	methods:{
+		incrementCongress(){
+			if (chamber === 'senate') {
+				if (this.number < this.senateMax) this.number++;
+			}else{
+				if(this.number < this.houseMax) this.number++;
+			}
+		},
+		decrementCongress(){
+			if (chamber === 'senate') {
+				if (this.number > this.senateMin) this.number--;
+			}else{
+				if(this.number > this.houseMin) this.number--;
+			}
+		}
+	}
+
+})
+
+function getCongressUrl(chamber, congressNumber) {
+	let url =
+		"https://api.propublica.org/congress/v1/{congress}/{chamber}/members.json";
+	url = url.replace("{chamber}", chamber);
+	url = url.replace("{congress}", congressNumber);
+	return url;
+}
+
 // fetch request
-export const getCongressData = async chamber => {
+export const getCongressData = async (chamber) => {
+	const url = getCongressUrl(chamber, congress.number);
+	const congressHeaders = new Headers();
+	congressHeaders.append("X-API-KEY", apiKey);
 	const request = new Request(url, {
 		method: "GET",
 		headers: congressHeaders
@@ -47,4 +80,4 @@ export const getCongressData = async chamber => {
 	}
 };
 
-export { chamber };
+export { chamber, congress};

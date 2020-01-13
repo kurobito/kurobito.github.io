@@ -2,11 +2,8 @@ import { getCongressData, chamber } from "./getCongressMembers.js";
 import { congressOverview } from "./congressOverview.js";
 import {
 	sortByFirstNameAscending,
-	sortByFirstNameDescending,
 	sortByNumPartyVotesAscending,
-	sortByNumPartyVotesDescending,
 	sortByVotesWithAscending,
-	sortByVotesWithDescending
 } from "./sortComparators.js";
 
 // vue instance for congress info
@@ -88,13 +85,15 @@ const congressLoyaltyTables = new Vue({
 			let mostLoyalMembers = [];
 			if (chamber === "senate") {
 				mostLoyalMembers = this.senateMembers
-					.sort(sortByVotesWithDescending)
+					.sort(sortByVotesWithAscending)
+					.reverse()
 					.slice();
 				mostLoyalMembers.splice(mostLoyalMembers.length * 0.1);
 				this.mostLoyalMembers = mostLoyalMembers;
 			} else {
 				mostLoyalMembers = this.houseMembers
-					.sort(sortByVotesWithDescending)
+					.sort(sortByVotesWithAscending)
+					.reverse()
 					.slice();
 				mostLoyalMembers.splice(mostLoyalMembers.length * 0.1);
 				this.mostLoyalMembers = mostLoyalMembers;
@@ -120,8 +119,8 @@ const congressLoyaltyTables = new Vue({
 				this.sortedOn.name = false;
 				event.target.innerHTML = sortStringDescendingly;
 				if (isLeastLoyalTable)
-					this.leastLoyalMembers.sort(sortByFirstNameDescending);
-				else this.mostLoyalMembers.sort(sortByFirstNameDescending);
+					this.leastLoyalMembers.sort(sortByFirstNameAscending).reverse();
+				else this.mostLoyalMembers.sort(sortByFirstNameAscending).reverse();
 			} else {
 				this.sortedOn.name = true;
 				event.target.innerHTML = sortStringAscendingly;
@@ -146,8 +145,8 @@ const congressLoyaltyTables = new Vue({
 				this.sortedOn.numOfPartyVotes = false;
 				event.target.innerHTML = sortStringDescendingly;
 				if (isLeastLoyalTable)
-					this.leastLoyalMembers.sort(sortByNumPartyVotesDescending);
-				else this.mostLoyalMembers.sort(sortByNumPartyVotesDescending);
+					this.leastLoyalMembers.sort(sortByNumPartyVotesAscending).reverse();
+				else this.mostLoyalMembers.sort(sortByNumPartyVotesAscending).reverse();
 			} else {
 				this.sortedOn.numOfPartyVotes = true;
 				event.target.innerHTML = sortStringAscendingly;
@@ -173,8 +172,8 @@ const congressLoyaltyTables = new Vue({
 				this.sortedOn.pctOfPartyVotes = false;
 				event.target.innerHTML = sortStringDescendingly;
 				if (isLeastLoyalTable)
-					this.leastLoyalMembers.sort(sortByVotesWithDescending);
-				else this.mostLoyalMembers.sort(sortByVotesWithDescending);
+					this.leastLoyalMembers.sort(sortByVotesWithAscending).reverse();
+				else this.mostLoyalMembers.sort(sortByVotesWithAscending).reverse();
 			} else {
 				this.sortedOn.pctOfPartyVotes = true;
 				event.target.innerHTML = sortStringAscendingly;
@@ -226,7 +225,7 @@ function updateVue(members) {
 		congressOverview.senateMembers = members;
 	} else {
 		congressLoyaltyTables.houseMembers = members;
-		congressOverview.houseMembersMembers = members;
+		congressOverview.houseMembers = members;
 	}
 }
 
@@ -240,7 +239,7 @@ function setNumOfPartyVotesOnMembers(members) {
 }
 
 const init = async () => {
-	const members = await getCongressData(chamber);
+	const members = await getCongressData(chamber, 116);
 	setNumOfPartyVotesOnMembers(members);
 	updateVue(members);
 	console.log(congressOverview.getCongressAtGlance);

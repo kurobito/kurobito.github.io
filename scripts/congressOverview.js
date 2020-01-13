@@ -1,11 +1,8 @@
-import { getCongressData, chamber } from "./getCongressMembers.js";
+import { chamber } from "./getCongressMembers.js";
 import {
 	sortByPartyAscending,
-	sortByPartyDescending,
 	sortByNumOfRepsAscending,
-	sortByNumOfRepsDescending,
 	sortByPctVotedWithAscending,
-	sortByPctVotedWithDescending
 } from "./sortComparators.js";
 
 // Senate/House at glance table
@@ -158,7 +155,7 @@ const congressOverview = new Vue({
 			if (this.sortedOn.party) {
 				this.sortedOn.party = false;
 				event.target.innerHTML = sortStringDescendingly;
-				this.congress.sort(sortByPartyDescending);
+				this.congress.sort(sortByPartyAscending).reverse();
 			} else {
 				this.sortedOn.party = true;
 				event.target.innerHTML = sortStringAscendingly;
@@ -175,7 +172,7 @@ const congressOverview = new Vue({
 			if (this.sortedOn.numOfReps) {
 				this.sortedOn.numOfReps = false;
 				event.target.innerHTML = sortStringDescendingly;
-				this.congress.sort(sortByNumOfRepsDescending);
+				this.congress.sort(sortByNumOfRepsAscending).reverse();
 			} else {
 				this.sortedOn.numOfReps = true;
 				event.target.innerHTML = sortStringAscendingly;
@@ -192,7 +189,7 @@ const congressOverview = new Vue({
 			if (this.sortedOn.pctVotedWith) {
 				this.sortedOn.pctVotedWith = false;
 				event.target.innerHTML = sortStringDescendingly;
-				this.congress.sort(sortByPctVotedWithDescending);
+				this.congress.sort(sortByPctVotedWithAscending).reverse();
 			} else {
 				this.sortedOn.pctVotedWith = true;
 				event.target.innerHTML = sortStringAscendingly;
@@ -220,11 +217,3 @@ const congressOverview = new Vue({
 });
 
 export { congressOverview };
-// initialize vue data
-// const init = async () => {
-// 	const members = await getCongressData(chamber);
-// 	// members.sort(sortByFirstNameAscending);
-// 	updateVue(members);
-// }
-
-// setTimeout(init, 500);

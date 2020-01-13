@@ -26,13 +26,24 @@
                             class="sr-only">(current)</span></a>
                 </li>
                 <li id="congressListItem" class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false" href="#" id="congressDropdownMenuLink">
-                        Congress 116
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="congressDropdownMenuLink">
-                        <a id="congressSenate" class="dropdown-item" href="./congress.html?senate">Senate</a>
-                        <a id="congressHouse" class="dropdown-item" href="./congress.html?house">House</a>
+                    <div id="congress">
+                        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false" href="#" id="congressDropdownMenuLink">
+                            Congress {{ number }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="congressDropdownMenuLink">
+                            <a id="congressSenate" class="dropdown-item" href="./congress.html?senate">Senate</a>
+                            <a id="congressHouse" class="dropdown-item" href="./congress.html?house">House</a>
+                            <form class="dropdown-item" onsubmit="return false;">
+                                <button id="incrementCongressBtn" v-on:click="decrementCongress()"
+                                        class="btn btn-secondary d-inline">-
+                                </button>
+                                <p class="dropdown-item d-inline">{{ number }}</p>
+                                <button id="decrementCongressBtn" v-on:click="incrementCongress()"
+                                        class="btn btn-secondary d-inline">+
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </li>
                 <li id="attendanceListItem" class="nav-item dropdown active">
@@ -145,8 +156,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-<script src="scripts/include.js"></script>
-<script src="scripts/navbar.js" type="module" defer></script>
 <script src="scripts/getCongressMembers.js" type="module" defer></script>
 <script src="scripts/renderCongressAttendance.js" type="module"></script>
 <script src="scripts/congressOverview.js" type="module"></script>

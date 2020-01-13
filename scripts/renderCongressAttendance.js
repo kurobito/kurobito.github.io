@@ -2,11 +2,8 @@ import { getCongressData, chamber } from "./getCongressMembers.js";
 import { congressOverview } from "./congressOverview.js";
 import {
 	sortByFirstNameAscending,
-	sortByFirstNameDescending,
 	sortByMissedVotesAscending,
-	sortByMissedVotesDescending,
-	sortByMissedVotesPctAscending,
-	sortByMissedVotesPctDescending
+	sortByMissedVotesPctAscending
 } from "./sortComparators.js";
 
 // vue instance for congress info
@@ -55,9 +52,7 @@ const congressEngagedTables = new Vue({
 	},
 	computed: {
 		leastEngagedTableHeaders: function() {
-			const nameHeader = document.getElementById(
-				"leastEngagedNameHeader"
-			);
+			const nameHeader = document.getElementById("leastEngagedNameHeader");
 			const numOfMissedVotesHeader = document.getElementById(
 				"leastEngagedNumMissedVotesHeader"
 			);
@@ -82,13 +77,15 @@ const congressEngagedTables = new Vue({
 			let leastEngagedMembers = [];
 			if (chamber === "senate") {
 				leastEngagedMembers = this.senateMembers
-					.sort(sortByMissedVotesPctDescending)
+					.sort(sortByMissedVotesPctAscending)
+					.reverse()
 					.slice();
 				leastEngagedMembers.splice(leastEngagedMembers.length * 0.1);
 				this.leastEngagedMembers = leastEngagedMembers;
 			} else {
 				leastEngagedMembers = this.houseMembers
-					.sort(sortByMissedVotesPctDescending)
+					.sort(sortByMissedVotesPctAscending)
+					.reverse()
 					.slice();
 				leastEngagedMembers.splice(leastEngagedMembers.length * 0.1);
 				this.leastEngagedMembers = leastEngagedMembers;
@@ -97,46 +94,33 @@ const congressEngagedTables = new Vue({
 		setMostEngagedMembers: function() {
 			let mostEngagedMembers = [];
 			if (chamber === "senate") {
-				mostEngagedMembers = this.senateMembers
-					.sort(sortByMissedVotesPctAscending)
-					.slice();
+				mostEngagedMembers = this.senateMembers.sort(sortByMissedVotesPctAscending).slice();
 				mostEngagedMembers.splice(mostEngagedMembers.length * 0.1);
 				this.mostEngagedMembers = mostEngagedMembers;
 			} else {
-				mostEngagedMembers = this.houseMembers
-					.sort(sortByMissedVotesPctAscending)
-					.slice();
+				mostEngagedMembers = this.houseMembers.sort(sortByMissedVotesPctAscending).slice();
 				mostEngagedMembers.splice(mostEngagedMembers.length * 0.1);
 				this.mostEngagedMembers = mostEngagedMembers;
 			}
 		},
 		sortByName: function(event) {
-			const sortStringAscendingly =
-				'Name <i class="fas fa-sort-up no-pointer-event">';
-			const sortStringDescendingly =
-				'Name <i class="fas fa-sort-down no-pointer-event">';
-			const leastEngagedHeaderRow = document.getElementById(
-				"leastEngagedHeader"
-			);
-			const mostEngagedHeaderRow = document.getElementById(
-				"mostEngagedHeader"
-			);
-			const isLeastEngagedTable =
-				leastEngagedHeaderRow === event.target.parentElement;
+			const sortStringAscendingly = 'Name <i class="fas fa-sort-up no-pointer-event">';
+			const sortStringDescendingly = 'Name <i class="fas fa-sort-down no-pointer-event">';
+			const leastEngagedHeaderRow = document.getElementById("leastEngagedHeader");
+			const mostEngagedHeaderRow = document.getElementById("mostEngagedHeader");
+			const isLeastEngagedTable = leastEngagedHeaderRow === event.target.parentElement;
 
 			if (isLeastEngagedTable) this.setDefaultStringOnLeastEngagedTable();
 			else this.setDefaultStringOnMostEngagedTable();
 			if (this.sortedOn.name) {
 				this.sortedOn.name = false;
 				event.target.innerHTML = sortStringDescendingly;
-				if (isLeastEngagedTable)
-					this.leastEngagedMembers.sort(sortByFirstNameDescending);
-				else this.mostEngagedMembers.sort(sortByFirstNameDescending);
+				if (isLeastEngagedTable) this.leastEngagedMembers.sort(sortByFirstNameAscending).reverse();
+				else this.mostEngagedMembers.sort(sortByFirstNameAscending).reverse();
 			} else {
 				this.sortedOn.name = true;
 				event.target.innerHTML = sortStringAscendingly;
-				if (isLeastEngagedTable)
-					this.leastEngagedMembers.sort(sortByFirstNameAscending);
+				if (isLeastEngagedTable) this.leastEngagedMembers.sort(sortByFirstNameAscending);
 				else this.mostEngagedMembers.sort(sortByFirstNameAscending);
 			}
 		},
@@ -145,28 +129,21 @@ const congressEngagedTables = new Vue({
 				'# of missed votes <i class="fas fa-sort-up no-pointer-event">';
 			const sortStringDescendingly =
 				'# of missed votes <i class="fas fa-sort-down no-pointer-event">';
-			const leastEngagedHeaderRow = document.getElementById(
-				"leastEngagedHeader"
-			);
-			const mostEngagedHeaderRow = document.getElementById(
-				"mostEngagedHeader"
-			);
-			const isLeastEngagedTable =
-				leastEngagedHeaderRow === event.target.parentElement;
+			const leastEngagedHeaderRow = document.getElementById("leastEngagedHeader");
+			const mostEngagedHeaderRow = document.getElementById("mostEngagedHeader");
+			const isLeastEngagedTable = leastEngagedHeaderRow === event.target.parentElement;
 
 			if (isLeastEngagedTable) this.setDefaultStringOnLeastEngagedTable();
 			else this.setDefaultStringOnMostEngagedTable();
 			if (this.sortedOn.numOfMissedVotes) {
 				this.sortedOn.numOfMissedVotes = false;
 				event.target.innerHTML = sortStringDescendingly;
-				if (isLeastEngagedTable)
-					this.leastEngagedMembers.sort(sortByMissedVotesDescending);
-				else this.mostEngagedMembers.sort(sortByMissedVotesDescending);
+				if (isLeastEngagedTable) this.leastEngagedMembers.sort(sortByMissedVotesAscending).reverse();
+				else this.mostEngagedMembers.sort(sortByMissedVotesAscending).reverse();
 			} else {
 				this.sortedOn.numOfMissedVotes = true;
 				event.target.innerHTML = sortStringAscendingly;
-				if (isLeastEngagedTable)
-					this.leastEngagedMembers.sort(sortByMissedVotesAscending);
+				if (isLeastEngagedTable) this.leastEngagedMembers.sort(sortByMissedVotesAscending);
 				else this.mostEngagedMembers.sort(sortByMissedVotesAscending);
 			}
 		},
@@ -175,14 +152,9 @@ const congressEngagedTables = new Vue({
 				'% of missed votes <i class="fas fa-sort-up no-pointer-event">';
 			const sortStringDescendingly =
 				'% of missed votes <i class="fas fa-sort-down no-pointer-event">';
-			const leastEngagedHeaderRow = document.getElementById(
-				"leastEngagedHeader"
-			);
-			const mostEngagedHeaderRow = document.getElementById(
-				"mostEngagedHeader"
-			);
-			const isLeastEngagedTable =
-				leastEngagedHeaderRow === event.target.parentElement;
+			const leastEngagedHeaderRow = document.getElementById("leastEngagedHeader");
+			const mostEngagedHeaderRow = document.getElementById("mostEngagedHeader");
+			const isLeastEngagedTable = leastEngagedHeaderRow === event.target.parentElement;
 
 			if (isLeastEngagedTable) this.setDefaultStringOnLeastEngagedTable();
 			else this.setDefaultStringOnMostEngagedTable();
@@ -190,30 +162,18 @@ const congressEngagedTables = new Vue({
 				this.sortedOn.pctOfMissedVotes = false;
 				event.target.innerHTML = sortStringDescendingly;
 				if (isLeastEngagedTable)
-					this.leastEngagedMembers.sort(
-						sortByMissedVotesPctDescending
-					);
-				else
-					this.mostEngagedMembers.sort(
-						sortByMissedVotesPctDescending
-					);
+					this.leastEngagedMembers.sort(sortByMissedVotesPctAscending).reverse();
+				else this.mostEngagedMembers.sort(sortByMissedVotesPctAscending).reverse();
 			} else {
 				this.sortedOn.pctOfMissedVotes = true;
 				event.target.innerHTML = sortStringAscendingly;
 				if (isLeastEngagedTable)
-					this.leastEngagedMembers.sort(
-						sortByMissedVotesPctAscending
-					);
-				else
-					this.mostEngagedMembers.sort(sortByMissedVotesPctAscending);
+					this.leastEngagedMembers.sort(sortByMissedVotesPctAscending);
+				else this.mostEngagedMembers.sort(sortByMissedVotesPctAscending);
 			}
 		},
 		setDefaultStringOnLeastEngagedTable: function() {
-			const defaultStrings = [
-				"Name",
-				"# of missed votes",
-				"% of missed votes"
-			];
+			const defaultStrings = ["Name", "# of missed votes", "% of missed votes"];
 			this.leastEngagedTableHeaders.forEach(header => {
 				defaultStrings.forEach(defaultString => {
 					if (
@@ -226,11 +186,7 @@ const congressEngagedTables = new Vue({
 			});
 		},
 		setDefaultStringOnMostEngagedTable: function() {
-			const defaultStrings = [
-				"Name",
-				"# of missed votes",
-				"% of missed votes"
-			];
+			const defaultStrings = ["Name", "# of missed votes", "% of missed votes"];
 			this.mostEngagedTableHeaders.forEach(header => {
 				defaultStrings.forEach(defaultString => {
 					if (
@@ -256,7 +212,7 @@ function updateVue(members) {
 }
 
 const init = async () => {
-	const members = await getCongressData(chamber);
+	const members = await getCongressData(chamber, 116);
 	updateVue(members);
 	congressEngagedTables.setLeastEngagedMembers();
 	congressEngagedTables.setMostEngagedMembers();
