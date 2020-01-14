@@ -63,8 +63,9 @@
                         Party Loyalty
                     </a>
                     <div class="dropdown-menu" aria-labelledby="partyLoyaltyDropdownMenuLink">
-                        <a id="partyLoyaltySenate" class="dropdown-item" href="#">Senate</a>
-                        <a id="partyLoyaltyHouse" class="dropdown-item" href="#">House</a>
+                        <a id="partyLoyaltySenate" class="dropdown-item" href="./congress-party-loyalty.html?senate">Senate</a>
+                        <a id="partyLoyaltyHouse" class="dropdown-item"
+                           href="./congress-party-loyalty.html?house">House</a>
                     </div>
                 </li>
             </ul>
@@ -170,9 +171,9 @@
             </div>
         </div>
         <div :is="currentDisplay" v-bind:current-house-component="currentHouseComponent"
-             v-bind:current-senate-component="currentSenateComponent"
-             v-bind:senate-members="senateMembers" v-bind:house-members="houseMembers" v-bind:states="states"
-             v-bind:get-state-name="getStateName">
+             v-bind:current-senate-component="currentSenateComponent" v-bind:senate-name-component="senateNameComponent"
+             v-bind:house-name-component="houseNameComponent" v-bind:senate-members="senateMembers"
+             v-bind:house-members="houseMembers" v-bind:states="states" v-bind:get-state-name="getStateName">
         </div>
     </div>
 </main>

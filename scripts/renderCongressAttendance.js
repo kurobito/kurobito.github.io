@@ -32,7 +32,7 @@ const congressInfoText = new Vue({
 	}
 });
 
-// vue instance fo
+// vue instance for engaged tables
 const congressEngagedTables = new Vue({
 	el: "#congressEngagedTables",
 	data: {

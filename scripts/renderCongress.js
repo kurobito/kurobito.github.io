@@ -20,6 +20,8 @@ let displayCard = Vue.component("displayCard", {
 		"houseMembers",
 		"currentSenateComponent",
 		"currentHouseComponent",
+		"senateNameComponent",
+		"houseNameComponent",
 		"states",
 		"getStateName"
 	],
@@ -32,6 +34,7 @@ let displayCard = Vue.component("displayCard", {
 	<div :is="currentSenateComponent"
 	v-for="senateMember in senateMembers"
 	v-bind:key="senateMember.id"
+	v-bind:senate-name-component="senateNameComponent"
 	v-bind:senate-member="senateMember"
 	v-bind:states="states"
 	v-bind:get-state-name="getStateName">
@@ -39,6 +42,7 @@ let displayCard = Vue.component("displayCard", {
 	<div :is="currentHouseComponent"
 	v-for="houseMember in houseMembers"
 	v-bind:key="houseMember.id"
+	v-bind:house-name-component="houseNameComponent"
 	v-bind:house-member="houseMember"
 	v-bind:states="states"
 	v-bind:get-state-name="getStateName">
@@ -48,11 +52,11 @@ let displayCard = Vue.component("displayCard", {
 });
 
 // Create card component to display a senate member, with his first name displayed first
-let senateMemberCardFirstName = Vue.component("senateMemberCardFirstName", {
-	props: ["senateMember", "states", "getStateName"],
+let senateMemberCard = Vue.component("senateMemberCard", {
+	props: ["senateMember", "states", "getStateName", "senateNameComponent"],
 	template: `<div class="col-sm-6 col-lg-3">
 	<div class="card" style="width: 16rem;">
-	<a v-bind:id="senateMember.id" v-bind:href="senateMember.url"><h5 class="card-header"> {{ senateMember.first_name }} {{ senateMember.middle_name }} {{ senateMember.last_name }}</h5></a>
+	<div :is="senateNameComponent" v-bind:senate-member="senateMember"></div>
 	<ul class="list-group list-group-flush">
 	<li class="list-group-item party bg-danger text-white" v-if="senateMember.party === 'R'">Republican</li>
 	<li class="list-group-item party bg-primary text-white" v-else-if="senateMember.party === 'D'">Democrat</li>
@@ -67,31 +71,27 @@ let senateMemberCardFirstName = Vue.component("senateMemberCardFirstName", {
 	</div>`
 });
 
-// Create card component to display a senate member, with his last name displayed first
-let senateMemberCardLastName = Vue.component("senateMemberCardLastName", {
-	props: ["senateMember", "states", "getStateName"],
-	template: `<div class="col-sm-6 col-lg-3">
-	<div class="card" style="width: 16rem;">
-	<a v-bind:id="senateMember.id" v-bind:href="senateMember.url"><h5 class="card-header"> {{ senateMember.last_name }}, {{ senateMember.first_name }} {{ senateMember.middle_name }}</h5></a>
-	<ul class="list-group list-group-flush">
-	<li class="list-group-item party bg-danger text-white" v-if="senateMember.party === 'R'">Republican</li>
-	<li class="list-group-item party bg-primary text-white" v-else-if="senateMember.party === 'D'">Democrat</li>
-	<li class="list-group-item party bg-info text-white" v-else-if="senateMember.party === 'ID' || senateMember.party === 'I'">Independent</li>
-	<li class="list-group-item party" v-else>Other</li>
-	<li class="list-group-item state">State: {{ getStateName(senateMember.state) }}</li>
-	<li class="list-group-item seniority">Seniority: {{ senateMember.seniority }}</li>
-	<li class="list-group-item party-votes">Party Votes with: {{ senateMember.votes_with_party_pct }}%</li>
-	<li class="list-group-item party-votes">Party Votes against: {{ senateMember.votes_against_party_pct }}%</li>
-	</ul>
-	</div>
-	</div>`
+// Component to display first name of senate member first
+let senateMemberFirstName = Vue.component("senateMemberFirstName", {
+	props: ["senateMember"],
+	template: `<a v-bind:href="senateMember.url"><h5 class="card-header"> 
+	{{ senateMember.first_name }} {{ senateMember.middle_name }} {{ senateMember.last_name }}
+	</h5></a>`
+});
+
+// Component to display last name of senate member first
+let senateMemberLastName = Vue.component("senateMemberLastName", {
+	props: ["senateMember"],
+	template: `<a v-bind:href="senateMember.url"><h5 class="card-header"> 
+	{{ senateMember.last_name }}, {{ senateMember.first_name }} {{ senateMember.middle_name }} 
+	</h5></a>`
 });
 
 let districtListenerSet = false; // Check if a listener has been set on district element
 
 // Create card component to display a house member, with his first name displayed first
-let houseMemberCardFirstName = Vue.component("houseMemberCardFirstName", {
-	props: ["houseMember", "states", "getStateName"],
+let houseMemberCard = Vue.component("houseMemberCard", {
+	props: ["houseMember", "states", "getStateName", "houseNameComponent"],
 	mounted: function() {
 		this.$nextTick(function() {
 			if (!districtListenerSet) {
@@ -101,7 +101,7 @@ let houseMemberCardFirstName = Vue.component("houseMemberCardFirstName", {
 	},
 	template: `<div class="col-sm-6 col-lg-3">
 	<div class="card" style="width: 16rem;">
-	<a v-bind:id="houseMember.id" v-bind:href="houseMember.url"><h5 class="card-header"> {{ houseMember.first_name }} {{ houseMember.middle_name }} {{ houseMember.last_name }}</h5></a>
+	<div :is="houseNameComponent" v-bind:house-member="houseMember"></div>
 	<ul class="list-group list-group-flush">
 	<li class="list-group-item party bg-danger text-white" v-if="houseMember.party === 'R'">Republican</li>
 	<li class="list-group-item party bg-primary text-white" v-else-if="houseMember.party === 'D'">Democrat</li>
@@ -117,25 +117,20 @@ let houseMemberCardFirstName = Vue.component("houseMemberCardFirstName", {
 	</div>`
 });
 
-// Create card component to display a house member, with his last name displayed first
-let houseMemberCardLastName = Vue.component("houseMemberCardLastName", {
-	props: ["houseMember", "states", "getStateName"],
-	template: `<div class="col-sm-6 col-lg-3">
-	<div class="card" style="width: 16rem;">
-	<a v-bind:id="houseMember.id" v-bind:href="houseMember.url"><h5 class="card-header">{{ houseMember.last_name }}, {{ houseMember.first_name }} {{ houseMember.middle_name }}</h5></a>
-	<ul class="list-group list-group-flush">
-	<li class="list-group-item party bg-danger text-white" v-if="houseMember.party === 'R'">Republican</li>
-	<li class="list-group-item party bg-primary text-white" v-else-if="houseMember.party === 'D'">Democrat</li>
-	<li class="list-group-item party bg-info text-white" v-else-if="houseMember.party === 'ID' || houseMember.party === 'I'">Independent</li>
-	<li class="list-group-item party" v-else>Other</li>
-	<li class="list-group-item state">State: {{ getStateName(houseMember.state) }}</li>
-	<li class="list-group-item state">District: {{ houseMember.district }}</li>
-	<li class="list-group-item seniority">Seniority: {{ houseMember.seniority }}</li>
-	<li class="list-group-item party-votes">Party Votes with: {{ houseMember.votes_with_party_pct }}%</li>
-	<li class="list-group-item party-votes">Party Votes against: {{ houseMember.votes_against_party_pct }}%</li>
-	</ul>
-	</div>
-	</div>`
+// Component to display first name of house member first
+let houseMemberFirstName = Vue.component("houseMemberFirstName", {
+	props: ["houseMember"],
+	template: `<a v-bind:href="houseMember.url"><h5 class="card-header"> 
+	{{ houseMember.first_name }} {{ houseMember.middle_name }} {{ houseMember.last_name }}
+	</h5></a>`
+});
+
+// Component to display last name of house member first
+let houseMemberLastName = Vue.component("houseMemberLastName", {
+	props: ["houseMember"],
+	template: `<a v-bind:href="houseMember.url"><h5 class="card-header"> 
+	{{ houseMember.last_name }}, {{ houseMember.first_name }} {{ houseMember.middle_name }} 
+	</h5></a>`
 });
 
 let displayTable = Vue.component("displayTable", {
@@ -186,7 +181,7 @@ let displayTable = Vue.component("displayTable", {
 });
 
 // Create a table row component to display a senate member, with his first name displayed first
-let senateMemberTableRowFirstName = Vue.component("senateMemberTableRowFirstName", {
+let senateMemberTableRow = Vue.component("senateMemberTableRow", {
 	props: ["senateMember", "states", "getStateName"],
 	template: `<tr>
 	<td scope="row">{{ senateMember.first_name }} {{ senateMember.middle_name }} 
@@ -199,41 +194,12 @@ let senateMemberTableRowFirstName = Vue.component("senateMemberTableRowFirstName
 	</tr>`
 });
 
-// Create a table row component to display a senate member, with his last name displayed first
-let senateMemberTableRowLastName = Vue.component("senateMemberTableRowLastName", {
-	props: ["senateMember", "states", "getStateName"],
-	template: `<tr>
-	<td scope="row">{{ senateMember.last_name }}, {{ senateMember.first_name }} 
-	{{ senateMember.middle_name }} </td>
-	<td> {{ senateMember.party }}</td>
-	<td> {{ getStateName(senateMember.state) }}</td>
-	<td> {{ senateMember.seniority }}</td>
-	<td> {{ senateMember.votes_with_party_pct }}</td>
-	<td> {{ senateMember.votes_against_party_pct }}</td>
-	</tr>`
-});
-
 // Create a table row component to display a house member, with his first name displayed first
-let houseMemberTableRowFirstName = Vue.component("houseMemberTableRowFirstName", {
+let houseMemberTableRow = Vue.component("houseMemberTableRow", {
 	props: ["houseMember", "states", "getStateName"],
 	template: `<tr>
 	<td scope="row">{{ houseMember.first_name }} {{ houseMember.middle_name }} 
 	{{ houseMember.last_name }}</td>
-	<td> {{ houseMember.party }}</td>
-	<td> {{ getStateName(houseMember.state) }}</td>
-	<td> {{ houseMember.district }} </td>
-	<td> {{ houseMember.seniority }}</td>
-	<td> {{ houseMember.votes_with_party_pct }}</td>
-	<td> {{ houseMember.votes_against_party_pct }}</td>
-	</tr>`
-});
-
-// Create a table row component to display a house member, with his last name displayed first
-let houseMemberTableRowLastName = Vue.component("houseMemberTableRowLastName", {
-	props: ["houseMember", "states", "getStateName"],
-	template: `<tr>
-	<td scope="row">{{ houseMember.last_name }}, {{ houseMember.first_name }}
-	{{ houseMember.middle_name }} </td>
 	<td> {{ houseMember.party }}</td>
 	<td> {{ getStateName(houseMember.state) }}</td>
 	<td> {{ houseMember.district }} </td>
@@ -259,8 +225,10 @@ const app = new Vue({
 		senateMembers: [],
 		searchQuery: "",
 		currentDisplay: "displayCard",
-		currentSenateComponent: "senateMemberCardFirstName",
-		currentHouseComponent: "houseMemberCardFirstName",
+		currentSenateComponent: "senateMemberCard",
+		currentHouseComponent: "houseMemberCard",
+		senateNameComponent: "senateMemberFirstName",
+		houseNameComponent: "houseMemberFirstName",
 		states: [
 			{ code: "AK", name: "Alaska" },
 			{ code: "AL", name: "Alabama" },
@@ -348,17 +316,6 @@ const app = new Vue({
 			}
 		}
 	},
-	components: {
-		displayCard: displayCard,
-		displayTable: displayTable,
-		senateMemberCardFirstName: senateMemberCardFirstName,
-		senateMemberCardLastName: senateMemberCardLastName,
-		houseMemberCardFirstName: houseMemberCardFirstName,
-		houseMemberCardLastName: houseMemberCardLastName,
-		senateMemberTableRowFirstName: senateMemberTableRowFirstName,
-		senateMemberTableRowLastName: senateMemberTableRowLastName,
-		stateCheckbox: stateCheckbox
-	},
 	methods: {
 		getStateName(code) {
 			return this.states[
@@ -371,22 +328,22 @@ const app = new Vue({
 		},
 		swapCongressComponent(component) {
 			if (this.senateMembers.length > 0) {
-				this.currentSenateComponent = component;
-			} else this.currentHouseComponent = component;
+				this.senateNameComponent = component;
+			} else this.houseNameComponent = component;
 		},
 		swapDisplay: function(event) {
 			const sortDropdown = document.getElementById("sortDropdown");
 			if (this.currentDisplay === "displayCard") {
 				sortDropdown.style.display = "none";
 				this.currentDisplay = "displayTable";
-				this.currentSenateComponent = "senateMemberTableRowFirstName";
-				this.currentHouseComponent = "houseMemberTableRowFirstName";
+				this.currentSenateComponent = "senateMemberTableRow";
+				this.currentHouseComponent = "houseMemberTableRow";
 				event.innerHTML = '<i class="fas fa-table"></i>';
 			} else {
 				sortDropdown.style.display = "inline";
 				this.currentDisplay = "displayCard";
-				this.currentSenateComponent = "senateMemberCardFirstName";
-				this.currentHouseComponent = "houseMemberCardFirstName";
+				this.currentSenateComponent = "senateMemberCard";
+				this.currentHouseComponent = "houseMemberCard";
 				event.innerHTML = '<i class="fas fa-grip-vertical"></i>';
 			}
 		}
@@ -402,8 +359,12 @@ function updateVue(members) {
 	}
 }
 
-// Sorts for card display
 // todo rebuild sort to encount for when congress changes numbers
+
+/*
+ * Sort object to check which sort has been used.
+ * data is sorted on firstname as default
+ */
 const sortedOn = {
 	firstName: true,
 	lastName: false,
@@ -450,6 +411,10 @@ const sortedOn = {
 	}
 };
 
+/*
+ * Function to run when user clicks on a sort button, takes sortedType and sortedOnType as argument
+ * to know which sortFunction it should use
+ */
 function sortClickHandler(
 	sortedOnType,
 	sortedType,
@@ -463,13 +428,13 @@ function sortClickHandler(
 	let filteredList = filter(searchByNameInput.value, partyFilterList, stateFilterList);
 	if (sortedType === "firstName" && !sortHeader) {
 		chamber === "senate"
-			? app.swapCongressComponent("senateMemberCardFirstName")
-			: app.swapCongressComponent("houseMemberCardFirstName");
+			? app.swapCongressComponent("senateMemberFirstName")
+			: app.swapCongressComponent("houseMemberFirstName");
 	}
 	if (sortedType === "lastName" && !sortHeader) {
 		chamber === "senate"
-			? app.swapCongressComponent("senateMemberCardLastName")
-			: app.swapCongressComponent("houseMemberCardLastName");
+			? app.swapCongressComponent("senateMemberLastName")
+			: app.swapCongressComponent("houseMemberLastName");
 	}
 
 	if (sortedOnType) {
@@ -495,6 +460,10 @@ function sortClickHandler(
 	}
 }
 
+/*
+ * Set on click listener for card display
+ * Sorts when button is clicked for sort dropdown menu
+ */
 function setSortCardsListeners() {
 	const sortMenuButton = document.getElementById("sortMenuButton");
 	const sortByFirstName = document.getElementById("sortFirstName");
@@ -625,6 +594,10 @@ function setSortCardsListeners() {
 	};
 }
 
+/*
+ * Set on click listener on district row for card display
+ * Called once when houseMemberCard is mounted
+ */
 function setSortDistrictListener() {
 	const sortByDistrict = document.getElementById("sortDistrict");
 
@@ -652,6 +625,11 @@ function setSortDistrictListener() {
 	return false;
 }
 
+/*
+ * Set on click listerners on table display headers
+ * Sorts on clicked header
+ * Called when table display is mounted
+ */
 function setSortTableListeners() {
 	// Sorts for table display
 	let nameHeader = document.getElementById("nameHeader");
@@ -748,15 +726,15 @@ function setSortTableListeners() {
 		let filteredList = filter(searchByNameInput.value, partyFilterList, stateFilterList);
 		setHeadersDefaultString(sortHeaderArray);
 		sortClickHandler(
-				sortedOn.seniority,
-				"seniority",
-				sortByFirstNameAscending,
-				sortStringAscendingly,
-				sortStringDescendingly,
-				undefined,
-				undefined,
-				seniorityHeader
-			);
+			sortedOn.seniority,
+			"seniority",
+			sortByFirstNameAscending,
+			sortStringAscendingly,
+			sortStringDescendingly,
+			undefined,
+			undefined,
+			seniorityHeader
+		);
 	};
 
 	votesWithHeader.onclick = () => {
@@ -765,15 +743,15 @@ function setSortTableListeners() {
 		let filteredList = filter(searchByNameInput.value, partyFilterList, stateFilterList);
 		setHeadersDefaultString(sortHeaderArray);
 		sortClickHandler(
-				sortedOn.partyVotesWith,
-				"partyVotesWith",
-				sortByFirstNameAscending,
-				sortStringAscendingly,
-				sortStringDescendingly,
-				undefined,
-				undefined,
-				votesWithHeader
-			);
+			sortedOn.partyVotesWith,
+			"partyVotesWith",
+			sortByFirstNameAscending,
+			sortStringAscendingly,
+			sortStringDescendingly,
+			undefined,
+			undefined,
+			votesWithHeader
+		);
 	};
 
 	votesAgainstHeader.onclick = () => {
@@ -782,18 +760,23 @@ function setSortTableListeners() {
 		let filteredList = filter(searchByNameInput.value, partyFilterList, stateFilterList);
 		setHeadersDefaultString(sortHeaderArray);
 		sortClickHandler(
-				sortedOn.partyVotesAgainst,
-				"partyVotesAgainst",
-				sortByFirstNameAscending,
-				sortStringAscendingly,
-				sortStringDescendingly,
-				undefined,
-				undefined,
-				votesAgainstHeader
-			);
+			sortedOn.partyVotesAgainst,
+			"partyVotesAgainst",
+			sortByFirstNameAscending,
+			sortStringAscendingly,
+			sortStringDescendingly,
+			undefined,
+			undefined,
+			votesAgainstHeader
+		);
 	};
 }
 
+/*
+ * Set default string on name table
+ * Called everytime when a user clicks a header to sort.
+ * Every header is set to default string, so that only the clicked header has a sort icon in the header
+ */
 function setHeadersDefaultString(sortHeaderArray) {
 	const sortDefaultStrings = [
 		"Name",
@@ -813,6 +796,10 @@ function setHeadersDefaultString(sortHeaderArray) {
 	});
 }
 
+/*
+ * Filter congress members based on search query
+ * If a member has a middle name include it in filter.
+ */
 function searchCongressMembers(searchQuery, members) {
 	let searchedCongressMembers = members.filter(member => {
 		let memberName;
@@ -941,11 +928,15 @@ filterByState.forEach(stateFilter => {
 	};
 });
 
+/*
+ * Function to update data set when congress
+ */
 function setOnCongressChangedListener() {
 	const incrementCongressBtn = document.getElementById("incrementCongressBtn");
 	const decrementCongressBtn = document.getElementById("decrementCongressBtn");
 
-	incrementCongressBtn.onclick = async () => {
+	// bad practice updating vue data twice, rewrite filter in future
+	incrementCongressBtn.onclick = async () => { 
 		updateVue(await fetchMembers());
 		updateVue(filter(searchByNameInput.value, partyFilterList, stateFilterList));
 	};

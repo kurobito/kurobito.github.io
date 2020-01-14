@@ -3,7 +3,7 @@ import { congressOverview } from "./congressOverview.js";
 import {
 	sortByFirstNameAscending,
 	sortByNumPartyVotesAscending,
-	sortByVotesWithAscending,
+	sortByVotesWithAscending
 } from "./sortComparators.js";
 
 // vue instance for congress info
@@ -43,23 +43,15 @@ const congressLoyaltyTables = new Vue({
 	computed: {
 		leastLoyalTableHeaders: function() {
 			const nameHeader = document.getElementById("leastLoyalNameHeader");
-			const numOfPartyVotesHeader = document.getElementById(
-				"leastLoyalNumPartyVotesHeader"
-			);
-			const pctOfPartyVotesHeader = document.getElementById(
-				"leastLoyalPctPartyVotesHeader"
-			);
+			const numOfPartyVotesHeader = document.getElementById("leastLoyalNumPartyVotesHeader");
+			const pctOfPartyVotesHeader = document.getElementById("leastLoyalPctPartyVotesHeader");
 
 			return [nameHeader, numOfPartyVotesHeader, pctOfPartyVotesHeader];
 		},
 		mostLoyalTableHeaders: function() {
 			const nameHeader = document.getElementById("mostLoyalNameHeader");
-			const numOfPartyVotesHeader = document.getElementById(
-				"mostLoyalNumPartyVotesHeader"
-			);
-			const pctOfPartyVotesHeader = document.getElementById(
-				"mostLoyalPctPartyVotesHeader"
-			);
+			const numOfPartyVotesHeader = document.getElementById("mostLoyalNumPartyVotesHeader");
+			const pctOfPartyVotesHeader = document.getElementById("mostLoyalPctPartyVotesHeader");
 
 			return [nameHeader, numOfPartyVotesHeader, pctOfPartyVotesHeader];
 		}
@@ -68,15 +60,11 @@ const congressLoyaltyTables = new Vue({
 		setLeastLoyalMembers: function() {
 			let leastLoyalMembers = [];
 			if (chamber === "senate") {
-				leastLoyalMembers = this.senateMembers
-					.sort(sortByVotesWithAscending)
-					.slice();
+				leastLoyalMembers = this.senateMembers.sort(sortByVotesWithAscending).slice();
 				leastLoyalMembers.splice(leastLoyalMembers.length * 0.1);
 				this.leastLoyalMembers = leastLoyalMembers;
 			} else {
-				leastLoyalMembers = this.houseMembers
-					.sort(sortByVotesWithAscending)
-					.slice();
+				leastLoyalMembers = this.houseMembers.sort(sortByVotesWithAscending).slice();
 				leastLoyalMembers.splice(leastLoyalMembers.length * 0.1);
 				this.leastLoyalMembers = leastLoyalMembers;
 			}
@@ -100,18 +88,11 @@ const congressLoyaltyTables = new Vue({
 			}
 		},
 		sortByName: function(event) {
-			const sortStringAscendingly =
-				'Name <i class="fas fa-sort-up no-pointer-event">';
-			const sortStringDescendingly =
-				'Name <i class="fas fa-sort-down no-pointer-event">';
-			const leastLoyalHeaderRow = document.getElementById(
-				"leastLoyalHeader"
-			);
-			const mostLoyalHeaderRow = document.getElementById(
-				"mostLoyalHeader"
-			);
-			const isLeastLoyalTable =
-				leastLoyalHeaderRow === event.target.parentElement;
+			const sortStringAscendingly = 'Name <i class="fas fa-sort-up no-pointer-event">';
+			const sortStringDescendingly = 'Name <i class="fas fa-sort-down no-pointer-event">';
+			const leastLoyalHeaderRow = document.getElementById("leastLoyalHeader");
+			const mostLoyalHeaderRow = document.getElementById("mostLoyalHeader");
+			const isLeastLoyalTable = leastLoyalHeaderRow === event.target.parentElement;
 
 			if (isLeastLoyalTable) this.setDefaultStringOnLeastLoyalTable();
 			else this.setDefaultStringOnMostLoyalTable();
@@ -124,8 +105,7 @@ const congressLoyaltyTables = new Vue({
 			} else {
 				this.sortedOn.name = true;
 				event.target.innerHTML = sortStringAscendingly;
-				if (isLeastLoyalTable)
-					this.leastLoyalMembers.sort(sortByFirstNameAscending);
+				if (isLeastLoyalTable) this.leastLoyalMembers.sort(sortByFirstNameAscending);
 				else this.mostLoyalMembers.sort(sortByFirstNameAscending);
 			}
 		},
@@ -134,11 +114,8 @@ const congressLoyaltyTables = new Vue({
 				'# of party votes <i class="fas fa-sort-up no-pointer-event">';
 			const sortStringDescendingly =
 				'# of party votes <i class="fas fa-sort-down no-pointer-event">';
-			const leastLoyalHeaderRow = document.getElementById(
-				"leastLoyalHeader"
-			);
-			const isLeastLoyalTable =
-				leastLoyalHeaderRow === event.target.parentElement;
+			const leastLoyalHeaderRow = document.getElementById("leastLoyalHeader");
+			const isLeastLoyalTable = leastLoyalHeaderRow === event.target.parentElement;
 			if (isLeastLoyalTable) this.setDefaultStringOnLeastLoyalTable();
 			else this.setDefaultStringOnMostLoyalTable();
 			if (this.sortedOn.numOfPartyVotes) {
@@ -150,8 +127,7 @@ const congressLoyaltyTables = new Vue({
 			} else {
 				this.sortedOn.numOfPartyVotes = true;
 				event.target.innerHTML = sortStringAscendingly;
-				if (isLeastLoyalTable)
-					this.leastLoyalMembers.sort(sortByNumPartyVotesAscending);
+				if (isLeastLoyalTable) this.leastLoyalMembers.sort(sortByNumPartyVotesAscending);
 				else this.mostLoyalMembers.sort(sortByNumPartyVotesAscending);
 			}
 		},
@@ -160,11 +136,8 @@ const congressLoyaltyTables = new Vue({
 				'% of party votes <i class="fas fa-sort-up no-pointer-event">';
 			const sortStringDescendingly =
 				'% of party votes <i class="fas fa-sort-down no-pointer-event">';
-			const leastLoyalHeaderRow = document.getElementById(
-				"leastLoyalHeader"
-			);
-			const isLeastLoyalTable =
-				leastLoyalHeaderRow === event.target.parentElement;
+			const leastLoyalHeaderRow = document.getElementById("leastLoyalHeader");
+			const isLeastLoyalTable = leastLoyalHeaderRow === event.target.parentElement;
 
 			if (isLeastLoyalTable) this.setDefaultStringOnLeastLoyalTable();
 			else this.setDefaultStringOnMostLoyalTable();
@@ -177,17 +150,12 @@ const congressLoyaltyTables = new Vue({
 			} else {
 				this.sortedOn.pctOfPartyVotes = true;
 				event.target.innerHTML = sortStringAscendingly;
-				if (isLeastLoyalTable)
-					this.leastLoyalMembers.sort(sortByVotesWithAscending);
+				if (isLeastLoyalTable) this.leastLoyalMembers.sort(sortByVotesWithAscending);
 				else this.mostLoyalMembers.sort(sortByVotesWithAscending);
 			}
 		},
 		setDefaultStringOnLeastLoyalTable: function(isLeastLoyalTable) {
-			const defaultStrings = [
-				"Name",
-				"# of party votes",
-				"% of party votes"
-			];
+			const defaultStrings = ["Name", "# of party votes", "% of party votes"];
 			this.leastLoyalTableHeaders.forEach(header => {
 				defaultStrings.forEach(defaultString => {
 					if (
@@ -200,11 +168,7 @@ const congressLoyaltyTables = new Vue({
 			});
 		},
 		setDefaultStringOnMostLoyalTable: function() {
-			const defaultStrings = [
-				"Name",
-				"# of party votes",
-				"% of party votes"
-			];
+			const defaultStrings = ["Name", "# of party votes", "% of party votes"];
 			this.mostLoyalTableHeaders.forEach(header => {
 				defaultStrings.forEach(defaultString => {
 					if (
@@ -229,11 +193,12 @@ function updateVue(members) {
 	}
 }
 
+/*
+ * Calculates the amount of votes in favor of their party each member has cast
+ */
 function setNumOfPartyVotesOnMembers(members) {
 	members.forEach(member => {
-		let numOfPartyVotes = Math.round(
-			member.total_votes * (member.votes_with_party_pct / 100)
-		);
+		let numOfPartyVotes = Math.round(member.total_votes * (member.votes_with_party_pct / 100));
 		member.num_party_votes = numOfPartyVotes;
 	});
 }
