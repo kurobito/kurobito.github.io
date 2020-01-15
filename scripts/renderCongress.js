@@ -849,7 +849,7 @@ function filter(searchQuery, partyFilterList, stateFilterList) {
 		filteredList = filterCongressMembersByParty(partyFilterList, filteredList);
 	if (stateFilterList.length > 0)
 		filteredList = filterCongressMembersByState(stateFilterList, filteredList);
-	console.log(filteredList);
+	// console.log(filteredList);
 	return filteredList;
 }
 

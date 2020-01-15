@@ -6,43 +6,41 @@ const chamber = window.location.href.split("?")[1];
 
 const congress = new Vue({
 	el: "#congress",
-	data:{
+	data: {
 		chamber: chamber,
-		number: 116,
+		number: 115,
 		senateMin: 80,
 		senateMax: 116,
 		houseMin: 102,
-		houseMax: 116,
+		houseMax: 116
 	},
-	methods:{
-		incrementCongress(){
-			if (chamber === 'senate') {
+	methods: {
+		incrementCongress() {
+			if (chamber === "senate") {
 				if (this.number < this.senateMax) this.number++;
-			}else{
-				if(this.number < this.houseMax) this.number++;
+			} else {
+				if (this.number < this.houseMax) this.number++;
 			}
 		},
-		decrementCongress(){
-			if (chamber === 'senate') {
+		decrementCongress() {
+			if (chamber === "senate") {
 				if (this.number > this.senateMin) this.number--;
-			}else{
-				if(this.number > this.houseMin) this.number--;
+			} else {
+				if (this.number > this.houseMin) this.number--;
 			}
 		}
 	}
-
-})
+});
 
 function getCongressUrl(chamber, congressNumber) {
-	let url =
-		"https://api.propublica.org/congress/v1/{congress}/{chamber}/members.json";
+	let url = "https://api.propublica.org/congress/v1/{congress}/{chamber}/members.json";
 	url = url.replace("{chamber}", chamber);
 	url = url.replace("{congress}", congressNumber);
 	return url;
 }
 
 // fetch request
-export const getCongressData = async (chamber) => {
+export const getCongressData = async chamber => {
 	const url = getCongressUrl(chamber, congress.number);
 	const congressHeaders = new Headers();
 	congressHeaders.append("X-API-KEY", apiKey);
@@ -56,22 +54,18 @@ export const getCongressData = async (chamber) => {
 			const jsonResponse = await response.json();
 			console.log(jsonResponse);
 			if (chamber === "senate") {
-				senateMembers = jsonResponse.results[0].members;
-				senateMembers.forEach(member => {
-					if (!member.in_office) {
-						senateMembers.splice(senateMembers.indexOf(member), 1);
-					}
-				});
+				if (congress.number == 116)
+					senateMembers = jsonResponse.results[0].members.filter(
+						member => member.in_office
+					);
+				else senateMembers = jsonResponse.results[0].members;
 				return senateMembers;
 			} else {
-				houseMembers = jsonResponse.results[0].members;
-				houseMembers.forEach(member => {
-					if (!member.in_office) {
-						houseMembers.splice(houseMembers.indexOf(member), 1);
-					}
-				});
-				console.log(houseMembers);
-
+				if (congress.number == 116)
+					houseMembers = jsonResponse.results[0].members.filter(
+						member => member.in_office
+					);
+				else houseMembers = jsonResponse.results[0].members;
 				return houseMembers;
 			}
 		} else throw new Error(`${response.status} : ${response.statusText}`);
@@ -80,4 +74,4 @@ export const getCongressData = async (chamber) => {
 	}
 };
 
-export { chamber, congress};
+export { chamber, congress };
