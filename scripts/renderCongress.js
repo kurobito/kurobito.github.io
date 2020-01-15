@@ -326,7 +326,11 @@ const app = new Vue({
 					.indexOf(code)
 			].name;
 		},
-		swapCongressComponent(component) {
+		/*
+		 * Swap component of card display to order the names differently
+		 * String component name of component to swap to
+		 */
+		swapCardNameOrder(component) {
 			if (this.senateMembers.length > 0) {
 				this.senateNameComponent = component;
 			} else this.houseNameComponent = component;
@@ -428,13 +432,13 @@ function sortClickHandler(
 	let filteredList = filter(searchByNameInput.value, partyFilterList, stateFilterList);
 	if (sortedType === "firstName" && !sortHeader) {
 		chamber === "senate"
-			? app.swapCongressComponent("senateMemberFirstName")
-			: app.swapCongressComponent("houseMemberFirstName");
+			? app.swapCardNameOrder("senateMemberFirstName")
+			: app.swapCardNameOrder("houseMemberFirstName");
 	}
 	if (sortedType === "lastName" && !sortHeader) {
 		chamber === "senate"
-			? app.swapCongressComponent("senateMemberLastName")
-			: app.swapCongressComponent("houseMemberLastName");
+			? app.swapCardNameOrder("senateMemberLastName")
+			: app.swapCardNameOrder("houseMemberLastName");
 	}
 
 	if (sortedOnType) {
@@ -935,8 +939,8 @@ function setOnCongressChangedListener() {
 	const incrementCongressBtn = document.getElementById("incrementCongressBtn");
 	const decrementCongressBtn = document.getElementById("decrementCongressBtn");
 
-	// bad practice updating vue data twice, rewrite filter in future
-	incrementCongressBtn.onclick = async () => { 
+	// bad practice updating vue data thrice, rewrite filter in future
+	incrementCongressBtn.onclick = async () => {
 		updateVue(await fetchMembers());
 		updateVue(filter(searchByNameInput.value, partyFilterList, stateFilterList));
 	};
