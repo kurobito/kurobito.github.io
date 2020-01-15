@@ -115,7 +115,8 @@ const congressEngagedTables = new Vue({
 			if (this.sortedOn.name) {
 				this.sortedOn.name = false;
 				event.target.innerHTML = sortStringDescendingly;
-				if (isLeastEngagedTable) this.leastEngagedMembers.sort(sortByFirstNameAscending).reverse();
+				if (isLeastEngagedTable)
+					this.leastEngagedMembers.sort(sortByFirstNameAscending).reverse();
 				else this.mostEngagedMembers.sort(sortByFirstNameAscending).reverse();
 			} else {
 				this.sortedOn.name = true;
@@ -138,7 +139,8 @@ const congressEngagedTables = new Vue({
 			if (this.sortedOn.numOfMissedVotes) {
 				this.sortedOn.numOfMissedVotes = false;
 				event.target.innerHTML = sortStringDescendingly;
-				if (isLeastEngagedTable) this.leastEngagedMembers.sort(sortByMissedVotesAscending).reverse();
+				if (isLeastEngagedTable)
+					this.leastEngagedMembers.sort(sortByMissedVotesAscending).reverse();
 				else this.mostEngagedMembers.sort(sortByMissedVotesAscending).reverse();
 			} else {
 				this.sortedOn.numOfMissedVotes = true;
@@ -209,16 +211,38 @@ function updateVue(members) {
 		congressEngagedTables.houseMembers = members;
 		congressOverview.houseMembers = members;
 	}
+	populateTables();
+}
+
+/*
+ * Function to update data set when congress
+ */
+function setOnCongressChangedListener() {
+	const incrementCongressBtn = document.getElementById("incrementCongressBtn");
+	const decrementCongressBtn = document.getElementById("decrementCongressBtn");
+
+	// bad practice updating vue data thrice, rewrite filter in future
+	incrementCongressBtn.onclick = async () => {
+		congressOverview.resetRepAndVoteWith();
+		updateVue(await getCongressData(chamber));
+
+	};
+	decrementCongressBtn.onclick = async () => {
+		congressOverview.resetRepAndVoteWith();
+		updateVue(await getCongressData(chamber));
+	};
+
+}
+
+function populateTables() {
+	congressEngagedTables.setLeastEngagedMembers();
+	congressEngagedTables.setMostEngagedMembers();
+	congressOverview.getCongressAtGlance;
 }
 
 const init = async () => {
-	const members = await getCongressData(chamber, 116);
-	updateVue(members);
-	congressEngagedTables.setLeastEngagedMembers();
-	congressEngagedTables.setMostEngagedMembers();
-	console.log("congressOverview");
-	console.log(congressOverview.getCongressAtGlance);
-	console.log(congressEngagedTables.mostEngagedMembers);
+	updateVue(await getCongressData(chamber));
+	setOnCongressChangedListener();
 };
 
 setTimeout(init, 500);

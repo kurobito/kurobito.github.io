@@ -191,6 +191,7 @@ function updateVue(members) {
 		congressLoyaltyTables.houseMembers = members;
 		congressOverview.houseMembers = members;
 	}
+	populateTables();
 }
 
 /*
@@ -203,15 +204,34 @@ function setNumOfPartyVotesOnMembers(members) {
 	});
 }
 
-const init = async () => {
-	const members = await getCongressData(chamber, 116);
-	setNumOfPartyVotesOnMembers(members);
-	updateVue(members);
-	console.log(congressOverview.getCongressAtGlance);
+/*
+ * Function to update data set when congress
+ */
+function setOnCongressChangedListener() {
+	const incrementCongressBtn = document.getElementById("incrementCongressBtn");
+	const decrementCongressBtn = document.getElementById("decrementCongressBtn");
+
+	// bad practice updating vue data thrice, rewrite filter in future
+	incrementCongressBtn.onclick = async () => {
+		congressOverview.resetRepAndVoteWith();
+		updateVue(await getCongressData(chamber));
+
+	};
+	decrementCongressBtn.onclick = async () => {
+		congressOverview.resetRepAndVoteWith();
+		updateVue(await getCongressData(chamber));
+	};
+}
+
+function populateTables() {
 	congressLoyaltyTables.setLeastLoyalMembers();
 	congressLoyaltyTables.setMostLoyalMembers();
-	console.log(congressLoyaltyTables.mostLoyalMembers);
-	console.log(congressLoyaltyTables.leastLoyalMembers);
+	congressOverview.getCongressAtGlance;
+}
+
+const init = async () => {
+	updateVue(await getCongressData(chamber));
+	setOnCongressChangedListener();
 };
 
 setTimeout(init, 500);

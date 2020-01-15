@@ -146,6 +146,12 @@ const congressOverview = new Vue({
 			this.congress[index].representatives++;
 			this.congress[index].pctVotedWith += pctVotedWith;
 		},
+		resetRepAndVoteWith: function(){
+			this.congress.forEach(party => {
+				party.representatives = 0;
+				party.pctVotedWith = 0;
+			});
+		},
 		sortByParty: function(event) {
 			const sortStringAscendingly =
 				'Party <i class="fas fa-sort-up no-pointer-event">';
