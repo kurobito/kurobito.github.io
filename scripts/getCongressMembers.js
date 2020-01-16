@@ -8,7 +8,7 @@ const congress = new Vue({
 	el: "#congress",
 	data: {
 		chamber: chamber,
-		number: 115,
+		number: 116,
 		senateMin: 80,
 		senateMax: 116,
 		houseMin: 102,
