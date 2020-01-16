@@ -64,7 +64,8 @@
                     <div class="dropdown-menu" aria-labelledby="partyLoyaltyDropdownMenuLink">
                         <a id="partyLoyaltySenate" class="dropdown-item"
                            href="./congress-party-loyalty.html?senate">Senate</a>
-                        <a id="partyLoyaltyHouse" class="dropdown-item" href="./congress-party-loyalty.html?house">House</a>
+                        <a id="partyLoyaltyHouse" class="dropdown-item"
+                           href="./congress-party-loyalty.html?house">House</a>
                     </div>
                 </li>
             </ul>
@@ -73,9 +74,9 @@
 </header>
 <main role="main" class="inner cover bg-light pt-3 mt-5">
     <div id="congressInfoText">
-    <h1 class="cover-heading text-center"> {{ getCongressHeading }} </h1>
-    <p class="lead text-center"> {{ getCongressText }} </p>
-    <hr class="my-4">
+        <h1 class="cover-heading text-center"> {{ getCongressHeading }} </h1>
+        <p class="lead text-center"> {{ getCongressText }} </p>
+        <hr class="my-4">
     </div>
     <div id="congressOverview">
         <congress-overview-table v-bind:chamber="chamber" v-bind:congress="congress"
@@ -156,7 +157,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-<script src="scripts/getCongressMembers.js" type="module" defer></script>
+<!--<script src="scripts/getCongressMembers.js" type="module" defer></script>-->
 <script src="scripts/renderCongressAttendance.js" type="module"></script>
 <script src="scripts/congressOverview.js" type="module"></script>
 </body>
